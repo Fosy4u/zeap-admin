@@ -13,6 +13,10 @@ interface DocumentWithFullscreen extends Document {
     mozCancelFullScreen?: () => void;
     webkitExitFullscreen?: () => void;
 }
+interface ImageUrlInterface {
+    link: string;
+    name: string;
+}
 
 interface UserInterface {
     email: string;
@@ -25,9 +29,26 @@ interface UserInterface {
     lastName: string;
     phoneNumber: string;
     shopId: string;
-    photoURL: string;
+    imageUrl: ImageUrlInterface;
     uid: string;
+    address: string;
+    region: string;
+    country: string;
+    isVendor: boolean;
+    disabled: boolean;
+}
+interface SighnUpInterface  {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    address: string;
+    region: string;
+    country: string
+   
+
 }
 
 
-export { RouteInterface, DocumentWithFullscreen, UserInterface };
+export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface };

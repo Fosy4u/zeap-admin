@@ -13,7 +13,9 @@ interface ToastInterface {
 
 
 const initialState = {
-  toasts : [] as ToastInterface[],
+  toasts : [
+   
+  ] as ToastInterface[],
   authToken: "",
 }
   

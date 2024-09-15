@@ -4,6 +4,7 @@ import { ThemeProvider } from "./contexts/themeContext";
 import {  socket,
   thisSessionId,SocketContext } from "./contexts/WebSocketContext";
 import DisplayTopSideBar from "./features/displayControl/DisplayTopSideBar";
+import ToastContainer from "./features/toast";
 
   import AllRoutes from "./routing/AllRoutes";
 import routes from "./routing/routes";
@@ -22,6 +23,7 @@ function App() {
     <DisplayTopSideBar>
     <AllRoutes routes={routes}/>
     </DisplayTopSideBar>
+    <ToastContainer />
     </AuthProvider>
     </ ThemeProvider>
   </SocketContext.Provider>;

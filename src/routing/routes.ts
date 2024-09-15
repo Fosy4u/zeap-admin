@@ -6,9 +6,11 @@ import Orders from "../features/orders";
 import Products from "../features/products";
 import Shops from "../features/shops";
 import Users from "../features/users";
+import User from "../features/users/User";
 import Promos from "../features/promos";
 import Vouchers from "../features/vouchers";
 import SignIn from "../features/Authentication/SignIn";
+import MyProfile from "../features/profile";
 
 
 // Define all routes for the app here.
@@ -42,6 +44,10 @@ const routes : RouteInterface[]
     component: Users
   },
   {
+    path: '/users/:id',
+    component: User
+  },
+  {
     path: '/promos',
     component: Promos 
   },
@@ -53,6 +59,10 @@ const routes : RouteInterface[]
     path: '/SignIn',
     component: SignIn
   },
+  {
+    path: '/profile',
+    component: MyProfile
+  }
  
 ];
 

@@ -1,7 +1,7 @@
 // success and error messages get passed through from the slice, via onQueryStarted for each call
 // you want it on.
 
-import { AppDispatch, FetchBaseQueryError } from "../store/store";
+import { AppDispatch } from "../store/store";
 import { globalActions } from "./global.slice";
 
 
@@ -17,7 +17,7 @@ const responseHandler = async (
   { success, successHandler, error, errorHandler }: {
     success?: string;
     successHandler?: Function;
-    error?: FetchBaseQueryError;
+    error?: any;
     errorHandler?: Function;
   },
   { dispatch, queryFulfilled }:{
@@ -25,6 +25,7 @@ const responseHandler = async (
     queryFulfilled: Promise<any>;
   }
 ) => {
+  console.log("error", error);
   let response;
 
   try {
@@ -67,7 +68,7 @@ const responseHandler = async (
     if (errorHandler) {
       
       const errorToDisplay =
-        error || e?.error?.data?.header || "Something went wrong...";
+        error ||error?.data?.error || e?.error?.data?.header  || "Something went wrong...";
 
       errorHandler(errorToDisplay);
     } else if (error) {
@@ -85,11 +86,11 @@ const responseHandler = async (
         globalActions.addToast({
           title:
             typeof errorTitle === "string"
-              ? errorTitle
+              ? error?.data?.error || errorTitle
               : "Something went wrong...",
           message:
             errorTitle !== 500
-              ? e?.error?.data?.error
+              ? error?.data?.error|| e?.error?.data?.error
               : "Something went wrong...",
           variant: "error",
         })

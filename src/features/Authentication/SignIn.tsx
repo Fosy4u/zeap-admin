@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Logo from '../../images/logo/app_logo.png';
 import { AuthContext } from '../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const SignIn: React.FC = () => {
   const { user, isAuthenticated, login, loginError,loading  } = useContext(AuthContext);
-  console.log({ user, isAuthenticated, login, loginError, loading });
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
 
   const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
+console.log("user", user)
   useEffect(() => {
     const email = localStorage.getItem('zeapEmail');
     const password = localStorage.getItem('zeapPassword');
@@ -22,6 +24,12 @@ const SignIn: React.FC = () => {
     }
   }
   , []);
+  useEffect(() => {
+    if (isAuthenticated && user) {
+       navigate('/');
+    }
+  }
+  , [isAuthenticated, user]);
 
   const handleLogin = () => {
     if (email && password){
@@ -89,14 +97,16 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
                       onChange={(e) => setPassword(e.currentTarget.value)}
                       value={password}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
-                    <span className="absolute right-4 top-4">
+                    <span className="absolute right-4 top-4"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
                       <svg
                         className="fill-current"
                         width="22"

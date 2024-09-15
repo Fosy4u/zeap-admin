@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import UserOne from '../../../images/user/user-05.png';
+import NoPic from '../../../images/user/avatar-anika-visser.png';
 import ClickOutside from '../../../utils/ClickOutside';
 import { AuthContext } from '../../../contexts/authContext';
 
@@ -22,11 +22,11 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {user?.firstName} {user?.lastName}
           </span>
-          <span className="block text-xs">Customer Service</span>
+          <span className="block text-xs">{user?.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full aspect-square object-cover overflow-hidden">
-          <img src={UserOne} alt="User" />
+          <img src={ user?.imageUrl?.link || NoPic} alt="User" />
         </span>
 
         <svg

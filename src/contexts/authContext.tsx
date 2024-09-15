@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { globalActions, globalSelectors } from "../redux/services/global.slice";
 import zeapApiSlice from "../redux/services/zeapApi.slice";
+import Loading from "../lib/Loading";
 
 
 
@@ -18,6 +19,7 @@ export const AuthContext = createContext<{
     user: UserInterface | null | undefined;
     loginError: string | null;
     loading: boolean;
+    setUser: React.Dispatch<React.SetStateAction<UserInterface | null | undefined>>;
   
 }>({
     isAuthenticated: false,
@@ -25,7 +27,8 @@ export const AuthContext = createContext<{
     logout: () => {},
     user: null,
     loginError: null,
-    loading: false
+    loading: false,
+    setUser: () => {}
 
 });
 
@@ -41,6 +44,8 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
     const [isTokenRefreshed, setIsTokenRefreshed] = useState<boolean>(false);
     const [user, setUser] = useState<UserInterface | null>();
     const [userUid, setUserUid] = useState<string>();
+   
+  
     const [loginError, setLoginError] = useState<string | null >(null);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -50,7 +55,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
       },
       { skip: !userUid  || !token }
     );
-    const userData = getAuthUserQuery?.data?.data
+    const userData = isAuthenticated? getAuthUserQuery?.data?.data : null;
 
   
 
@@ -122,9 +127,9 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
             localStorage.removeItem("currentUrl");
             return navigate(currentUrl);
           }
-          return navigate(
-            `/`
-          );
+          // return navigate(
+          //   `/`
+          // );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [isAuthenticated]);
@@ -144,18 +149,28 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
               getToken();
               setIsAuthenticated(true);
               setUserUid(curtrentUser.uid);
+              
             
 
             }
             // ...
           })
           .catch((e) => {
+            console.log("error", e.code)
             if (
               e.code === "auth/user-not-found" ||
               e.code === "auth/invalid-email" ||
-              e.code === "auth/wrong-password"
+              e.code === "auth/wrong-password" ||
+              e.code === "auth/invalid-credential"
             ) {
               setLoginError(" Invalid email or password");
+            }
+            if (e.code === "auth/too-many-requests") {
+              setLoginError("Too many requests, please try again later");
+            }
+         
+            if (e.code === "auth/user-disabled") {
+              setLoginError("User account is disabled");
             }
             if (e.code === "auth/network-request-failed") {
               setLoginError("loginloginError in Network connection");
@@ -178,14 +193,15 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
         setIsAuthenticated(false);
         setUser(null);
         dispatch(globalActions.setAuthToken(null));
-        navigate("/SignIn");
+       
 
     }
 
    
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout, loginError, loading}}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout, loginError, loading, setUser}}>
+          {loading && <Loading />}
             {children}
         </AuthContext.Provider>
     );
