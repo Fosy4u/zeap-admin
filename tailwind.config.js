@@ -1,8 +1,9 @@
+const flowbite = require("flowbite-react/tailwind"); 
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', "./node_modules/flowbite/**/*.js", "./node_modules/flowbite/**/*.ts", flowbite.content(),],
   darkMode: 'class',
   theme: {
     fontFamily: {
@@ -18,12 +19,14 @@ module.exports = {
       colors: {
         baseGreen: '#133522',
         lightGreen: '#D5F4E3',
-        lightGold: '#FFFAF2',
+        lightGold: '#F1E3A4',
         gold: '#D5B07B',
         darkGold: '#a17f1a',
         orange: '#ddb31d',
         black: '#151518',
         lightGray: '#F3F4F6',
+        grey8:"#F8F9FE",
+        grey2:"#272B36",
         current: 'currentColor',
         transparent: 'transparent',
         white: '#FFFFFF',
@@ -57,8 +60,9 @@ module.exports = {
         'meta-8': '#F0950C',
         'meta-9': '#E5E7EB',
         success: '#219653',
-        danger: '#D34053',
-        warning: '#FFA70B',
+        danger: '#F44336',
+        warning: '#FDF7EA',
+        info: '#E3ECFF',
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],
@@ -253,5 +257,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    flowbite.plugin() (
+      {
+        charts : true,
+      }
+    )
+
+    
+  ],
 };

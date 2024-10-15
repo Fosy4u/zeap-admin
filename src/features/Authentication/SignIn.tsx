@@ -2,18 +2,21 @@ import React, { useContext, useEffect, useState } from 'react';
 import Logo from '../../images/logo/app_logo.png';
 import { AuthContext } from '../../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
+import Banner from '../../lib/Banner';
 
 
 
 const SignIn: React.FC = () => {
-  const { user, isAuthenticated, login, loginError,loading  } = useContext(AuthContext);
+  const { user, isAuthenticated, login, loginError,loading, logout, setLoading  } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
 
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-console.log("user", user)
+  const [errorTitle, setErrorTitle] = useState<string >("");
+  const [error, setError] = useState<string >("");
+
   useEffect(() => {
     const email = localStorage.getItem('zeapEmail');
     const password = localStorage.getItem('zeapPassword');
@@ -25,18 +28,34 @@ console.log("user", user)
   }
   , []);
   useEffect(() => {
-    if (isAuthenticated && user) {
-       navigate('/');
+    if(isAuthenticated && user){
+  
+    const admin = user?.isAdmin || user?.superAdmin;
+   
+    if (admin) {
+      return navigate('/');
+    }
+    else {
+   
+      logout();
+      setErrorTitle("Unauthorized");
+      setError("You are not authorized to access this application. Please contact the administrator");
+    return  setLoading(false);
+     
+
     }
   }
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   , [isAuthenticated, user]);
+ 
 
   const handleLogin = () => {
     if (email && password){
-      if (rememberMe){
-        localStorage.setItem('zeapEmail', email);
-        localStorage.setItem('zeapPassword', password);
-      }
+      // if (rememberMe){
+      //   localStorage.setItem('zeapEmail', email);
+      //   localStorage.setItem('zeapPassword', password);
+      // }
    
     login(email, password);
   }
@@ -56,7 +75,8 @@ console.log("user", user)
               <h2 className="mb-9 text-2xl font-bold text-darkGold dark:text-white sm:text-title-xl2">
                 Sign In to Zeap Admin
               </h2>
-              {loginError && <p className="text-danger">{loginError}</p>}
+              {error && <Banner title={errorTitle} message={error} variant="error" className='mb-5' />}
+              {loginError && <Banner title="Error" message={loginError} variant="error" className='mb-5' />}
               <form>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">

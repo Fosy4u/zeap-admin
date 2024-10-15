@@ -5,8 +5,15 @@ import { globalSelectors } from "../../redux/services/global.slice";
 import UserTable from "./components/UserTable";
 import Loading from "../../lib/Loading";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import UserTileList from "./components/UserTileList";
+import UserDisplaySwitcher from "./components/UserDisplaySwitcher";
+
+const tileLink ="/table"
 
 const Users = () => {
+  const location = useLocation().pathname
+  const view = location.includes(tileLink)? "table":"tile"
   const token = useSelector(globalSelectors.selectAuthToken);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [input, setInput] = useState("");
@@ -35,12 +42,16 @@ const Users = () => {
   };
  
   return <div>
-     <UserHeader setInput={setInput} />
+     <UserHeader setInput={setInput} title={"Users"} />
   
 
     {users?.length === 0 && !usersQuery.isLoading && <div>No users found</div>}
     {usersQuery.isLoading && <Loading />}
-   {users && <UserTable users={filteredUsers} />}
+    {users && <UserDisplaySwitcher view = {view}
+    />}
+   {users &&  view === "table"? <UserTable users={filteredUsers} /> :
+   <UserTileList users={filteredUsers}/>
+   }
   </div>;
 }
 

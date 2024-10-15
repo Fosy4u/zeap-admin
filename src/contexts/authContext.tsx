@@ -19,6 +19,7 @@ export const AuthContext = createContext<{
     user: UserInterface | null | undefined;
     loginError: string | null;
     loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     setUser: React.Dispatch<React.SetStateAction<UserInterface | null | undefined>>;
   
 }>({
@@ -28,6 +29,7 @@ export const AuthContext = createContext<{
     user: null,
     loginError: null,
     loading: false,
+    setLoading: () => {},
     setUser: () => {}
 
 });
@@ -44,6 +46,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
     const [isTokenRefreshed, setIsTokenRefreshed] = useState<boolean>(false);
     const [user, setUser] = useState<UserInterface | null>();
     const [userUid, setUserUid] = useState<string>();
+   
    
   
     const [loginError, setLoginError] = useState<string | null >(null);
@@ -120,7 +123,8 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
       useEffect(() => {
         const currentUrl = localStorage.getItem("currentUrl");
-        if (isAuthenticated) {
+        const admin = user?.isAdmin || user?.superAdmin;
+        if (isAuthenticated && admin ) {
           
           getToken();
           if (currentUrl) {
@@ -132,14 +136,17 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
           // );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [isAuthenticated]);
+      }, [isAuthenticated, user]);
+
+     
+
 
     const login = (email:string, password:string) => {
 
       try {
         setLoginError(null);
         setLoading(true);
-        console.log(email + password);
+        
   
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
@@ -200,8 +207,10 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
    
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout, loginError, loading, setUser}}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout, loginError, loading, setUser,setLoading}}>
           {loading && <Loading />}
+        
+          
             {children}
         </AuthContext.Provider>
     );

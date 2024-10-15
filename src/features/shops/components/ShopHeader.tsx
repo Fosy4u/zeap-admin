@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { smallScreen } from "../../../utils/screenSizes"
-import SearchBar from "../../../lib/SearchBar"
+
 import SimpleModal from "../../../lib/SimpleModal"
 import SignUp from "../../Authentication/SignUp"
+import SearchBar from "../../../lib/SearchBar"
 
 
-const UserHeader = ({setInput, title, showSearchBar = true}: 
+const ShopHeader = ({setInput, title, showSearchBar = true}: 
     {setInput: (input: string) => void, title:string, showSearchBar?: boolean}
     
 ) => {
@@ -16,7 +17,7 @@ const UserHeader = ({setInput, title, showSearchBar = true}:
        </h1></div>
 
         <div className="flex items-center gap-2">
-          {showSearchBar && <SearchBar placeHolder="Search Users" setInput={setInput} />}
+          {showSearchBar && <SearchBar setInput={setInput}  placeHolder="Search Shop"/>}
          
             <button 
             onClick={() => setOpen(true)}
@@ -25,7 +26,7 @@ const UserHeader = ({setInput, title, showSearchBar = true}:
   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
 </svg>
 
-                {smallScreen ? "Add" : "Add User"}
+                {smallScreen ? "Add" : "Add Shop"}
             </button>
             </div>
             {open && (<SimpleModal 
@@ -33,7 +34,7 @@ const UserHeader = ({setInput, title, showSearchBar = true}:
             closeOnOutsideClick={false}
             open
             showActionButtons={false}
-            headerText="Add User" close={() => setOpen(false)}   onclick={() => {}}>
+            headerText="Add Shop" close={() => setOpen(false)}   onclick={() => {}}>
 
                 <SignUp 
                 close={() => setOpen(false)}
@@ -44,4 +45,4 @@ const UserHeader = ({setInput, title, showSearchBar = true}:
   )
 }
 
-export default UserHeader
+export default ShopHeader

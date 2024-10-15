@@ -135,12 +135,12 @@ const SimpleModal = ({ children,
                 >
                   {/*        <!-- Modal header --> */}
                   <header id="header-4a" className="flex items-center">
-                    <h3 className="flex-1  text-lg font-medium text-slate-700">
+                    <h3 className="flex-1  text-lg font-medium text-darkGold">
                      {headerText}
                     </h3>
                     <button
                       onClick={() => close()}
-                      className="inline-flex h-10 items-center justify-center gap-2 justify-self-center whitespace-nowrap rounded-full px-5 text-sm font-medium tracking-wide  text-emerald-500 transition duration-300 bg-baseGreen hover:bg-darkGold hover:text-emerald-600 focus:bg-baseGold focus:text-white focus-visible:outline-none disabled:cursor-not-allowed disabled:text-emerald-300 disabled:shadow-none disabled:hover:bg-transparent"
+                      className="inline-flex h-10 items-center justify-center gap-2 justify-self-center whitespace-nowrap rounded-full px-5 text-sm font-medium tracking-wide  text-danger transition duration-300 bg-slate-200 hover:bg-darkGold hover:text-emerald-600 focus:bg-baseGold focus:text-white focus-visible:outline-none disabled:cursor-not-allowed disabled:text-emerald-300 disabled:shadow-none disabled:hover:bg-transparent"
                       aria-label="close dialog"
                     >
                       <span className="relative only:-mx-5">

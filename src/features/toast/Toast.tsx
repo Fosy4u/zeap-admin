@@ -12,7 +12,7 @@ const Toast = ({message,id, variant}:{
     useEffect(() => {
         const timer = setTimeout(() => {
           dispatch(globalActions.removeToast(id));
-        }, 3000);
+        }, 5000);
         return () => clearTimeout(timer);
       }
         , [dispatch, id]);

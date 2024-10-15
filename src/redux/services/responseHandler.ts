@@ -25,7 +25,7 @@ const responseHandler = async (
     queryFulfilled: Promise<any>;
   }
 ) => {
-  console.log("error", error);
+  
   let response;
 
   try {
@@ -57,9 +57,10 @@ const responseHandler = async (
     if (successHandler) {
       successHandler(success, data);
     } else if (success) {
+      
       dispatch(
         globalActions.addToast({
-          title: success,
+          title: data?.message || success,
           message: "Request Successful",
         })
       );

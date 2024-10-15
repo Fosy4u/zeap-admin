@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NoPic from '../../../images/user/avatar-anika-visser.png';
 import ClickOutside from '../../../utils/ClickOutside';
 import { AuthContext } from '../../../contexts/authContext';
+import { capitalizeFirstLetter } from '../../../utils/helpers';
 
 
 const DropdownUser = () => {
@@ -20,7 +21,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user?.firstName} {user?.lastName}
+            {capitalizeFirstLetter(user?.firstName as string)} {capitalizeFirstLetter(user?.lastName as string)}
           </span>
           <span className="block text-xs">{user?.role}</span>
         </span>
@@ -55,7 +56,7 @@ const DropdownUser = () => {
             <li>
               <Link
                 to="/profile"
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base"
               >
                 <svg
                   className="fill-current"
@@ -80,7 +81,7 @@ const DropdownUser = () => {
             <li>
               <Link
                 to="#"
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base"
               >
                 <svg
                   className="fill-current"
@@ -101,7 +102,7 @@ const DropdownUser = () => {
             <li>
               <Link
                 to="/settings"
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base"
               >
                 <svg
                   className="fill-current"
@@ -126,7 +127,7 @@ const DropdownUser = () => {
           </ul>
           <button
           onClick={logout}
-           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base">
             <svg
               className="fill-current"
               width="22"
