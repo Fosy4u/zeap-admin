@@ -1,18 +1,17 @@
 import { useState } from "react";
-import Otp from "../../Authentication/Otp";
-import { UserInterface } from "../../../interface/interface";
+import { ShopInterface } from "../../../interface/interface";
 import SimpleModal from "../../../lib/SimpleModal";
-import SignUp from "../../Authentication/SignUp";
-import UserDeleteRestore from "./UserDeleteRestore";
-import UserComment from "./UserComment";
+import { AddShop } from "./AddShop";
+import ShopDeleteRestore from "./ShopDeleteRestore";
+import ShopComment from "./ShopComment";
 
 
 const buttonClass = "w-[56px] h-[56px] text-gray-500 rounded-full border border-gray-200 dark:border-gray-600 hover:text-white shadow-sm dark:hover:text-white bg-emerald-100 dark:text-gray-400 hover:bg-emerald-500  dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
-const UserActions = ({user}:{
-    user: UserInterface
+
+const ShopActions = ({shop}:{
+    shop: ShopInterface
 }) => {
     const [open, setOpen] = useState(false);
-    const [openVeirfyPhone, setOpenVeirfyPhone] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [openDisable, setOpenDisable] = useState(false);
     const [openEnable, setOpenEnable] = useState(false);
@@ -36,7 +35,7 @@ const UserActions = ({user}:{
 
             <span className="block mb-px text-xs font-medium ">Edit</span>
         </button>
-        <button 
+    <button 
     onClick={()=>setOpenComment(true)}
     type="button" className={buttonClass}>
            
@@ -48,7 +47,7 @@ const UserActions = ({user}:{
             <span className="block mb-px text-xs font-medium ">Comment</span>
         </button>
 
-    {user?.disabled && (<button 
+    {shop?.disabled && (<button 
     onClick={()=>setOpenEnable(true)}
     type="button" className={buttonClass}>
            
@@ -57,10 +56,10 @@ const UserActions = ({user}:{
 </svg>
 
 
-            <span className="block mb-px text-xs font-medium">Enable</span>
+            <span className="block mb-px text-xs font-medium ">Enable</span>
         </button>
     )}
-   {!user?.disabled && ( <button 
+   {!shop?.disabled && ( <button 
     onClick={()=>setOpenDisable(true)}
     type="button" className={buttonClass}>
            
@@ -69,19 +68,10 @@ const UserActions = ({user}:{
 </svg>
 
 
-            <span className="block mb-px text-xs font-medium">Disable</span>
+            <span className="block mb-px text-xs font-medium ">Disable</span>
         </button>
     )}
-    <button 
-    onClick={()=>setOpenVeirfyPhone(true)}
-    type="button" className={buttonClass}>
-           
-            <svg className="w-4 h-4 mx-auto mb-1 text-darkGold" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-  <path fillRule="evenodd" d="M5 4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4Zm12 12V5H7v11h10Zm-5 1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z" clipRule="evenodd"/>
-</svg>
-
-            <span className="block mb-px text-xs font-medium">Verify</span>
-        </button>
+  
       
     </div>
     <button 
@@ -95,49 +85,48 @@ const UserActions = ({user}:{
         <span className="sr-only">Open actions menu</span>
     </button>
 </div>
-{openVeirfyPhone && (
-    
 
-                <Otp 
-                close={() => setOpenVeirfyPhone(false)}
-                user={user}
-              
-                />)}
 {openEdit && ( <SimpleModal 
             isLoading={false}
             closeOnOutsideClick={false}
             open
             showActionButtons={false}
-            headerText="Edit User" close={() => setOpenEdit(false)}   onclick={() => {}}>
+            headerText="Edit Shop" close={() => setOpenEdit(false)}   onclick={() => {}}>
 
-                <SignUp 
-                close={() => setOpenEdit(false)}
-                user = {user}
+                <AddShop
+                
+                shop = {shop}
                 mode ="edit"
+                setOpenModal={setOpenEdit}
+                openModal={openEdit}
               
                 />
             </SimpleModal>)}
 
-{openDisable && ( <UserDeleteRestore 
+{openDisable && ( <ShopDeleteRestore 
            
             close={() => setOpenDisable(false)}
             mode="disable"
-            user = {user}
+            shop = {shop}
+            open = {openDisable}
               
                 />)}
 
-{openEnable && ( <UserDeleteRestore
+{openEnable && ( <ShopDeleteRestore
            
             close={() => setOpenEnable(false)}
             mode="enable"
-            user = {user}
+            shop = {shop}
+            open = {openEnable}
+
               
                 />)}
-                   {openComment && <UserComment userId={user?.userId} open={openComment} close={()=>setOpenComment(false)} />}
+
+                {openComment && <ShopComment shopId={shop?.shopId} open={openComment} close={()=>setOpenComment(false)} />}
             
 </>
 
   )
 }
 
-export default UserActions
+export default ShopActions

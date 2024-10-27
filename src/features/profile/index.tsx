@@ -1,22 +1,97 @@
 
 import CoverOne from '../../images/logo/cover.png';
 import NoPic from '../../images/user/avatar-anika-visser.png';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import EditProfile from './EditProfile';
+import zeapApiSlice from '../../redux/services/zeapApi.slice';
+import Loading from '../../lib/Loading';
+import { Alert, Button } from 'flowbite-react';
+import { HiInformationCircle } from 'react-icons/hi';
+
+
 
 
 const MyProfile = () => {
     const { user} = useContext(AuthContext);
-   
+    const [selectedFile, setSelectedFile] = useState<File>();
+    const [preview, setPreview] = useState<string>();
+    const [errorMsg, setErrorMsg] = useState<string>("");
+    const [updateUserProfilePic, updateUserProfilePicStatus] = zeapApiSlice.useUpdateUserProfilePicMutation();
+    const isLoading = updateUserProfilePicStatus.isLoading;
+
+    useEffect(() => {
+      if (!selectedFile) {
+        setPreview(undefined);
+        return;
+      }
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setPreview(objectUrl);
+      // free memory when ever this component is unmounted
+      return () => URL.revokeObjectURL(objectUrl);
+    }, [selectedFile]);
+
+    useEffect(() => {
+      if (selectedFile) {
+        const MAX_FILE_SIZE = 5120; // 5MB
+  
+        const fileSizeKiloBytes = selectedFile?.size / 1024;
+  
+        if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+          setErrorMsg(
+            "Selected file size is greater than 5MB. Please select a smaller file"
+          );
+          setTimeout(() => {
+            setSelectedFile(undefined);
+          }, 1000);
+          return;
+        }
+  
+        setErrorMsg("");
+      }
+    }, [selectedFile]);
+
+    const save = () => {
+      const form = new FormData();
+      if (selectedFile) {
+        form.append("file", selectedFile);
+      }
+    
+  
+      const payload = form;
+  
+      updateUserProfilePic({
+        payload,
+      })
+      .unwrap().then((data) => {
+          const user = data?.data?.data;
+          console.log("user", user);
+         
+        
+          setSelectedFile(undefined);
+          setPreview(undefined);
+          setErrorMsg("");
+        })
+  
+        .catch((err) => {
+      setErrorMsg(err?.data?.error);
+        });
+    };
 
     
   return <><div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
   <div className="relative z-20 h-35 md:h-65">
+    {isLoading && <Loading />}
+    {errorMsg && (
+    <Alert color="failure"icon={HiInformationCircle} className="my-4">{errorMsg}</Alert>
+       
+    )}
     <img
       src={CoverOne}
       alt="profile cover"
       className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+     
+      
     />
     <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
         <EditProfile />
@@ -33,10 +108,35 @@ const MyProfile = () => {
   <div className=" h-screen px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
     <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
       <div className="relative drop-shadow-2">
-        <img src={ user?.imageUrl?.link || NoPic} alt="profile" />
+        <img src={preview|| user?.imageUrl?.link || NoPic} alt="profile" />
+        {selectedFile && (
+          <div className="absolute bottom-0 right-0 flex h-8.5 gap-2 items-center justify-center  text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2">
+           
+            <Button
+              onClick={() => save()}
+              size="xs"
+              className='bg-emerald-500 hover:bg-emerald-600 '
+            >
+              Save
+            </Button>
+            <Button size="xs" className='bg-red-500 hover:bg-red-600' onClick={() => {setSelectedFile(undefined);
+          setPreview(undefined)
+          setErrorMsg("")
+            }}>
+              Cancel
+            </Button>
+      
+          </div>
+        )}
+        {!selectedFile && 
         <label
           htmlFor="profile"
           className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
+          onClick={() => {
+        
+            setErrorMsg("");
+          }
+          }
         >
           <svg
             className="fill-current"
@@ -64,8 +164,13 @@ const MyProfile = () => {
             name="profile"
             id="profile"
             className="sr-only"
+            accept="image/*"
+            onChange={(e) => {
+              setSelectedFile((e.target as HTMLInputElement).files?.[0]);
+            }
+            }
           />
-        </label>
+        </label>}
       </div>
     </div>
     <div className="mt-4">

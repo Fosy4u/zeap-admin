@@ -12,6 +12,8 @@ import Vouchers from "../features/vouchers";
 import SignIn from "../features/Authentication/SignIn";
 import MyProfile from "../features/profile";
 import Shop from "../features/shops/Shop";
+import AddProduct from "../features/products/view/AddProduct";
+import AddReadyMadeCloth from "../features/products/view/AddReadyMadeCloth";
 
 
 // Define all routes for the app here.
@@ -34,6 +36,22 @@ const routes : RouteInterface[]
   },
   {
     path:'/products/',
+    component: Products
+  },
+  {
+    path:'/products/:shopId/add-product',
+    component: AddProduct
+  },
+  {
+    path:'/products/:shopId/add-product/readyMadeCloth',
+    component: AddReadyMadeCloth
+  },
+  {
+    path:'/products/:shopId/add-product/readyMadeCloth/:id',
+    component: AddReadyMadeCloth
+  },
+  {
+    path:'/products/table',
     component: Products
   },
   {

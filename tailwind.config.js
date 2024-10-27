@@ -26,6 +26,7 @@ module.exports = {
         black: '#151518',
         lightGray: '#F3F4F6',
         grey8:"#F8F9FE",
+        grey7:"#EDEFF4",
         grey2:"#272B36",
         current: 'currentColor',
         transparent: 'transparent',
@@ -206,6 +207,7 @@ module.exports = {
         75: '18.75rem',
       },
       zIndex: {
+        9999999: '9999999',
         999999: '999999',
         99999: '99999',
         9999: '9999',

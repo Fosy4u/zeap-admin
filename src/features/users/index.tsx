@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import UserTileList from "./components/UserTileList";
 import UserDisplaySwitcher from "./components/UserDisplaySwitcher";
+import { UserInterface } from "../../interface/interface";
 
 const tileLink ="/table"
 
@@ -20,26 +21,49 @@ const Users = () => {
   const usersQuery = zeapApiSlice.useGetUsersQuery({},  { skip: !token });
   const users = usersQuery?.data?.data;
 
+  const escapeRegExp = (value:string) => {
+    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  };
+
+  const searchRegex = new RegExp(escapeRegExp(input), "i");
+  // recursive search function
+  const search = (item:any) => {
+    let found = false;
+
+    if (typeof item === "string") {
+      if (searchRegex.test(item?.toString())) {
+        found = true;
+        return found;
+      }
+    }
+
+    if (typeof item === "object" && item !== null) {
+      Object.keys(item).forEach((key) => {
+        const value = item[key];
+        const match = search(value);
+        if (match) {
+          found = true;
+          return found;
+        }
+      });
+    }
+    return found;
+  };
+
   useEffect(() => {
     if (users?.length > 0) {
-      const searchRegex = new RegExp(escapeRegExp(input), "i");
-
-      const result = users?.filter((row:any) => {
-        return Object.keys(row).some((field) => {
-          return (
-            searchRegex.test(row[field]?.toString()) ||
-            searchRegex.test(row[field]?.regNo?.toString())
-          );
+      const result = users?.filter((row:UserInterface) => {
+        const keys =  Object.keys(row);
+        return keys.some((field) => {
+          return search(row[field as keyof UserInterface]);
         });
       });
 
       setFilteredUsers(result);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input, users]);
 
-  const escapeRegExp = (value:string) => {
-    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-  };
  
   return <div>
      <UserHeader setInput={setInput} title={"Users"} />

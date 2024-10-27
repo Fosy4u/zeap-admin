@@ -8,7 +8,7 @@ export default createApi({
   reducerPath: "zeapApi",
   baseQuery: fetchBaseQuery,
   refetchOnMountOrArgChange: true,
-  tagTypes: ["Users", "User","Comment", "Shops"],
+  tagTypes: ["Users", "User","Comment", "Shops","Shop", "Products", "Product"],
   endpoints: (builder) => ({
     getUser: builder.query({
         query: (arg) => {
@@ -74,6 +74,25 @@ export default createApi({
           const { payload } = arg;
           return {
             url: `user/update`,
+            method: "PUT",
+            body: payload,
+            params:{_id : payload._id}
+          };
+        },
+        invalidatesTags: ["User"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "User Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      updateUserProfilePic: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `user/update/profilePic`,
             method: "PUT",
             body: payload,
             params:{_id : payload._id}
@@ -193,6 +212,19 @@ export default createApi({
           responseHandler({}, queryArgs);
         },
       }),
+      getShopComments: builder.query({
+        query: (arg) => {
+          const { shopId } = arg;
+          return {
+            url: `comment/shop/`,
+            params: { shopId },
+          };
+        },
+        providesTags: [ "Shops", "Shop","Comment"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
       UpdateComment: builder.mutation({
         query: (arg) => {
           const { payload } = arg;
@@ -284,9 +316,10 @@ export default createApi({
         },
       }),
       getShops: builder.query({
-        query: () => {
+        query: (arg) => {
           return {
             url: `shops/`,
+            params: {  ...arg },
           };
         },
         providesTags: ["Shops"],
@@ -296,13 +329,13 @@ export default createApi({
       }),
       getShop: builder.query({
         query: (arg) => {
-          const { shopId } = arg;
+         
           return {
             url: `shop/`,
-            params: { shopId },
+            params: {  ...arg },
           };
         },
-        providesTags: ["Shops"],
+        providesTags: ["Shops", "Shop"],
         onQueryStarted: async (_, queryArgs) => {
           responseHandler({}, queryArgs);
         },
@@ -317,7 +350,7 @@ export default createApi({
             params:{_id : payload._id}
           };
         },
-        invalidatesTags: ["Shops"],
+        invalidatesTags: ["Shops", "Shop"],
         onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
           responseHandler({
             success: "Shop Successfully Updated",
@@ -326,7 +359,7 @@ export default createApi({
           }, queryArgs);
         },
       }),
-      deleteShop: builder.mutation({
+      disableShop: builder.mutation({
         query: (arg) => {
           const { payload } = arg;
           return {
@@ -336,7 +369,7 @@ export default createApi({
          
           };
         },
-        invalidatesTags: ["Shops"],
+        invalidatesTags: ["Shops", "Shop"],
         onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
          
           responseHandler(
@@ -349,6 +382,178 @@ export default createApi({
           );
         },
       }),
+      enableShop: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `shop/restore`,
+            method: "PUT",
+            body: payload,
+         
+          };
+        },
+        invalidatesTags: ["Shops", "Shop"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+         
+          responseHandler(
+            {
+              success: "Shop Successfully Enabled",
+              successHandler,
+              errorHandler,
+            },
+            queryArgs
+          );
+        },
+      }),
+      getProductsOptions: builder.query({
+        query: (arg) => {
+          return {
+            url: `products/options`,
+            params: {  ...arg },
+          };
+        },
+        providesTags: ["Products"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
+      getProducts: builder.query({
+        query: (arg) => {
+          return {
+            url: `products/`,
+            params: {  ...arg },
+          };
+        },
+        providesTags: ["Products"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
+      getShopDraftProducts: builder.query({
+        query: (arg) => {
+          return {
+            url: `products/shop/draft`,
+            params: {  ...arg },
+          };
+        },
+        providesTags: ["Products"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
+      getProduct: builder.query({
+        query: (arg) => {
+          return {
+            url: `product/`,
+            params: {  ...arg },
+          };
+        },
+        providesTags: ["Products", "Product"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
+      getProductById: builder.query({
+        query: (arg) => {
+          return {
+            url: `product/id`,
+            params: {  ...arg },
+          };
+        },
+        providesTags: ["Products", "Product"],
+        onQueryStarted: async (_, queryArgs) => {
+          responseHandler({}, queryArgs);
+        },
+      }),
+      createProduct: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/create`,
+            method: "POST",
+            body: payload,
+          };
+        },
+        invalidatesTags: ["Products"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+         
+          responseHandler(
+            {
+              success: "Product Successfully Created",
+              successHandler,
+              errorHandler,
+            },
+            queryArgs
+          );
+        },
+      }),
+      updateProduct: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update`,
+            method: "PUT",
+            body: payload,
+            params:{_id : payload._id}
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      disableProduct: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/delete`,
+            method: "PUT",
+            body: payload,
+         
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+         
+          responseHandler(
+            {
+              success: "Product Successfully Deleted",
+              successHandler,
+              errorHandler,
+            },
+            queryArgs
+          );
+        },
+      }),
+      enableProduct: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/restore`,
+            method: "PUT",
+            body: payload,
+         
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+         
+          responseHandler(
+            {
+              success: "Product Successfully Enabled",
+              successHandler,
+              errorHandler,
+            },
+            queryArgs
+          );
+        },
+      }),
+
+
       
     }),
     })

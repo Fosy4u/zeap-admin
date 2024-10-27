@@ -63,7 +63,7 @@ const Comment = ({comment}:{
          <span className="text-sm font-normal text-gray-500 dark:text-gray-400">{displayDate(comment?.createdAt)}</span>
       </div>
       <p className="text-sm font-normal py-2.5 text-slate-600 ">{comment?.comment}</p>
-      {comment?.createdAt !== comment?.updatedAt && <span className="text-xs font-normal text-warning ">Edited {displayDate(comment?.updatedAt)}</span>}
+      {comment?.createdAt !== comment?.updatedAt && <span className="text-xs font-normal text-black w-fit bg-warning ">Edited {displayDate(comment?.updatedAt)}</span>}
    </div>
    {(!showActions && commentedByAuthUser) && (
    <button 

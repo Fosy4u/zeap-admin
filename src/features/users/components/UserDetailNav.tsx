@@ -44,11 +44,7 @@ const UserDetailNav = ({setValue, value}:{
     className={`hidden md:inline-flex h-10 ${value === "Cart" && "bg-darkGold text-white"} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}>
       <span>Cart</span>
     </button>
-    <button
-    onClick={()=>setValue("Comments")}
-    className={`hidden md:inline-flex h-10 ${value === "Comments" && "bg-darkGold text-white"} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}>
-      <span>Comments</span>
-    </button>
+ 
 <button
 onClick={()=> setDropdownOpen(!dropdownOpen)}
    

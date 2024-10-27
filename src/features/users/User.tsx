@@ -22,9 +22,13 @@ const User = () => {
   const users = usersQuery?.data?.data;
 
   const user = getUserQuery?.data?.data;
+  const getShopQuery = zeapApiSlice.useGetShopsQuery({userId:user?.userId},{
+    skip: !token || !user?.userId
+  })
+  const shops = getShopQuery?.data?.data;
  
   const isLoading = getUserQuery.isLoading  || usersQuery.isLoading
-  const fulfilled = getUserQuery?.status === "fulfilled" && usersQuery?.status === "fulfilled"
+  const fulfilled = getUserQuery?.status === "fulfilled" && usersQuery?.status === "fulfilled" && getShopQuery?.status === "fulfilled"
 
   useEffect(() => {
     if (users?.length > 0) {
@@ -68,7 +72,7 @@ const User = () => {
                   on the system and not deleted." variant="warning" />}
 
 {user && users?.length > 0 && (
-        <UserLayout user={user} users={filteredUsers} />
+        <UserLayout user={user} users={filteredUsers} shops={shops}/>
       )}
       </div>
      

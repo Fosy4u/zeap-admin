@@ -5,6 +5,9 @@ import { globalSelectors } from "../../redux/services/global.slice";
 import { useParams } from "react-router-dom";
 import Loading from "../../lib/Loading";
 import ShopOverview from "./components/ShopOverview";
+import ShopActions from "./components/ShopActions";
+import ShopProfile from "./components/ShopProfile";
+
 
 
 const Shop = () => {
@@ -14,6 +17,7 @@ const Shop = () => {
         shopId:id
     }, { skip: !token || !id });
     const shop = shopQuery?.data?.data;
+   const user = shop?.user
     
   return (
     <div>
@@ -22,6 +26,10 @@ const Shop = () => {
         <> 
         <TopSection  shop={shop}/> 
         <ShopOverview shop={shop} />
+        <ShopProfile user={user} shop={shop}/>
+        <ShopActions shop={shop} />
+       
+
        
         </>}
    

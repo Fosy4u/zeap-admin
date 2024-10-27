@@ -10,7 +10,7 @@ const ShopOverview = ({shop}:{
     shop: ShopInterface
 }) => {
   return (
-    <div className="my-3 w-full">
+    <div className="my-4 w-full">
         
         <div className="text-darkGold my-2">
             Overview

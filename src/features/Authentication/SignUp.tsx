@@ -3,6 +3,7 @@ import _ from 'lodash'
 import zeapApiSlice from '../../redux/services/zeapApi.slice';
 import { UserInterface, SocialInterface } from '../../interface/interface';
 import CountrySelector from '../../lib/CountrySelector';
+import PhoneNumberInput from '../../lib/PhoneNumberInput';
 const CryptoJS = require("crypto-js");
 
 
@@ -134,7 +135,7 @@ const topRef = useRef<HTMLDivElement>(null);
        
     }).catch((err) => {
         console.log("err", err)
-        setError(err.data.error)
+        setError(err?.data?.error)
       
     }
     )
@@ -366,13 +367,17 @@ const topRef = useRef<HTMLDivElement>(null);
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Phone Number
                   </label>
-                  <div className="relative">
-                    <input
+                  <div   className=" relative w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">
+                    {/* <input
                       type="text"
                       placeholder="Enter phone number"
                       onChange={(e) => setPhoneNumber(e.currentTarget.value)}
                       value={phoneNumber}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    /> */}
+                    <PhoneNumberInput
+                    value = {phoneNumber}
+                    setValue={setPhoneNumber}
                     />
                   </div>
                 </div>

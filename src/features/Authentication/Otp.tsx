@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import zeapApiSlice from "../../redux/services/zeapApi.slice";
 import Loading from "../../lib/Loading";
 import Banner from "../../lib/Banner";
@@ -22,35 +22,45 @@ const Otp = ({close,  user}: {
     const [otp3, setOtp3] = useState("");
     const [otp4, setOtp4] = useState("");
     const [error, setError] = useState("");
-    const [pin_id, setPinId] = useState("");
+  
     const [sendOtp, sendOtpStatus] = zeapApiSlice.useSendOTPToUserMutation();
-
+ 
+  const isMounted = useRef(false)
+  const pin_id = localStorage.getItem("pin_id");
     const [verifyOtp, verifyOtpStatus] = zeapApiSlice.useVerifyOtpMutation();
 
 
     useEffect(() => {
-        if(user && !user?.phoneNumberVerified){
-            const payload ={userId: user?.userId}
+        if(user && !user?.phoneNumberVerifiedt && !isMounted.current){
+           const payload = { userId: user?.userId };
+           
+            
         sendOtp({ payload}).unwrap()
         .then((otp) => {
-            console.log("OTP sent successfully");
-            setPinId(otp.pin_id);
+   
+            // save pinId to local storage
+            const pin_id = otp.data.pinId;
+            localStorage.setItem("pin_id", pin_id);
+            
         }
         ).catch((error) => {
             console.error(error);
             setError(error.data.error);
         }
     );
+    isMounted.current = true;
     }
 }
-    , [sendOtp, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [user ]);
 
 
-    
+  
 
     const handleSubmit = () => {
    
         const pin = `${otp1}${otp2}${otp3}${otp4}`;
+        const pin_id = localStorage.getItem("pin_id");
         const payload = { pin, pin_id, userId: user?.userId };
         verifyOtp({ payload }).unwrap()
         .then(() => {
@@ -115,27 +125,27 @@ const Otp = ({close,  user}: {
                             type="text"
                             onChange={(e) => setOtp1(e.target.value)}
                             className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                            pattern="\d*" maxLength={1}   disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading || !pin_id}/>
+                            pattern="\d*" maxLength={1}   disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading}/>
                           
                         <input
                             type="text"
                             onChange={(e) => setOtp2(e.target.value)}
                             className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                            maxLength={1}  disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading || !pin_id}/>
+                            maxLength={1}  disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading }/>
                         <input
                             type="text"
                             onChange={(e) => setOtp3(e.target.value)}
                             className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                            maxLength={1}  disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading || !pin_id}/>
+                            maxLength={1}  disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading }/>
                         <input
                             type="text"
                             onChange={(e) => setOtp4(e.target.value)}
                             className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                            maxLength={1} disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading || !pin_id}/>
+                            maxLength={1} disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading }/>
                     </div>
                     <div className="max-w-[260px] mx-auto mt-4">
                         <button 
-                        disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading || !pin_id}
+                        disabled={verifyOtpStatus.isLoading || sendOtpStatus?.isLoading }
                             onClick={(e) => {
                                 e.preventDefault();
                                 handleSubmit();

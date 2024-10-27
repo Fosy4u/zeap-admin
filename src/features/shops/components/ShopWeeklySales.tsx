@@ -2,7 +2,12 @@
 import Chart from "react-apexcharts";
 import { ShopInterface } from "../../../interface/interface";
 import { kFormatter } from "../../../utils/helpers";
-import { useThemeMode } from "flowbite-react";
+import { Button, Popover, useThemeMode } from "flowbite-react";
+import { useState } from "react";
+// import WeekFilter from "../../../lib/weekFilter/WeekFilter";
+
+import { HiChevronDown } from "react-icons/hi";
+import WeekSelector from "../../../lib/weekFilter/WeekSelector";
 
 
 
@@ -75,13 +80,14 @@ const SalesWeeklyChart = ({  data,  currency}: {
       },
       xaxis: {
         categories: [
-          "01 Feb",
-          "02 Feb",
-          "03 Feb",
-          "04 Feb",
-          "05 Feb",
-          "06 Feb",
-          "07 Feb",
+          "M",
+          "T",
+          "W",
+          "T",
+          "F",
+          "S",
+          "S",
+          
         ],
         labels: {
           style: {
@@ -160,12 +166,64 @@ const SalesWeeklyChart = ({  data,  currency}: {
 const ShopWeeklySales = ({shop}:{
   shop: ShopInterface
 }) => {
+
+    const [value, setValue] = useState(new Date());
     
+    
+
+    //fet first and last day of the week
+    const firstDay = new Date(value);
+    const lastDay = new Date(value);
+    const day = firstDay.getDay();
+    const diff = firstDay.getDate() - day + (day === 0 ? -6 : 1);
+    firstDay.setDate(diff);
+    lastDay.setDate(diff + 6);
+
+
+    const convertDate = (date:Date) => {
+      let dt = new Date(date);
+  
+      return `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}.`;
+    };
   return (
     <div className="bg-grey8 shadow-lg rounded-lg p-4 w-full text-grey2    dark:bg-slate-800 dark:text-white">
         <div className="flex justify-between my-1">
         <div className="text-sm">Weekly Sales</div>
-        <div className="text-sm">Date Picker</div>
+        <Popover
+     
+        content= {<div className=""><WeekSelector
+        
+          setValue={setValue}
+        
+          /></div>}
+        >
+          <Button   
+          color="success"
+          size="xs"
+          >
+
+       
+        {convertDate(firstDay)} - {convertDate(lastDay)}
+        <HiChevronDown className="ml-2 h-5 w-5" />
+      </Button> 
+      </Popover>
+        
+        {/* {!openWeekPicker && ( 
+          <Button   
+          color="success"
+          size="xs"
+          onClick={() => setOpenWeekPicker(!openWeekPicker)}>
+
+       
+        {convertDate(firstDay)} - {convertDate(lastDay)}
+        <HiChevronDown className="ml-2 h-5 w-5" />
+      </Button> )} */}
+
+        {/* {openWeekPicker && (<WeekFilter 
+        value={value}
+        setValue={setValue}
+        close = {() => setOpenWeekPicker(false)}
+        />)}  */}
         </div>
         <div className="flex justify-between my-3 flex-wrap">
             <div className="flex items-center text-center gap-1 text-sm flex-wrap">

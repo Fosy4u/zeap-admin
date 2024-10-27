@@ -7,7 +7,7 @@ const ShopTable = ({shops}:{shops : ShopInterface[]
 
 }) => {
     const navigate = useNavigate()
-    console.log("shops", shops)
+
   
   return (
    <div className="mt-5 bg-white dark:bg-boxdark dark:text-white w-full overflow-x-auto">
@@ -22,9 +22,9 @@ const ShopTable = ({shops}:{shops : ShopInterface[]
         <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Shop Id</th>
         <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Shop Name</th>
         <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Owner</th>
-        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Phone</th>
-        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Address</th>
-        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Disabled</th>
+        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">Tailor</th>
+        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">ShoeMaker</th>
+        <th scope="col" className="h-10 px-4 text-sm font-medium border-l first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100">MakeUp Artist</th>
       </tr>
     
        
@@ -42,12 +42,13 @@ const ShopTable = ({shops}:{shops : ShopInterface[]
      onClick={(e) => {
       e.stopPropagation()
       navigate(`/users/${shop?.userId}`)}}
-     className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 underline cursor-pointer text-darkGold">{capitalizeFirstLetter(shop?.user?.displayName)} </td>
-    <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500  ">{shop?.phoneNumber || "N/A"}</td>
-      <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500">{shop?.address || "N/A"}</td>
+     className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 underline cursor-pointer text-darkGold">{capitalizeFirstLetter(shop?.user?.firstName)} {capitalizeFirstLetter(shop?.user?.lastName)}
+      </td>
+    <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500  ">{shop?.isTailor? "Yes": "No"}</td>
+      <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500">{shop?.isShoeMaker? "Yes": "No"}</td>
      
     
-      <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500  ">{shop?.disabled? "Yes": "No"}</td>
+      <td className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500  ">{shop?.isMakeUpArtist? "Yes": "No"}</td>
      
     
       </tr>

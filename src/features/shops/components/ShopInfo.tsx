@@ -1,18 +1,17 @@
 
 import { useState } from 'react';
-import { UserInterface } from '../../../interface/interface';
+import { ShopInterface } from '../../../interface/interface';
 import { shortenLongString } from '../../../utils/helpers';
 
-
-const UserInfo = ({user}:{user: UserInterface}) => {
-    console.log(user)
+const ShopInfo = ({shop}:{shop: ShopInterface}) => {
+    console.log(shop)
     const [viewAll, setViewAll] = useState(false)
   return (
     
 
 <div className="w-full max-w-md p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 dark:bg-slate-800 dark:text-white dark:border-gray-700">
     <div className="flex items-center justify-between mb-4">
-        <h5 className="text-xl font-bold text-darkGold">User Info</h5>
+        <h5 className="text-xl font-bold text-darkGold">Shop Info</h5>
         <div 
         onClick={()=>setViewAll(!viewAll)}
          className="text-sm font-medium text-darkGold hover:underline cursor-pointer">
@@ -24,25 +23,60 @@ const UserInfo = ({user}:{user: UserInterface}) => {
             <li className="py-3 sm:py-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        First Name
+                        Shop Name
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.firstName || "N/A"}
+                        {shop?.shopName || "N/A"}
+                    </div>
+                </div>
+            </li>
+         
+            <li className="py-3 sm:py-4">
+                <div className="flex items-center justify-between">
+                    <div>
+                        Shop Id
+                    </div>
+                    <div className=' text-slate-500 dark:text-slate-300
+                    '>
+                        {shop?.shopId || "N/A"}
                     </div>
                 </div>
             </li>
             <li className="py-3 sm:py-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        Last Name
+                        Tailor
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.lastName || "N/A"}
+                        {shop?.isTailor? "Yes": "No"}
                     </div>
                 </div>
             </li>
+            <li className="py-3 sm:py-4">
+                <div className="flex items-center justify-between">
+                    <div>
+                        Shoe Maker
+                    </div>
+                    <div className=' text-slate-500 dark:text-slate-300
+                    '>
+                        {shop?.isShoeMaker? "Yes": "No"}
+                    </div>
+                </div>
+            </li>
+            <li className="py-3 sm:py-4">
+                <div className="flex items-center justify-between">
+                    <div>
+                        MakeUp Artist
+                    </div>
+                    <div className=' text-slate-500 dark:text-slate-300
+                    '>
+                        {shop?.isMakeUpArtist? "Yes": "No"}
+                    </div>
+                </div>
+            </li>
+           
             <li className="py-3 sm:py-4">
                 <div className="flex items-center justify-between">
                     <div>
@@ -50,7 +84,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.email || "N/A"}
+                        {shop?.email || "N/A"}
                     </div>
                 </div>
             </li>
@@ -61,7 +95,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.phoneNumber || "N/A"}
+                        {shop?.phoneNumber || "N/A"}
                     </div>
                 </div>
             </li>
@@ -74,7 +108,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.address || "N/A"}
+                        {shop?.address || "N/A"}
                     </div>
                 </div>
             </li>
@@ -85,7 +119,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.region || "N/A"}
+                        {shop?.region || "N/A"}
                     </div>
                 </div>
             </li>
@@ -96,7 +130,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.country || "N/A"}
+                        {shop?.country || "N/A"}
                     </div>
                 </div>
             </li>
@@ -107,7 +141,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                     </div>
                     <div className=' text-slate-500 dark:text-slate-300
                     '>
-                        {user?.social?.twitter? shortenLongString(user?.social?.twitter, 20): "N/A"}
+                        {shop?.social?.twitter? shortenLongString(shop?.social?.twitter, 20): "N/A"}
                     </div>
                 </div>
             </li>
@@ -118,7 +152,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                         </div>
                         <div className=' text-slate-500 dark:text-slate-300
                         '>
-                            {user?.social?.facebook? shortenLongString(user?.social?.facebook, 20): "N/A"}
+                            {shop?.social?.facebook? shortenLongString(shop?.social?.facebook, 20): "N/A"}
                         </div>
                     </div>
                 </li>
@@ -129,7 +163,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                         </div>
                         <div className=' text-slate-500 dark:text-slate-300
                         '>
-                            {user?.social?.instagram? shortenLongString(user?.social?.instagram, 20): "N/A"}
+                            {shop?.social?.instagram? shortenLongString(shop?.social?.instagram, 20): "N/A"}
                         </div>
                     </div>
                 </li>
@@ -140,7 +174,7 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                         </div>
                         <div className=' text-slate-500 dark:text-slate-300
                         '>
-                            {user?.social?.linkedin? shortenLongString(user?.social?.linkedin, 20): "N/A"}
+                            {shop?.social?.linkedin? shortenLongString(shop?.social?.linkedin, 20): "N/A"}
                         </div>
                     </div>
                 </li>
@@ -150,9 +184,9 @@ const UserInfo = ({user}:{user: UserInterface}) => {
                             Website
                         </div>
                         <a className="text-slate-500 dark:text-slate-300"
-                        href={user?.social?.website} target='_blank' rel="noreferrer noopener"
+                        href={shop?.social?.website} target='_blank' rel="noreferrer noopener"
                         >
-                            {user?.social?.website? shortenLongString(user?.social?.website, 20): "N/A"}
+                            {shop?.social?.website? shortenLongString(shop?.social?.website, 20): "N/A"}
                         </a>
                     </div>
                 </li>
@@ -167,4 +201,4 @@ const UserInfo = ({user}:{user: UserInterface}) => {
   )
 }
 
-export default UserInfo
+export default ShopInfo

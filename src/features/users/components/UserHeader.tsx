@@ -12,7 +12,7 @@ const UserHeader = ({setInput, title, showSearchBar = true}:
     const [open, setOpen] = useState<boolean>(false)
   return (
     <div className="flex justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark border border-gray-200 rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-       <div> <h1 className="text-2xl text-dark">{title}
+       <div> <h1 className="text-xl md:text-2xl text-dark">{title}
        </h1></div>
 
         <div className="flex items-center gap-2">

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { UserInterface } from "../../../interface/interface"
+import { ShopInterface, UserInterface } from "../../../interface/interface"
 import UserDetailNav from "./UserDetailNav"
 import UserProfilePaper from "./UserProfilePaper"
  import UserTile from "./UserTile"
@@ -8,20 +8,22 @@ import UserInfo from "./UserInfo"
 import Banner from "../../../lib/Banner"
 import UserActions from "./UserActions"
 import SignInInfo from "./SignInInfo"
-import UserComment from "./UserComment"
+import UserShops from "./UserShops"
 
 
-const UserLayout = ({users, user}:{
+const UserLayout = ({users, user, shops}:{
     users: UserInterface[],
-    user: UserInterface
+    user: UserInterface,
+    shops:ShopInterface []
+
 }) => {
 
     const [value, setValue] = useState("Overview");
   return (
     <div className="grid grid-cols-6 gap-4 md:divide-x h-screen">
         <UserActions user={user}/>
-        <div className="hidden md:flex flex-col col-span-2  ">
-            <span className="border p-1 border-success border-2">
+        <div className="hidden md:flex flex-col col-span-2">
+            <span className="border p-1 border-success border-4 mb-4">
             <UserTile user={user} />
             </span>
         {users.filter(person => person?.userId !== user?.userId).map((user) => {
@@ -60,7 +62,7 @@ const UserLayout = ({users, user}:{
                     <SignInInfo user={user}/>
                     </span>
                     <span className="w-full">
-                     <UserProfileOverview setValue={setValue}/></span>
+                     <UserProfileOverview setValue={setValue}  shopsNumber={shops?.length}/></span>
                      </div>
                 }
                 {value === "Orders" && <div>
@@ -72,9 +74,11 @@ const UserLayout = ({users, user}:{
                      />
                     </div>}
 
-                    {value === "Comments" && <div>
-                        <UserComment userId = {user.userId}/>
-                    </div>}
+                   
+                    {value === "Shops" && <div>
+                        <UserShops shops={shops} />
+                    </div>
+                        }
             </div>
 
         </div>

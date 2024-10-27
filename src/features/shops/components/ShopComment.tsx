@@ -23,28 +23,28 @@ const drawerTheme= {
   
   }
 
-const UserComment = ({userId, open, close}:{
-    userId: string,
+
+const ShopComment = ({shopId, open, close}:{
+    shopId: string
     open: boolean
     close: () => void
-
 }) => {
     const token = useSelector(globalSelectors.selectAuthToken);
 
     const [newComment, setNewComment] = useState<string>("")
-    const getUserCommentsQuery = zeapApiSlice.useGetUserCommentsQuery({userId},{
-        skip: !token || !userId
+    const getShopCommentsQuery = zeapApiSlice.useGetShopCommentsQuery({shopId},{
+        skip: !token || !shopId
       })
-    const comments = getUserCommentsQuery?.data?.data;
+    const comments = getShopCommentsQuery?.data?.data;
     console.log("comments", comments)
     const [createComment, createCommentStatus] = zeapApiSlice.useCreateCommentMutation();
   
 
     const addComment = () => {
         const payload = {
-            userId,
+            shopId,
             comment: newComment,
-            type: "user"
+            type: "shop"
         }
         createComment({payload}).unwrap()
         .then(() => {
@@ -63,9 +63,10 @@ const UserComment = ({userId, open, close}:{
     >
     <Drawer.Header title="Comments" titleIcon={() => <></>} />
     <Drawer.Items>
+
     <div className="w-full  p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
     <div className="flex flex-col  justify-between mb-4">
-        <h5 className="text-xl font-bold text-darkGold">User Comments</h5>
+        <h5 className="text-xl font-bold text-darkGold">Shop Comments</h5>
         <p className="text-sm text-gray-500">(Internal use only)</p>
 
         <div className="flex flex-col md:items-center md:flex-row w-full justify-between  gap-2 mt-2 mb-2">
@@ -105,10 +106,8 @@ const UserComment = ({userId, open, close}:{
         </div>
         </div>
         </Drawer.Items>
-     
         </Drawer>
-
   )
 }
 
-export default UserComment
+export default ShopComment

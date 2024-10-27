@@ -93,8 +93,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
               <NavLink
+
                   to="/"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium  duration-300 ease-in-out hover:bg-graydark cursor-pointer hover:text-white dark:hover:bg-meta-4 ${
                     (pathname === '/' ||
@@ -138,7 +139,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             
 
               {/* <!-- Menu Item Profile --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/users"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium  duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -169,7 +170,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
 
               {/* <!-- Menu Item Shops --> */}
-              <li>
+              <li
+              onClick={() => setSidebarOpen(false)}
+              >
                 <NavLink
                   to="/shops"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -187,7 +190,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Shops --> */}
               {/* <!-- Menu Item Products --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/products"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -204,7 +207,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Products --> */}
               {/* <!-- Menu Item Orders --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/orders"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -222,7 +225,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Orders --> */}
               {/* <!-- Menu Item Vouchers --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/vouchers"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -241,7 +244,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Vouchers --> */}
               {/* <!-- Menu Item Promo --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/promos"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -273,7 +276,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/reports"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
@@ -286,7 +289,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     Reports
                 </NavLink>
               </li>
-              <li>
+              <li  onClick={() => setSidebarOpen(false)}>
                 <NavLink
                   to="/marketplace"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${

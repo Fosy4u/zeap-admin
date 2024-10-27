@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import NoPic from '../../../images/user/avatar-anika-visser.png';
 import { ShopInterface } from '../../../interface/interface';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
@@ -6,7 +7,7 @@ import { capitalizeFirstLetter } from '../../../utils/helpers';
 const TopSection = ({shop}:{
     shop: ShopInterface
 }) => {
-    console.log("shop", shop)
+  const navigate = useNavigate()
   return (
     <div
     className="bg-lightGreen text-black dark:text-white dark:bg-baseGreen  opacity-100 rounded-b-3xl p-2">
@@ -28,6 +29,10 @@ const TopSection = ({shop}:{
     {shop?.isShoeMaker && <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2">
         Shoe Maker
         </span>}
+    {shop?.isMakeUpArtist && <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2">
+        MakeUp Artist
+        </span>}
+
   </div>
 <div className='my-3 w-full flex flex-1 justify-between items-center'>
   <div
@@ -38,6 +43,7 @@ const TopSection = ({shop}:{
 }${shop?.totalRevenue || 0}`}</p>
   </div>
   <button 
+  onClick={() => navigate(`/products/${shop?.shopId}/add-product`)}
             
             className="flex  w-fit h-fit items-center gap-1 px-3 py-1.5 text-sm font-medium text-white bg-darkGold rounded-md hover:bg-opacity-90">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">

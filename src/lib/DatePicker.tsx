@@ -1,113 +1,120 @@
-import { Dropdown } from "flowbite-react";
-import { FC, useState } from "react";
-import { dateCalcHelper } from "../utils/dateCalcHelper";
-
-const previousMonthLastDay = dateCalcHelper.getPreviousMonthLastDay();
-
-const previousMonthFirstDay = dateCalcHelper.getPreviousMonthFirstDay();
-
-const thisMonthFirstDay = dateCalcHelper.getThisMonthFirstDay();
-const thisMonthLastDay = dateCalcHelper.getThisMonthLastDay();
-const yesterday = dateCalcHelper.getYesterday();
-const today = dateCalcHelper.getToday();
-const thisWeekFirstDay = dateCalcHelper.getThisWeekFirstDay();
-const thisWeekLastDay = dateCalcHelper.getThisWeekLastDay();
-const lastWeekFirstDay = dateCalcHelper.getLastWeekFirstDay();
-const lastWeekLastDay = dateCalcHelper.getLastWeekLastDay();
-const thisQuarterFirstDay = dateCalcHelper.getQuarterFirstDay();
-const thisQuarterLastDay = dateCalcHelper.getQuarterLastDay();
-const lastQuarterFirstDay = dateCalcHelper.getLastQuarterFirstDay();
-const lastQuarterLastDay = dateCalcHelper.getLastQuarterLastDay();
-const thisYearFirstDay = dateCalcHelper.getThisYearFirstDay();
-const thisYearLastDay = dateCalcHelper.getThisYearLastDay();
-const lastYearFirstDay = dateCalcHelper.getPreviousYearFirstDay();
-const lastYearLastDay = dateCalcHelper.getPreviousYearLastDay();
-
-const Datepicker: FC = function () {
-  const [to, setTo] = useState<string>(thisYearLastDay);
-  const [from, setFrom] = useState<string>(thisYearFirstDay);
+import { Datepicker } from 'flowbite-react'
 
 
+const customTheme = {
+  root: {
+    base: "relative"
+  },
+  popup: {
+    root: {
+      base: "absolute top-10 z-50 block pt-2",
+      inline: "relative top-0 z-auto",
+      inner: "inline-block rounded-lg bg-white p-4 shadow-lg dark:bg-gray-700"
+    },
+    header: {
+      base: "",
+      title: "px-2 py-3 text-center font-semibold text-gray-900 dark:text-white",
+      selectors: {
+        base: "mb-2 flex justify-between",
+        button: {
+          base: "rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600",
+          prev: "text-darkGold",
+          next: "text-darkGold hover:bg-gold",
+          view:""
+        }
+      }
+    },
+    view: {
+      base: "p-1"
+    },
+    footer: {
+      base: "mt-2 flex space-x-2",
+      button: {
+        base: "w-full rounded-lg px-5 py-2 text-center text-sm font-medium focus:ring-4 focus:ring-cyan-300",
+        today: "bg-cyan-700 text-white bg-darkGold hover:bg-gold",
+        clear: "border border-gray-300 bg-white text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+      }
+    }
+  },
+  views: {
+    days: {
+      header: {
+        base: "mb-1 grid grid-cols-7",
+        title: "h-6 text-center text-sm font-medium leading-6 text-gray-500 dark:text-gray-400"
+      },
+      items: {
+        base: "grid w-64 grid-cols-7",
+        item: {
+          base: "block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+          selected: "bg-success text-white hover:bg-cyan-600",
+          disabled: "text-gray-500"
+        }
+      }
+    },
+    months: {
+      items: {
+        base: "grid w-64 grid-cols-4",
+        item: {
+          base: "block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+          selected: "bg-cyan-700 text-white hover:bg-cyan-600",
+          disabled: "text-gray-500"
+        }
+      }
+    },
+    years: {
+      items: {
+        base: "grid w-64 grid-cols-4",
+        item: {
+          base: "block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+          selected: "bg-cyan-700 text-white hover:bg-cyan-600",
+          disabled: "text-gray-500"
+        }
+      }
+    },
+    decades: {
+      items: {
+        base: "grid w-64 grid-cols-4",
+        item: {
+          base: "block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+          selected: "bg-cyan-700 text-white hover:bg-cyan-600",
+          disabled: "text-gray-500"
+        }
+      }
+    }
+  }
+}
 
- 
+const DatePicker = ({
+    value,
+    minDate,
+    maxDate,
+    setValue,
+    placeholder,
+    title
+}:{
+    value: Date,
+    minDate?: Date,
+    maxDate?: Date,
+    setValue: (date: Date) => void,
+    placeholder?: string,
+    title?: string
+}) => {
+  return (
+    <Datepicker
+    theme={customTheme}
+    placeholder={placeholder}
+    title={title}
+    value={value}
+    minDate={minDate}
+    onChange={(date) => setValue(date as Date)}
+    maxDate={maxDate}
+    weekStart={1}
 
-  const dateFilterOptions = [
-    {
-      label: "Today",
-      from: today,
-      to: today,
-    },
-    {
-      label: "Yesterday",
-      from: yesterday,
-      to: yesterday,
-    },
-    {
-      label: "This Week",
-      from: thisWeekFirstDay,
-      to: thisWeekLastDay,
-    },
-    {
-      label: "Last Week",
-      from: lastWeekFirstDay,
-      to: lastWeekLastDay,
-    },
-    {
-      label: "This Month",
-      from: thisMonthFirstDay,
-      to: thisMonthLastDay,
-    },
-    {
-      label: "Last Month",
-      from: previousMonthFirstDay,
-      to: previousMonthLastDay,
-    },
-    {
-      label: "This Quarter",
-      from: thisQuarterFirstDay,
-      to: thisQuarterLastDay,
-    },
-    {
-      label: "Last Quarter",
-      from: lastQuarterFirstDay,
-      to: lastQuarterLastDay,
-    },
-    {
-      label: "This Year",
-      from: thisYearFirstDay,
-      to: thisYearLastDay,
-    },
-    {
-      label: "Last Year",
-      from: lastYearFirstDay,
-      to: lastYearLastDay,
-    },
-  ];
 
-    return (
-      <span className="text-sm text-gray-600">
-        <Dropdown color="success" size="sm" label={dateFilterOptions?.find(
-          (option) => option.from === from && option.to === to
-        )?.label || "Custom Date"}>
-          
-          <Dropdown.Divider />
-          {dateFilterOptions.map((option) => (
-            <Dropdown.Item key={option.label} value={option.label}
-              onClick={() => {
-                setFrom(option.from);
-                setTo(option.to);
-              }}
-              className={`${option.from === from && option.to === to ? "bg-success text-white" : ""}`}
-            >
-              {option.label}
-            </Dropdown.Item>
-          ))}
-        
-          <Dropdown.Divider />
-          <Dropdown.Item>Custom...</Dropdown.Item>
-        </Dropdown>
-      </span>
-    );
-  };
+   
 
-  export default Datepicker;
+  />
+  )
+}
+
+export default DatePicker

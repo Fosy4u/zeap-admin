@@ -8,8 +8,12 @@ const customTheme: CustomFlowbiteTheme = {
       primary: "bg-darkGold hover:bg-gold",
       
     },
+   
     
   },
+
+  
+  
 };
 
 const FlowBiteTheme = ({ children }: { children: ReactNode }) => {

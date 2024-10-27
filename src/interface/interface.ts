@@ -1,4 +1,5 @@
 
+
 interface RouteInterface {
     path : string;
     component : any;
@@ -24,6 +25,7 @@ interface SocialInterface{
     linkedin?: string;
     youtube?: string;
     website?: string;
+    tikTok?: string;
 }
 
 interface UserInterface {
@@ -105,9 +107,88 @@ interface ShopInterface {
     social: SocialInterface;
     isShoeMaker?: boolean;
     isTailor?: boolean;
+    isMakeUpArtist?: boolean;
     totalRevenue?: number;
     currency?: CurrencyInterface;
+    email?: string;
+}
+
+interface ColorInterface {
+    value: string;
+    imageLink: string;
 }
 
 
-export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface};
+    
+interface ReadyMadeClothCategoryInterface {
+    gender : "male" | "female" | "unisex";
+    top:"top" | "shirt" | "blouse" | "tunic" | "kaftan" | "kimono" | "sweatshirt" | "hoodie" | "polo";
+    bottom: "trouser" | "short" | "skirt" | "pant" | "tights" | "trunks";
+    ageGroup: "adult" | "children" | "infant";
+    brand?: string;
+    isCorporate?: boolean;
+    isJeans?: boolean;
+    isSuit?: boolean;
+    isTraditional?: boolean;
+    isSport?: boolean;
+    isCasual?: boolean;
+    isVest?: boolean;
+    isJacket?: boolean;
+    isBlazer?: boolean;
+    isGym?: boolean;
+    isSwim?: boolean;
+    isUnderwear?: boolean;
+    isNightwear?: boolean;
+    isGown?: boolean;
+    isTracksuit?: boolean;
+    isJoggers?: boolean;
+    isKnitwear?: boolean;
+    isPlussize?: boolean;
+    isTwoPiece?: boolean;
+    isWhiteWedding?: boolean;
+    isTraditionalWedding?: boolean;
+    isAsoebi?: boolean;
+    isGroomsMen?: boolean;
+    isBridalTrain?: boolean;
+    isBridalShower?: boolean;
+    isBirthDay?: boolean;
+    isBurial?: boolean;
+    
+}
+interface VariationInterface {
+    sku: string;
+    price: number;
+    discount: number;
+    colorValue: string;
+    size: string;
+    stock: number;
+}
+interface ReadyMadeClothInterface{
+    productType: "readyMadeCloth"| "readyMadeShoe"
+    productId: string;
+    disabled: boolean;
+    shopId: string;
+    title: string;
+    description: string;
+    subTitle: string;
+    status: string;
+    currentStep: number;
+    sizes: string[];
+    colors: ColorInterface[];
+    images: ImageUrlInterface[];
+    postedBy: UserInterface;
+    shop: ShopInterface;
+    category: ReadyMadeClothCategoryInterface;
+    variations: VariationInterface[];
+    _id: string;
+}
+
+type ProductInterface  = ReadyMadeClothInterface;
+
+
+
+
+
+
+
+export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface,ProductInterface, ReadyMadeClothInterface, ColorInterface, CurrencyInterface};

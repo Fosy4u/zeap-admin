@@ -76,7 +76,7 @@ const UserProfilePaper = ({user}:{user: UserInterface}) => {
         <p>User has access to Zeap Admin App</p>
       </div >}
                <div
-        className={`flex w-100% items-start gap-4 rounded border border-emerald-100  px-4 py-3 text-sm ${user?.phoneNumberVerified ? "text-emerald-500 bg-emrald-50" : "text-black bg-danger"} mb-2`}
+        className={`flex w-100% items-start gap-4 rounded border border-emerald-100  px-4 py-3 text-sm ${user?.phoneNumberVerified ? "text-emerald-500 bg-emrald-50" : "text-white bg-danger"} mb-2`}
         role="alert"
       >
        
