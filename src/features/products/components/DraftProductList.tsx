@@ -18,10 +18,15 @@ const DraftProductList = ({draftProducts=[]}:{
         if(type === "readyMadeCloth") return "Ready Made Cloth"
     }
     const getDefaultImageLink = (product:ProductInterface) => {
-        if(product?.images?.length > 0) {
-            const defaultValue = product?.images?.find((image:any) => image?.isDefault === true)
-            if(defaultValue) return defaultValue?.link
-            return product?.images[0]?.link
+        if(product?.colors?.length > 0) {
+          const colors = product.colors;
+          //array of color images
+          const colorImages = colors.map((color) => color.images).flat();
+          const isDefault = colorImages.find((image) => image.isDefault);
+          if(isDefault) {
+              return isDefault.link;
+          }
+          return colorImages[0]?.link;
         }
         return NoPic
     }

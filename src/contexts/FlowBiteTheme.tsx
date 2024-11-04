@@ -5,12 +5,23 @@ import { ReactNode } from "react";
 const customTheme: CustomFlowbiteTheme = {
   button: {
     color: {
-      primary: "bg-darkGold hover:bg-gold",
+      primary: "bg-darkGold hover:bg-gold text-white",
       
     },
    
     
   },
+  badge: {
+    root: {
+    color: {
+      primary: "bg-darkGold hover:bg-gold text-lightGold",
+      
+    }
+   
+    
+  }
+},
+  
 
   
   

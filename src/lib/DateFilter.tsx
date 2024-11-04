@@ -116,14 +116,14 @@ const DateFilter =  ({ from, to, setFrom, setTo }:{
           
           <Dropdown.Divider />
           {dateFilterOptions.map((option) => (
-            <Dropdown.Item key={option.label} value={option.label}
+            <Dropdown.Item  key={option.label} value={option.label}
             
               onClick={() => {
                 setFrom(option.from);
                 setTo(option.to);
                 setOpenCustom(false);
               }}
-              className={`${option.from === from && option.to === to ? "bg-success text-white" : ""}`}
+              className={`${option.from === from && option.to === to ? "bg-success text-white" : "text-black"}`}
             >
               {option.label}
             </Dropdown.Item>

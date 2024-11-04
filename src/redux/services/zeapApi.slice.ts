@@ -494,7 +494,178 @@ export default createApi({
             url: `product/update`,
             method: "PUT",
             body: payload,
-            params:{_id : payload._id}
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      updateProductColorAndImages: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/addColorAndImages`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      addProductVariation: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/addProductVariation`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      editProductVariation: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/editProductVariation`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      submitProduct: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/submitProduct`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Submitted",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      deleteProductVariation: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/deleteProductVariation`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      deleteProductColor: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/deleteProductColor`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      deleteProductImage: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/deleteProductImage`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      setProductImageAsDefault: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/setProductImageAsDefault`,
+            method: "PUT",
+            body: payload,
+           
+          };
+        },
+        invalidatesTags: ["Products", "Product"],
+        onQueryStarted: async ({ successHandler, errorHandler}, queryArgs) => {
+          responseHandler({
+            success: "Product Successfully Updated",
+            successHandler,
+            errorHandler,
+          }, queryArgs);
+        },
+      }),
+      addImagesToProductColor: builder.mutation({
+        query: (arg) => {
+          const { payload } = arg;
+          return {
+            url: `product/update/addImagesToProductColor`,
+            method: "PUT",
+            body: payload,
+           
           };
         },
         invalidatesTags: ["Products", "Product"],

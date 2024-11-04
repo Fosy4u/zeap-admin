@@ -1,6 +1,6 @@
 
 import { Alert, Button, Dropdown, Label, Textarea, TextInput } from 'flowbite-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductHeader from '../components/ProductHeader'
 import zeapApiSlice from "../../../redux/services/zeapApi.slice";
@@ -11,6 +11,9 @@ import { globalSelectors } from '../../../redux/services/global.slice';
 import Multiselect from 'multiselect-react-dropdown';
 import { sortNaturally } from '../../../utils/helpers';
 import ImagesAndColor from '../components/ImagesAndColor';
+import Variations from '../components/Variations';
+import { ThemeContext } from '../../../contexts/themeContext';
+import SubmitProductModal from '../components/SubmitProductModal';
 
 // import ProductHeader from '../components/ProductHeader'
 
@@ -33,11 +36,12 @@ interface CategoriesInterface {main:string[], style:string[], gender:string[], a
 }
 
 const AddReadyMadeCloth = () => {
+  const { setDimBackground} = useContext(ThemeContext);
     const token = useSelector(globalSelectors.selectAuthToken);
     const {shopId, id} = useParams <{shopId:string, option:string, step:string, id:string}>()
-    console.log("id", id)
     const [productId, setProductId] = useState("")
-   
+    const [product_id, setProduct_id] = useState("")
+   const [openSubmitModal, setOpenSubmitModal] = useState(false)
     const [stage, setStage] = useState(1)
     const [title, setTitle] = useState("")
     const [subtitle, setSubtitle] = useState("")
@@ -61,15 +65,18 @@ const AddReadyMadeCloth = () => {
     const designOptionEnums = options?.readyMadeClothes?.designEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
     const occasionOptionEnums = options?.readyMadeClothes?.occasionEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
     const sleeveLengthEnums = options?.readyMadeClothes?.sleeveLengthEnums
+    const colorEnums = options?.readyMadeClothes?.colorEnums
     const fasteningOptionEnums = options?.readyMadeClothes?.fasteningEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
     const fitOptionEnums = options?.readyMadeClothes?.fitEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
     const sizeOptionEnums = options?.readyMadeClothes?.sizeEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
 
    
 
-    const productQuery = zeapApiSlice.useGetProductByIdQuery({_id: id},  { skip: !token || !id });
+    const productQuery = zeapApiSlice.useGetProductByIdQuery({_id: id || product_id
+
+    },  { skip: !token || (stage === 1 && !id) });
     const product = productQuery?.data?.data;
-    console.log("product", product)
+    console.log("product is", product)
 
     const isLoading = creteProductStatus.isLoading || productOptionsQuery.isLoading || productQuery.isLoading || updateProductStatus.isLoading
 
@@ -79,7 +86,7 @@ const AddReadyMadeCloth = () => {
             setSubtitle(product.subtitle)
             setDescription(product.description)
             setProductId(product.productId)
-            setCategories({main:product.categories.main, style:product.categories.style, gender: product.categories.gender, age: product.categories.age? product.categories.age : {ageGroup: "", ageRange:""}, brand: product.categories.brand, design: product.categories.design, occasion: product.categories.occasion, sleeveLength: product.categories.sleeveLength, fastening: product.categories.fastening, fit: product.categories.fit})
+            setCategories({main:product?.categories.main, style:product?.categories.style, gender: product?.categories.gender, age: product?.categories.age? product?.categories.age : {ageGroup: "", ageRange:""}, brand: product.categories.brand, design: product.categories.design, occasion: product.categories.occasion, sleeveLength: product?.categories.sleeveLength, fastening: product?.categories.fastening, fit: product?.categories.fit})
             setSizes(product.sizes)
 
        
@@ -177,6 +184,23 @@ const AddReadyMadeCloth = () => {
             }
             return true
         }
+        if(stage === 4){
+            if(!productId){
+                setServerError("Please save the product before adding images and colors")
+                return false
+            }
+            if(!product?.colors || product?.colors?.length === 0){
+                setServerError("Please add at least one color with image to the product")
+                return false
+            }
+        }
+        if(stage === 5){
+           
+            if(!product?.variations || product?.variations?.length === 0){
+                setServerError("Please add at least one variation to the product")
+                return false
+            }
+        }
         return true
     }
 
@@ -192,6 +216,7 @@ const AddReadyMadeCloth = () => {
         createProduct({payload}).unwrap().then((res) => {
             console.log("res", res)
             setProductId(res.data.productId)
+            setProduct_id(res.data._id)
           
             setStage(stage + 1)
         }).catch((err) => {
@@ -206,7 +231,7 @@ const AddReadyMadeCloth = () => {
         updateProduct({payload}).unwrap().then((res) => {
             console.log("res", res)
             setProductId(res.data.productId)
-          
+            setProduct_id(res.data._id)
             setStage(stage + 1)
         }).catch((err) => {
          
@@ -221,12 +246,18 @@ const AddReadyMadeCloth = () => {
     }
     const nextStep = () => {
       clearError()
+      
         if(!handleValidation()){
-            setServerError("Please fill all required fields")
+           
             setTimeout(() => {
                 setServerError("")
             }
             , 1000)
+            return
+        }
+        if(stage === 5){
+          setDimBackground(true)
+            setOpenSubmitModal(true)
             return
         }
         let payload ={}
@@ -252,6 +283,9 @@ const AddReadyMadeCloth = () => {
                 sizes,
                 productId
             }
+        }
+        if(stage === 4){
+         return  setStage(stage + 1)
         }
 
         if(!productId){
@@ -485,7 +519,7 @@ const AddReadyMadeCloth = () => {
             </div>
             <Dropdown label={categories?.age?.ageGroup || "Select Age Group"}  color = {categories.age?.ageGroup ? "success" : "primary"} size="xs" inline={categories.age?.ageGroup ? false : true}>
                 {ageGroupEnums?.map((item:string, index:number) => (
-                    <Dropdown.Item key={index} onClick={() => {
+                    <Dropdown.Item  className="text-black" key={index} onClick={() => {
                         if(item === "Adults"){
                             setCategories({...categories, age: {ageGroup: item}})
                         }
@@ -502,7 +536,7 @@ const AddReadyMadeCloth = () => {
                 </div>
                 <Dropdown label={categories.age?.ageRange || "Select Age Range"}  color = {categories.age?.ageRange ? "success" : "primary"} size="xs" inline={categories.age?.ageRange ? false : true}>
                 {ageRangeEnums?.map((item:string, index:number) => (
-                    <Dropdown.Item key={index} onClick={() => setCategories({...categories, age: {ageGroup: "Kids", ageRange: item}})}
+                    <Dropdown.Item className="text-black" key={index} onClick={() => setCategories({...categories, age: {ageGroup: "Kids", ageRange: item}})}
                     >{item}</Dropdown.Item>
                 ))}
             </Dropdown>
@@ -519,7 +553,7 @@ const AddReadyMadeCloth = () => {
         </div>
           <Dropdown label={categories?.brand || "Select Brand"}  color = {categories.brand ? "success" : "primary"} size="xs" inline={categories.brand ? false : true}>
                 {brandEnums?.map((item:string, index:number) => (
-                    <Dropdown.Item key={index} onClick={() => setCategories({...categories, brand: item})}>{item}</Dropdown.Item>
+                    <Dropdown.Item className="text-black" key={index} onClick={() => setCategories({...categories, brand: item})}>{item}</Dropdown.Item>
                 ))}
             </Dropdown>
     </div>
@@ -707,9 +741,19 @@ const AddReadyMadeCloth = () => {
             {error.size && sizes.length === 0 && <span className="text-xs text-danger">{error.size}</span>}
             </div>
     }
-    {stage === 4 && <ImagesAndColor />}
+    {stage === 4 && <ImagesAndColor  colors={colorEnums}
+    product={product}
+    />}
+    {stage === 5 && <div>
+        <Variations 
+        product={product}
+        />
+    </div>}
+
       
     </div>
+    {openSubmitModal && <SubmitProductModal productId={productId} open={openSubmitModal} close={() => {setDimBackground(false); setOpenSubmitModal(false)}}
+     />}
     <div className='flex justify-between items-end my-4'>
     <Button 
     onClick={prevStep}
@@ -725,7 +769,7 @@ const AddReadyMadeCloth = () => {
     size="sm"
     color="success"
 >
-        {stage === 5 ? "Review" : "Save and Continue"}
+        {stage === 5 ? "Submit" : "Save and Continue"}
     </Button>
     </div>
 </div>

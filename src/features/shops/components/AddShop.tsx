@@ -198,7 +198,7 @@ else {
                
              
                   {users?.map((user:UserInterface) => (
-                    <Dropdown.Item
+                    <Dropdown.Item className="text-black"
                       key={user.userId}
                       onClick={() => setUserId(user.userId)}
                     >

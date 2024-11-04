@@ -33,13 +33,13 @@ const MyProfile = () => {
 
     useEffect(() => {
       if (selectedFile) {
-        const MAX_FILE_SIZE = 5120; // 5MB
+        const MAX_FILE_SIZE = 1120; // 1MB
   
         const fileSizeKiloBytes = selectedFile?.size / 1024;
   
         if (fileSizeKiloBytes > MAX_FILE_SIZE) {
           setErrorMsg(
-            "Selected file size is greater than 5MB. Please select a smaller file"
+            "Selected file size is greater than 1MB. Please select a smaller file"
           );
           setTimeout(() => {
             setSelectedFile(undefined);

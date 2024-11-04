@@ -8,11 +8,11 @@ import { ThemeContext } from '../contexts/themeContext';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme, dimBackground} = useContext(ThemeContext);
  
 
   return (
-    <div className={`${theme}`}>
+    <div className={`${theme} ${dimBackground && "opacity-25"}`}>
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">

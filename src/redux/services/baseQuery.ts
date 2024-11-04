@@ -6,7 +6,7 @@ import { RootState } from "../store/store";
 
 export default fetchBaseQuery({
 
-  baseUrl: "http://localhost:8080", // local api base url
+  baseUrl: "http://192.168.0.22:8080", // local api base url
   // baseUrl:
   //   env === "dev"
   //     ? process.env.REACT_APP_SERVER_URL_DEV || "http://localhost:8080"

@@ -17,6 +17,7 @@ interface DocumentWithFullscreen extends Document {
 interface ImageUrlInterface {
     link: string;
     name: string;
+    isDefault?: boolean;
 }
 interface SocialInterface{
     facebook?: string;
@@ -115,44 +116,26 @@ interface ShopInterface {
 
 interface ColorInterface {
     value: string;
-    imageLink: string;
+    images: ImageUrlInterface[];
 }
 
 
-    
+interface AgeInterface{
+    ageGroup: string;
+    ageRange?: string;
+} 
 interface ReadyMadeClothCategoryInterface {
-    gender : "male" | "female" | "unisex";
-    top:"top" | "shirt" | "blouse" | "tunic" | "kaftan" | "kimono" | "sweatshirt" | "hoodie" | "polo";
-    bottom: "trouser" | "short" | "skirt" | "pant" | "tights" | "trunks";
-    ageGroup: "adult" | "children" | "infant";
-    brand?: string;
-    isCorporate?: boolean;
-    isJeans?: boolean;
-    isSuit?: boolean;
-    isTraditional?: boolean;
-    isSport?: boolean;
-    isCasual?: boolean;
-    isVest?: boolean;
-    isJacket?: boolean;
-    isBlazer?: boolean;
-    isGym?: boolean;
-    isSwim?: boolean;
-    isUnderwear?: boolean;
-    isNightwear?: boolean;
-    isGown?: boolean;
-    isTracksuit?: boolean;
-    isJoggers?: boolean;
-    isKnitwear?: boolean;
-    isPlussize?: boolean;
-    isTwoPiece?: boolean;
-    isWhiteWedding?: boolean;
-    isTraditionalWedding?: boolean;
-    isAsoebi?: boolean;
-    isGroomsMen?: boolean;
-    isBridalTrain?: boolean;
-    isBridalShower?: boolean;
-    isBirthDay?: boolean;
-    isBurial?: boolean;
+ gender: string[];
+age: AgeInterface[];
+style: string[];
+main: string[];
+sleeveLength? : string;
+design : string [];
+fastening?: string[];
+occasion?: string[];
+fit?: string[];
+brand?: string
+
     
 }
 interface VariationInterface {
@@ -161,7 +144,7 @@ interface VariationInterface {
     discount: number;
     colorValue: string;
     size: string;
-    stock: number;
+    quantity: number;
 }
 interface ReadyMadeClothInterface{
     productType: "readyMadeCloth"| "readyMadeShoe"
@@ -175,11 +158,11 @@ interface ReadyMadeClothInterface{
     currentStep: number;
     sizes: string[];
     colors: ColorInterface[];
-    images: ImageUrlInterface[];
     postedBy: UserInterface;
     shop: ShopInterface;
     category: ReadyMadeClothCategoryInterface;
     variations: VariationInterface[];
+    currency: CurrencyInterface;
     _id: string;
 }
 
@@ -191,4 +174,4 @@ type ProductInterface  = ReadyMadeClothInterface;
 
 
 
-export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface,ProductInterface, ReadyMadeClothInterface, ColorInterface, CurrencyInterface};
+export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface,ProductInterface, ReadyMadeClothInterface, ColorInterface, CurrencyInterface, VariationInterface};

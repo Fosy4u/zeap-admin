@@ -7,6 +7,8 @@ type ThemeContextType = "light" | "dark";
 interface ThemeContextInterface {
   theme: ThemeContextType;
   toggleTheme: () => void;
+  dimBackground: boolean;
+  setDimBackground: (dim: boolean) => void;
 }
 
 
@@ -14,10 +16,13 @@ interface ThemeContextInterface {
 export const ThemeContext = createContext<ThemeContextInterface>({
   theme: "light",
   toggleTheme: () => {},
+  dimBackground: false,
+  setDimBackground: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<ThemeContextType>("light");
+  const [dimBackground, setDimBackground] = useState(false);
 
   useEffect(() => {
     const localTheme = localStorage.getItem("theme");
@@ -37,7 +42,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, dimBackground, setDimBackground }}>
       {children}
     </ThemeContext.Provider>
   );

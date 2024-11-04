@@ -36,3 +36,9 @@ export const capitalizeFirstLetter = (string:string) => {
   export const sortNaturally= (array:any[], key:string) => {
     return array.sort((a, b) => a[key].localeCompare(b[key], undefined, { numeric: true, sensitivity: 'base' }));
   }
+  export const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
+  export const numberWithCommas = (x:number) => {
+    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
