@@ -69,7 +69,7 @@ const AddNewProductOptions = ({shopId}:{shopId:string}) => {
 </svg></div>
       <span className='text-sm'>Ready-Made Clothes</span>
     </div>
-    <div className={`${cardClass}`}
+    {/* <div className={`${cardClass}`}
     onClick={()=>{setOption('Bags')}}
     >
       <div 
@@ -83,9 +83,9 @@ const AddNewProductOptions = ({shopId}:{shopId:string}) => {
 </svg>
 </div>
       <span className='text-sm'>Bags</span>
-    </div>
+    </div> */}
     <div className={`${cardClass}`}
-    onClick={()=>{setOption('Accessories')}}
+    onClick={()=>{setOption('Accessories'); navigate(`/products/${shopId}/add-product/accessory/`)}}
     >
       <div      className='bg-grey7 p-2 rounded-lg w-12 h-12 flex items-center justify-center' ><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19Z" fill="#272B36" stroke="#272B36" stroke-width="1.5"/>

@@ -30,12 +30,12 @@ interface CategoriesInterface { style:string[], gender:string[], age:{ageGroup: 
     design:string[],
     occasion:string[],
     fastening:string[],
-    heelHeight: string,
-    heelType: string
+   
+    accessoryType: string
 
 }
 
-const AddReadyMadeShoe = () => {
+const AddAccessorie = () => {
   const { setDimBackground} = useContext(ThemeContext);
     const token = useSelector(globalSelectors.selectAuthToken);
     const {shopId, id} = useParams <{shopId:string, option:string, step:string, id:string}>()
@@ -47,26 +47,25 @@ const AddReadyMadeShoe = () => {
     const [subtitle, setSubtitle] = useState("")
     const [description, setDescription] = useState("")
     const [sizes, setSizes] = useState<string[]>([])
-    const [categories, setCategories] = useState<CategoriesInterface>({style:[], gender:[], age:{ageGroup: "", ageRange:""}, brand:"", design:[],occasion:[], heelHeight: "",heelType:"", fastening:[] }) 
+    const [categories, setCategories] = useState<CategoriesInterface>({style:[], gender:[], age:{ageGroup: "", ageRange:""}, brand:"", design:[],occasion:[], accessoryType:"", fastening:[] }) 
 
-    const [error, setError] = useState({title:"", description:"",  style:"", gender:"",age:"", size:"", heelHeight:"", heelType:""})
+    const [error, setError] = useState({title:"", description:"",  style:"", gender:"",age:"", size:"",  accessoryType:""})
     const [serverError, setServerError] = useState("")
     const [createProduct, creteProductStatus] = zeapApiSlice.useCreateProductMutation()
     const [updateProduct, updateProductStatus] = zeapApiSlice.useUpdateProductMutation()
     const productOptionsQuery = zeapApiSlice.useGetProductsOptionsQuery({},  { skip: !token });
     const options = productOptionsQuery?.data?.data;
-    const styleOptions = options?.readyMadeShoes?.shoeStyleEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
-    const genderOptions = options?.readyMadeShoes?.genderEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value)); 
-    const ageGroupEnums = options?.readyMadeShoes?.ageGroupEnums
-    const ageRangeEnums = options?.readyMadeShoes?.ageRangeEnums
-    const brandEnums = options?.readyMadeShoes?.brandEnums
-    const designOptionEnums = options?.readyMadeShoes?.designEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
-    const occasionOptionEnums = options?.readyMadeShoes?.occasionEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
-    const heelHeightEnums = options?.readyMadeShoes?.heelHeightEnums
-    const heelTypeEnums = options?.readyMadeShoes?.heelTypeEnums
-    const colorEnums = options?.readyMadeShoes?.colorEnums
-    const fasteningOptionEnums = options?.readyMadeShoes?.fasteningEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
-    const sizeOptionEnums = options?.readyMadeShoes?.shoeSizeEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const styleOptions = options?.accessories?.accessoryStyleEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const genderOptions = options?.accessories?.genderEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value)); 
+    const ageGroupEnums = options?.accessories?.ageGroupEnums
+    const ageRangeEnums = options?.accessories?.ageRangeEnums
+    const brandEnums = options?.accessories?.brandEnums
+    const designOptionEnums = options?.accessories?.designEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const occasionOptionEnums = options?.accessories?.occasionEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const accessoryTypeEnums = options?.accessories?.accessoryTypeEnums
+    const colorEnums = options?.accessories?.colorEnums
+    const fasteningOptionEnums = options?.accessories?.fasteningEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const sizeOptionEnums = options?.accessories?.accessorySizeEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
 
    
 
@@ -84,7 +83,7 @@ const AddReadyMadeShoe = () => {
             setSubtitle(product.subtitle)
             setDescription(product.description)
             setProductId(product.productId)
-            setCategories({ style:product?.categories.style, gender: product?.categories.gender, age: product?.categories.age? product?.categories.age : {ageGroup: "", ageRange:""}, brand: product.categories.brand, design: product.categories.design, occasion: product.categories.occasion, heelHeight: product?.categories.heelHeight,heelType: product?.categories?.heelType ,fastening: product?.categories.fastening})
+            setCategories({ style:product?.categories.style, gender: product?.categories.gender, age: product?.categories.age? product?.categories.age : {ageGroup: "", ageRange:""}, brand: product.categories.brand, design: product.categories.design, occasion: product.categories.occasion, accessoryType: product?.categories?.accessoryType ,fastening: product?.categories.fastening})
             setSizes(product.sizes)
 
        
@@ -170,12 +169,9 @@ const AddReadyMadeShoe = () => {
                 setError({...error, age: "Select at least one age range"})
                 return false
             }
-            if(!categories?.heelHeight){
-                setError({...error, heelHeight: "Heel height is required"})
-                return false
-            }
-            if(!categories?.heelType){
-                setError({...error, heelType: "Heel type is required"})
+           
+            if(!categories?.accessoryType){
+                setError({...error, accessoryType: "Heel type is required"})
                 return false
             }
             return true
@@ -237,7 +233,7 @@ const AddReadyMadeShoe = () => {
 
     }
     const clearError = () => {
-        setError({title:"", description:"",  style:"", gender:"", age:"", size:"", heelHeight:"", heelType:""})
+        setError({title:"", description:"",  style:"", gender:"", age:"", size:"", accessoryType:""})
         setServerError("")
     }
     const nextStep = () => {
@@ -263,7 +259,7 @@ const AddReadyMadeShoe = () => {
                 subtitle,
                 description,
                 shopId,
-                productType: "readyMadeShoe",
+                productType: "accessory",
                 ...(productId && {productId})
             }
         }
@@ -299,7 +295,7 @@ const AddReadyMadeShoe = () => {
     <div
     
     >
-        <ProductHeader  title={`Ready-Made Footwear: Shop - ${shopId}`}  />
+        <ProductHeader  title={`Accessory: Shop - ${shopId}`}  />
 
 
 <ol className="flex items-center w-full mb-4 sm:mb-5">
@@ -504,7 +500,20 @@ const AddReadyMadeShoe = () => {
 
     </div>
     </div>
-
+    <div className='border rounded p-2'>
+        <div className="mb-2 block">
+          <Label  value="Accessory Type" />
+          <div className='text-xs text-slate-500 mb-2'>
+                Select the accessory type
+            </div>
+            <Dropdown label={categories?.accessoryType || "Select Accessory Type"}  color = {categories.accessoryType ? "success" : "primary"} size="xs" inline={categories.accessoryType ? false : true}>
+                {accessoryTypeEnums?.map((item:string, index:number) => (
+                    <Dropdown.Item key={index} onClick={() => setCategories({...categories, accessoryType: item})}>{item}</Dropdown.Item>
+                ))}
+            </Dropdown>
+        </div>
+        {error.accessoryType && !categories?.accessoryType && <span className="text-xs text-danger">{error.accessoryType}</span>}
+    </div>
     <div className='border rounded p-2'>
         <div className="mb-2 block">
           <Label  value="Brand" />
@@ -547,7 +556,7 @@ const AddReadyMadeShoe = () => {
         </div>
          
     </div>
-
+  
 <div className='border rounded p-2'>
         <div className="mb-2 block">
           <Label  value="Occasion" />
@@ -581,35 +590,8 @@ const AddReadyMadeShoe = () => {
         </div>
 
 
-    <div className='border rounded p-2'>
-        <div className="mb-2 block">
-          <Label  value="Heel height" />
-          <div className='text-xs text-slate-500 mb-2'>
-                Select the heel height
-            </div>
-            <Dropdown label={categories?.heelHeight || "Select Heel Height"}  color = {categories.heelHeight ? "success" : "primary"} size="xs" inline={categories.heelHeight ? false : true}>
-                {heelHeightEnums?.map((item:string, index:number) => (
-                    <Dropdown.Item key={index} onClick={() => setCategories({...categories, heelHeight: item})}>{item}</Dropdown.Item>
-                ))}
-            </Dropdown>
 
-        </div>
-        {error.heelHeight && !categories?.heelHeight && <span className="text-xs text-danger">{error.heelHeight}</span>}
-    </div>
-    <div className='border rounded p-2'>
-        <div className="mb-2 block">
-          <Label  value="Heel Type" />
-          <div className='text-xs text-slate-500 mb-2'>
-                Select the heel type
-            </div>
-            <Dropdown label={categories?.heelType || "Select Heel Type"}  color = {categories.heelType ? "success" : "primary"} size="xs" inline={categories.heelType ? false : true}>
-                {heelTypeEnums?.map((item:string, index:number) => (
-                    <Dropdown.Item key={index} onClick={() => setCategories({...categories, heelType: item})}>{item}</Dropdown.Item>
-                ))}
-            </Dropdown>
-        </div>
-        {error.heelType && !categories?.heelType && <span className="text-xs text-danger">{error.heelType}</span>}
-    </div>
+    
 
     <div className='border rounded p-2'>
         <div className="mb-2 block">
@@ -724,4 +706,4 @@ const AddReadyMadeShoe = () => {
   )
 }
 
-export default AddReadyMadeShoe
+export default AddAccessorie
