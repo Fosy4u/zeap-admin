@@ -10,12 +10,12 @@ import DeleteVariationModal from "./DeleteVariationModal"
 
 
 
-
+interface ColInterface {name:string, hex?: string, background?: string}
 
 const Variations = ({
-    product
+    product, allColors
 }:{
-    product: ProductInterface 
+    product: ProductInterface; allColors: ColInterface[] 
 }) => {const { setDimBackground} = useContext(ThemeContext);
     const [showInfo, setShowInfo] = useState(true)
     const [currVariation, setCurrVariation] = useState<VariationInterface | null>(null)
@@ -23,7 +23,16 @@ const Variations = ({
     const[openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
    const currency = product?.currency?.symbol|| "₦"
    
-
+   const getTextColor = (hex: string) => {
+    const red = parseInt(hex.substring(1, 3), 16);
+    const green = parseInt(hex.substring(3, 5), 16);
+    const blue = parseInt(hex.substring(5, 7), 16);
+    return (red*0.299 + green*0.587 + blue*0.114) > 186 ? 'text-black' : 'text-white';
+}
+const getColorBg = (value : string) => {
+    const color = allColors.find(color => color.name === value)
+    return color?.hex || color?.background
+}
     
   return (
     <div className="flex flex-col gap-4">
@@ -69,7 +78,11 @@ const Variations = ({
             {product?.variations?.map((variation) => (
                 <Table.Row key={variation.sku}>
                     <Table.Cell>{variation.sku}</Table.Cell>
-                    <Table.Cell className="text-darkGold">{variation.colorValue}</Table.Cell>
+                    <Table.Cell><span className={`text-sm font-semibold p-1 rounded-md ${getTextColor(getColorBg(variation.colorValue) as string)}`}
+                        style={{
+                        background: getColorBg(variation.colorValue),
+                    }}>{variation.colorValue}</span>
+                    </Table.Cell>
                     <Table.Cell className="text-darkGold">{variation.size}</Table.Cell>
                     <Table.Cell>{currency}{numberWithCommas( variation.price)}</Table.Cell>
                     <Table.Cell>{variation.quantity}</Table.Cell>
@@ -106,7 +119,10 @@ const Variations = ({
                     </div>
                     <div>
                       
-                        <p className="text-sm font-semibold">Color: <span className="font-normal text-darkGold">{variation.colorValue}</span></p>
+                        <p className="text-sm font-semibold">Color: <span className={`text-sm font-semibold ${getTextColor(getColorBg(variation.colorValue) as string)}`}
+                        style={{
+                        background: getColorBg(variation.colorValue),
+                    }}>{variation.colorValue}</span></p>
                         <p className="text-sm font-semibold">Size: <span className="font-normal text-darkGold">{variation.size}</span></p>
                     </div>
                     <div>
@@ -148,6 +164,7 @@ const Variations = ({
     </div>
 
     {openModal && <AddVariationModal
+    allColors={allColors}
     currVariation={currVariation}
      close={() => {setDimBackground(false); setOpenModal(false)}} open={openModal} product={product} />}
 

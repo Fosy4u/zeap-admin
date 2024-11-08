@@ -48,7 +48,7 @@ const AddNewProductOptions = ({shopId}:{shopId:string}) => {
       <span className='text-[10px] md:text-[12px] text-danger'>seller must be a shoemaker</span>
     </div>
     <div className={`${cardClass}`}
-    onClick={()=>{setOption('ReadyMadeFootwears')}}
+    onClick={()=>{setOption('ReadyMadeFootwears'); navigate(`/products/${shopId}/add-product/readyMadeShoe/`)}}
     >
     <div      className='bg-grey7 p-2 rounded-lg w-12 h-12 flex items-center justify-center'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M19.1012 18H7.96299C5.02913 18 3.56221 18 2.66807 16.8828C0.97093 14.7623 2.9047 9.1238 4.07611 7C4.47324 9.4 8.56152 9.33333 10.0507 9C9.05852 7.00119 10.3831 6.33413 11.0453 6.00059L11.0465 6C14 9.5 20.3149 11.404 21.8624 15.2188C22.5309 16.8667 20.6262 18 19.1012 18Z" fill="#272B36" stroke="#272B36" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

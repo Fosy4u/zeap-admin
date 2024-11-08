@@ -14,6 +14,7 @@ import MyProfile from "../features/profile";
 import Shop from "../features/shops/Shop";
 import AddProduct from "../features/products/view/AddProduct";
 import AddReadyMadeCloth from "../features/products/view/AddReadyMadeCloth";
+import AddReadyMadeShoe from "../features/products/view/AddReadyMadeShoe";
 
 
 // Define all routes for the app here.
@@ -49,6 +50,14 @@ const routes : RouteInterface[]
   {
     path:'/products/:shopId/add-product/readyMadeCloth/:id',
     component: AddReadyMadeCloth
+  },
+  {
+    path:'/products/:shopId/add-product/readyMadeShoe',
+    component: AddReadyMadeShoe
+  },
+  {
+    path:'/products/:shopId/add-product/readyMadeShoe/:id',
+    component: AddReadyMadeShoe
   },
   {
     path:'/products/table',

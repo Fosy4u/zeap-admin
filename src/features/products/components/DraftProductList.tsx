@@ -31,6 +31,8 @@ const DraftProductList = ({draftProducts=[]}:{
         return NoPic
     }
 
+    
+
    
   return (
     <div className="flex flex-col">
@@ -43,7 +45,7 @@ const DraftProductList = ({draftProducts=[]}:{
         <List unstyled className="max-w-md ">
             {draftProducts?.map((product:ProductInterface) => (
                  <List.Item key={product?.productId} className="py-3 sm:py-4  border rounded-lg my-2 cursor-pointer">
-                    <NavLink to={`/products/${product?.shopId}/add-product/readyMadeCloth/${product?._id}`}>
+                    <NavLink to={`/products/${product?.shopId}/add-product/${product?.productType}/${product?._id}`}>
                  <div className="flex items-center space-x-4 rtl:space-x-reverse">
                    <Avatar img={getDefaultImageLink(product)} alt="Neil image" rounded size="sm" />
                    <div className="min-w-0 flex-1">

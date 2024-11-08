@@ -30,19 +30,22 @@ const ModalTheme = {
       }
     }
   }
+  interface ColInterface {name:string, hex?: string, background?: string}
 
 const AddVariationModal = ({
     open,
     close,
     currVariation,
     product,
+    allColors,
    
 
 }:{
     open:boolean;
     close:()=>void;
-    product:ProductInterface,
+    product:ProductInterface
     currVariation?:VariationInterface | null
+    allColors: ColInterface[]
    
 }) => {
     const [error, setError] = useState<string | null>(null)
@@ -57,6 +60,18 @@ const AddVariationModal = ({
     const isLoading = addVariationStatus.isLoading || editVariationStatus.isLoading
     const colors = product?.colors?.map(color => color.value)
     const sizes = product?.sizes
+
+
+    const getTextColor = (hex: string) => {
+        const red = parseInt(hex.substring(1, 3), 16);
+        const green = parseInt(hex.substring(3, 5), 16);
+        const blue = parseInt(hex.substring(5, 7), 16);
+        return (red*0.299 + green*0.587 + blue*0.114) > 186 ? 'text-black' : 'text-white';
+    }
+    const getColorBg = (value : string) => {
+        const color = allColors.find(color => color.name === value)
+        return color?.hex || color?.background
+    }
 
     useEffect(() => {
         if(currVariation) {
@@ -149,8 +164,14 @@ const AddVariationModal = ({
             inline ={color ? false : true}
             >
                 {colors?.map((color, index) => (
-                    <Dropdown.Item key={index} onClick={() => setColor(color)}>{color}
-                    
+                    <Dropdown.Item key={index} onClick={() => setColor(color)}>
+                    <div
+                    style={{
+                        background: getColorBg(color),
+                    }}
+                    className={`w-20 h-6 text-md rounded-md items-center justify-center flex ${getTextColor(getColorBg(color) as string)}`}
+                    >{color}
+                    </div>
                     </Dropdown.Item>
                 ))}
 

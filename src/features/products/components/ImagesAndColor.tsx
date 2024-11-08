@@ -9,6 +9,7 @@ import DeleteProductColor from "./DeleteProductColor";
 
 
 
+
 const BadgeThem = {
     "root": {
       "base": "flex h-fit w-fit items-center gap-1 font-semibold cursor-pointer",
@@ -24,12 +25,12 @@ const BadgeThem = {
     },
     
   }
-
+interface ColInterface {name:string, hex?: string, background?: string}
 const ImagesAndColor = ({colors,product }:{
-    colors: string[],
+    colors: ColInterface[],
    product: ProductInterface 
 }) => {
-    console.log("product is", product)
+  
      const { setDimBackground} = useContext(ThemeContext);
     const [openModal, setOpenModal] = useState(false);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -54,6 +55,18 @@ useEffect(() => {
 }
 , [error])
 
+const getTextColor = (hex: string) => {
+    const red = parseInt(hex.substring(1, 3), 16);
+    const green = parseInt(hex.substring(3, 5), 16);
+    const blue = parseInt(hex.substring(5, 7), 16);
+    return (red*0.299 + green*0.587 + blue*0.114) > 186 ? 'text-black' : 'text-white';
+}
+const getAccordionBg = (value : string) => {
+    const color = colors.find(color => color.name === value)
+    return color?.hex || color?.background
+}
+
+
   return (
 <div className="">
     {isLoading && <Loading />}
@@ -70,7 +83,14 @@ useEffect(() => {
         <Accordion>
             {product?.colors?.map((color, index) => (
                 <Accordion.Panel key={index}>
-        <Accordion.Title className="text-darkGold">{color?.value}</Accordion.Title>
+        <Accordion.Title> <span
+        style={{
+            background: getAccordionBg(color?.value)
+        }}
+        className={`w-24 h-8 text-md rounded-md items-center justify-center flex ${getTextColor(getAccordionBg(color?.value) as string)}`}
+        >{color?.value}</span>
+            
+        </Accordion.Title>
         <Accordion.Content>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-2">
                        {color?.images?.map((image, index) => (
@@ -151,12 +171,19 @@ useEffect(() => {
      <div className="flex my-4">
         <Dropdown  label={newColor? newColor : "Add Color"} color={newColor?"success" : "primary"} >
             {colors?.map((color) => (
-                <Dropdown.Item className="text-black" key={color} value={color}
+                <Dropdown.Item className="text-black" key={color?.name} value={color?.name}
                 onClick={() => {
                     setCurrColor(undefined);
-                    setNewColor(color); setOpenModal(true)}}
+                    setNewColor(color?.name); setOpenModal(true)}}
                  >
-                    {color}
+                    <div 
+                    style={{
+                        background: color?.hex || color?.background
+                    }}
+                    className={`w-20 h-6 rounded-md items-center justify-center flex ${getTextColor(color?.hex || '')}`}
+                    >
+                    {color?.name}
+                    </div>
                 </Dropdown.Item>
             ))}
         </Dropdown>

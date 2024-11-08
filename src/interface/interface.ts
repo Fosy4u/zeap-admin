@@ -124,7 +124,7 @@ interface AgeInterface{
     ageGroup: string;
     ageRange?: string;
 } 
-interface ReadyMadeClothCategoryInterface {
+interface ProductCategoryInterface {
  gender: string[];
 age: AgeInterface[];
 style: string[];
@@ -134,7 +134,10 @@ design : string [];
 fastening?: string[];
 occasion?: string[];
 fit?: string[];
-brand?: string
+brand?: string;
+heelHeight?: string;
+heelType?: string;
+
 
     
 }
@@ -146,7 +149,7 @@ interface VariationInterface {
     size: string;
     quantity: number;
 }
-interface ReadyMadeClothInterface{
+interface ProductInterface{
     productType: "readyMadeCloth"| "readyMadeShoe"
     productId: string;
     disabled: boolean;
@@ -160,13 +163,12 @@ interface ReadyMadeClothInterface{
     colors: ColorInterface[];
     postedBy: UserInterface;
     shop: ShopInterface;
-    category: ReadyMadeClothCategoryInterface;
+    category: ProductCategoryInterface;
     variations: VariationInterface[];
     currency: CurrencyInterface;
     _id: string;
 }
 
-type ProductInterface  = ReadyMadeClothInterface;
 
 
 
@@ -174,4 +176,5 @@ type ProductInterface  = ReadyMadeClothInterface;
 
 
 
-export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface,ProductInterface, ReadyMadeClothInterface, ColorInterface, CurrencyInterface, VariationInterface};
+
+export { RouteInterface, DocumentWithFullscreen, UserInterface, SighnUpInterface, ImageUrlInterface, SocialInterface, CommentInterface , ShopInterface,ProductInterface, ColorInterface, CurrencyInterface, VariationInterface};

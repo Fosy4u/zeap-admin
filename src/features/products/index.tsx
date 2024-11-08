@@ -21,10 +21,13 @@ const location = useLocation().pathname
   const view = location.includes(tileLink)? "table":"tile"
   const token = useSelector(globalSelectors.selectAuthToken);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  console.log(filteredProducts)
+  console.log("filterPro",filteredProducts)
   const [input, setInput] = useState("");
-  const productsQuery = zeapApiSlice.useGetProductsQuery({},  { skip: !token });
+  const productsQuery = zeapApiSlice.useGetProductsQuery({
+   
+  },  { skip: !token });
   const products = productsQuery?.data?.data;
+  console.log("products", products)
   const isLoading = productsQuery.isLoading;
 
   const escapeRegExp = (value:string) => {
