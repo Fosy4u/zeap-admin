@@ -41,6 +41,10 @@ const routes : RouteInterface[]
     component: Products
   },
   {
+    path:'/products/:status',
+    component: Products
+  },
+  {
     path:'/products/:shopId/add-product',
     component: AddProduct
   },

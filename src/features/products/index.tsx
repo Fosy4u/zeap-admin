@@ -7,27 +7,47 @@ import { useEffect, useState } from "react";
 import ProductHeader from "./components/ProductHeader";
 
 import { ProductInterface } from "../../interface/interface";
-import ProductTable from "./components/ProductTable";
-import { useLocation } from "react-router-dom";
 import ProductTileList from "./components/ProductTileList";
+import ProductNav from "./components/ProductNav";
+import { Alert } from "flowbite-react";
+import ProductFilters from "./components/ProductFilters";
+import { useParams, useSearchParams } from "react-router-dom";
+import { MobileProductFilters } from "./components/MobileProductFilters";
 
 
 
-const tileLink ="/table"
+
+
+
+
 
 const Products = () => {
-
-const location = useLocation().pathname
-  const view = location.includes(tileLink)? "table":"tile"
+  const [searchParams] = useSearchParams();
+const {status} = useParams<{status:string}>();
   const token = useSelector(globalSelectors.selectAuthToken);
   const [filteredProducts, setFilteredProducts] = useState([]);
   console.log("filterPro",filteredProducts)
   const [input, setInput] = useState("");
+  
+
+  const param: { [key: string]: string } = {};
+  searchParams.forEach((value, key) => {
+      param[key] = value;
+  });
+  console.log("param", param)
   const productsQuery = zeapApiSlice.useGetProductsQuery({
+    status: status || "live",
+    limit:100,
+    pageNumber:1,
+    ...param
+
    
   },  { skip: !token });
-  const products = productsQuery?.data?.data;
-  console.log("products", products)
+  const products = productsQuery?.data?.data?.products
+
+  const dynamicFilters = productsQuery?.data?.data?.dynamicFilters;
+  const totalCount = productsQuery?.data?.data?.totalCount;
+
   const isLoading = productsQuery.isLoading;
 
   const escapeRegExp = (value:string) => {
@@ -79,15 +99,27 @@ const location = useLocation().pathname
   
     <ProductHeader setInput={setInput} title={"Products"}  />
 
-    {products?.length === 0 && !productsQuery.isLoading && <div>No products found</div>}
-    {isLoading && <Loading />}
    
-       {products?.length > 0 && <>{
-         view === "table"? <ProductTable /> :
-         <ProductTileList />
-       }
+    {isLoading && <Loading />}
+    <ProductNav 
+   
+    />
+    {products?.length === 0 && !productsQuery.isLoading && <div className="m-2 mt-4"><Alert color="info">{`No ${status} products`}</Alert></div>}
+       {products?.length > 0 && <div className="flex flex-col md:flex-row md:gap-4">
+        <div className="flex md:hidden">
+        <MobileProductFilters dynamicFilters={dynamicFilters} totalCount={totalCount}/>
+
+        </div>
+        <div className="hidden md:flex flex-none md:w-64">
+       <ProductFilters dynamicFilters={dynamicFilters} totalCount={totalCount}/>
+        </div>
+        
+         <ProductTileList
+          products={filteredProducts}
+           />
        
-       </>
+       
+       </div>
        }
     
       

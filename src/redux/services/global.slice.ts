@@ -8,6 +8,7 @@ interface ToastInterface {
   variant: "success" | "error" | "info";
   id : number;
   title?: string;
+  
  
 }
 
@@ -17,6 +18,10 @@ const initialState = {
    
   ] as ToastInterface[],
   authToken: "",
+  currency: {
+    name: "Naira",
+    symbol: "₦",
+  }
 }
   
 
@@ -56,10 +61,12 @@ const selectAuthToken = createSelector(
   (state) => state.authToken
 );
 const selectToasts = createSelector(getGlobalState, (state) => state.toasts);
+const selectCurrency = createSelector(getGlobalState, (state) => state.currency);
 
 
 export const globalSelectors = {
   getGlobalState,
   selectToasts,
-  selectAuthToken
+  selectAuthToken,
+  selectCurrency
 };

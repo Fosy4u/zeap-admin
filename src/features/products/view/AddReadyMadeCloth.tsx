@@ -55,7 +55,7 @@ const AddReadyMadeCloth = () => {
     const [updateProduct, updateProductStatus] = zeapApiSlice.useUpdateProductMutation()
     const productOptionsQuery = zeapApiSlice.useGetProductsOptionsQuery({},  { skip: !token });
     const options = productOptionsQuery?.data?.data;
-    const mainOptions = options?.readyMadeClothes?.clothMainEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
+    const mainOptions = options?.readyMadeClothes?.mainEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
   
     const styleOptions = options?.readyMadeClothes?.clothStyleEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value));
     const genderOptions = options?.readyMadeClothes?.genderEnums?.map((str:string, index:number) => ({ value: str, id: index + 1 })).sort((a:any, b:any) => a.value.localeCompare(b.value)); 

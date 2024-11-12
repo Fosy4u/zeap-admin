@@ -27,7 +27,9 @@ module.exports = {
         lightGray: '#F3F4F6',
         grey8:"#F8F9FE",
         grey7:"#EDEFF4",
+        grey6:"#E0E2E8",
         grey2:"#272B36",
+
         current: 'currentColor',
         transparent: 'transparent',
         white: '#FFFFFF',

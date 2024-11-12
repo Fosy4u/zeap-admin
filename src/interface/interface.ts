@@ -141,10 +141,18 @@ heelType?: string;
 
     
 }
+interface DiscountInterface {
+    discountPrice: number;
+    percentage: number;
+    startDate: Date;
+    endDate: Date;
+    promoId: string;
+    promoName: string;
+}
 interface VariationInterface {
     sku: string;
     price: number;
-    discount: number;
+    discount: DiscountInterface;
     colorValue: string;
     size: string;
     quantity: number;
