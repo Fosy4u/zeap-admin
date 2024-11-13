@@ -1,8 +1,8 @@
-import { Button } from "@mui/material";
-import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { globalSelectors } from "../../global/global.slice";
+import { Button } from '@mui/material';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { globalSelectors } from '../../global/global.slice';
 
 const Default404Page2 = ({ message }) => {
   const navigate = useNavigate();
@@ -355,7 +355,7 @@ const Default404Page2 = ({ message }) => {
                     class="st8 st10"
                     font-size="24.025"
                   >
-                    {message || "No data found"}
+                    {message || 'No data found'}
                   </text>
                 </g>
                 <g id="ladders">

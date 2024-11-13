@@ -1,10 +1,10 @@
-
-
-
-const SearchBar = ({setInput, placeHolder}:
-    {setInput: (input: string) => void, placeHolder: string}
-) => {
-
+const SearchBar = ({
+  setInput,
+  placeHolder,
+}: {
+  setInput: (input: string) => void;
+  placeHolder: string;
+}) => {
   return (
     <>
       {/*<!-- Component: Rounded basic search input --> */}
@@ -15,7 +15,7 @@ const SearchBar = ({setInput, placeHolder}:
           name="id-s03"
           placeholder={placeHolder}
           aria-label="Search content"
-            onChange={(e) => setInput(e.currentTarget.value)}
+          onChange={(e) => setInput(e.currentTarget.value)}
           className="peer relative h-9 w-full rounded border border-slate-200 px-4 pr-12 text-sm text-slate-500 outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
         />
         <svg
@@ -38,10 +38,7 @@ const SearchBar = ({setInput, placeHolder}:
       </div>
       {/*<!-- End Rounded search input --> */}
     </>
-  )
+  );
+};
 
-
-  
-}
-
-export default SearchBar
+export default SearchBar;

@@ -1,9 +1,8 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 
-
-const env = process.env.ENV || "dev";
+const env = process.env.ENV || 'dev';
 const bucket =
-  env === "dev"
+  env === 'dev'
     ? process.env.REACT_APP_FIREBASE_STORAGE_BUCKET_DEV
     : process.env.REACT_APP_FIREBASE_STORAGE_BUCKET_PROD;
 

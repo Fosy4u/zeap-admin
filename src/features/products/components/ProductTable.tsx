@@ -1,9 +1,5 @@
-
-
 const ProductTable = () => {
-  return (
-    <div>ProductTable</div>
-  )
-}
+  return <div>ProductTable</div>;
+};
 
-export default ProductTable
+export default ProductTable;

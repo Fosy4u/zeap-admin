@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { ThemeContext } from "../../../contexts/themeContext";
-
-
+import { useContext } from 'react';
+import { ThemeContext } from '../../../contexts/themeContext';
 
 const DarkModeSwitcher = () => {
-const {theme, toggleTheme} = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <li>
@@ -16,9 +14,7 @@ const {theme, toggleTheme} = useContext(ThemeContext);
         <input
           type="checkbox"
           onChange={() => {
-            
             toggleTheme();
-            
           }}
           className="dur absolute top-0 z-50 m-0 h-full w-full cursor-pointer opacity-0"
         />

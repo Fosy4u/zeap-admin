@@ -1,16 +1,12 @@
-
 // import { useSelector } from "react-redux";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/authContext";
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/authContext';
 // import { globalSelectors } from "../../global/global.slice";
-
 
 const Default404Page = () => {
   const navigate = useNavigate();
-  const {user} = useContext(AuthContext)
-;
-
+  const { user } = useContext(AuthContext);
   return (
     <div>
       <main>
@@ -728,20 +724,22 @@ const Default404Page = () => {
               <p> You can click the button below to go back to the homepage.</p>
 
               <div>
-              <div  className="inline-flex items-center justify-center rounded-md bg-darkGold my-4 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"  onClick={() => {
+                <div
+                  className="inline-flex items-center justify-center rounded-md bg-darkGold my-4 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                  onClick={() => {
                     if (user) {
                       navigate(`/dashboard`);
                     } else {
-                      navigate("/signIn");
+                      navigate('/signIn');
                     }
-                  }}>
-          <h3 className="font-medium ">
-          {user
-                    ? "Go to Zeap-Admin Home Page"
-                    : "Go to Zeap-Admin Sign In Page"}
-          </h3>
-        </div>
-               
+                  }}
+                >
+                  <h3 className="font-medium ">
+                    {user
+                      ? 'Go to Zeap-Admin Home Page'
+                      : 'Go to Zeap-Admin Sign In Page'}
+                  </h3>
+                </div>
               </div>
             </div>
           </div>

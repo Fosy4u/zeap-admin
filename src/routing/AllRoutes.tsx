@@ -11,9 +11,7 @@ import { RouteInterface } from '../interface/interface';
 interface AllRoutesProps {
   routes: RouteInterface[];
 }
-const AllRoutes = (
-  { routes }: AllRoutesProps
-) => {
+const AllRoutes = ({ routes }: AllRoutesProps) => {
   // const defaultRoute = routes.find((element) => {
   //   return element.isDefault;
   // });

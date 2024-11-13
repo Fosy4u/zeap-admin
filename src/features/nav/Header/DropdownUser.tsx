@@ -5,12 +5,10 @@ import ClickOutside from '../../../utils/ClickOutside';
 import { AuthContext } from '../../../contexts/authContext';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
 
-
 const DropdownUser = () => {
-  const {logout, user} = useContext(AuthContext);
- 
+  const { logout, user } = useContext(AuthContext);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -21,13 +19,14 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {capitalizeFirstLetter(user?.firstName as string)} {capitalizeFirstLetter(user?.lastName as string)}
+            {capitalizeFirstLetter(user?.firstName as string)}{' '}
+            {capitalizeFirstLetter(user?.lastName as string)}
           </span>
           <span className="block text-xs">{user?.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full aspect-square object-cover overflow-hidden">
-          <img src={ user?.imageUrl?.link || NoPic} alt="User" />
+          <img src={user?.imageUrl?.link || NoPic} alt="User" />
         </span>
 
         <svg
@@ -126,8 +125,9 @@ const DropdownUser = () => {
             </li>
           </ul>
           <button
-          onClick={logout}
-           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base">
+            onClick={logout}
+            className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base"
+          >
             <svg
               className="fill-current"
               width="22"
