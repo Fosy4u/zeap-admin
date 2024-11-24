@@ -6,7 +6,7 @@ const UserInfo = ({ user }: { user: UserInterface }) => {
   console.log(user);
   const [viewAll, setViewAll] = useState(false);
   return (
-    <div className="w-full max-w-md p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 dark:bg-slate-800 dark:text-white dark:border-gray-700">
+    <div className="w-full md:max-w-md p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 dark:bg-slate-800 dark:text-white dark:border-gray-700">
       <div className="flex items-center justify-between mb-4">
         <h5 className="text-xl font-bold text-darkGold">User Info</h5>
         <div

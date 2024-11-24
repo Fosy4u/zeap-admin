@@ -8,11 +8,15 @@ import {
   ColorInterface,
   VariationInterface,
 } from '../../../interface/interface';
-import { Accordion, Alert, Badge, Table } from 'flowbite-react';
+import { Accordion, Alert, Badge, Button, Table } from 'flowbite-react';
 import ProductImage from './ProductImage';
-import { numberWithCommas } from '../../../utils/helpers';
+import { getStatusColor, numberWithCommas } from '../../../utils/helpers';
 import ShopBar from '../../shops/components/ShopBar';
 import UserTile from '../../users/components/UserTile';
+import ProductActions from './ProductActions';
+import ProductTimeline from './ProductTimeline';
+import ProductReview from './ProductReview';
+import ProductPromo from './ProductPromo';
 
 interface ColInterface {
   name: string;
@@ -36,7 +40,6 @@ const Product = () => {
   );
   const product = productQuery?.data?.data;
   const categories = product?.categories;
-  console.log('product is', product);
   const productOptionsQuery = zeapApiSlice.useGetProductsOptionsQuery(
     {},
     { skip: !token },
@@ -46,7 +49,9 @@ const Product = () => {
   const isLoading = productQuery.isLoading || productOptionsQuery.isLoading;
 
   const [images, setImages] = useState<string[]>([]);
-
+  const [numberOfShownVariations, setNumberOfShownVariations] =
+    useState<number>(5);
+  const [viewAllTimeline, setViewAllTimeline] = useState<boolean>(false);
   const getTextColor = (hex: string) => {
     const red = parseInt(hex.substring(1, 3), 16);
     const green = parseInt(hex.substring(3, 5), 16);
@@ -58,7 +63,7 @@ const Product = () => {
   useEffect(() => {
     if (!color && product) {
       setImages(
-        product.colors[0].images.map((image: { link: string }) => image.link),
+        product.colors[0]?.images.map((image: { link: string }) => image.link),
       );
     }
   }, [product, color]);
@@ -68,7 +73,7 @@ const Product = () => {
         (color: ColorInterface) => color.value === searchParams.get('color'),
       );
       if (color) {
-        setImages(color.images.map((image: { link: string }) => image.link));
+        setImages(color?.images.map((image: { link: string }) => image.link));
       }
     }
   }, [product, searchParams]);
@@ -77,6 +82,7 @@ const Product = () => {
     const color = colors.find((color) => color.name === value);
     return color?.hex || color?.background;
   };
+
   return (
     <div>
       {isLoading && <Loading />}
@@ -85,12 +91,39 @@ const Product = () => {
       )}
       {product?._id && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="">{product && <ProductImage images={images} />}</div>
+          <div className="">
+            {product?.colors?.length > 0 && (
+              <ProductImage images={images || []} />
+            )}
+            {product?.colors?.length === 0 && (
+              <div className="flex items-center h-100">
+                <Alert color="info">
+                  No images or colours uploaded yet found for this product
+                </Alert>
+              </div>
+            )}
+            <div className="hidden md:block mt-4">
+              <div className="text-darkGold text-lg mt-4">Reviews</div>
+              <div>
+                <ProductReview product={product} />
+              </div>
+            </div>
+          </div>
           <div className=" flex flex-col">
             <div>
               <p className="text-2xl font-bold">{product?.title}</p>
               <p className="text-md text-slate-500">{product?.subTitle}</p>
               <p className="text-sm text-gray-500">{product?.description}</p>
+            </div>
+            <div>
+              <div className="text-darkGold text-lg mt-4">Status</div>
+              <Badge
+                size="md"
+                color={getStatusColor(product?.status)}
+                className="w-fit"
+              >
+                {product?.status}
+              </Badge>
             </div>
             <div>
               <div className="text-darkGold text-lg mt-4">Colors</div>
@@ -101,7 +134,7 @@ const Product = () => {
                     <div
                       onClick={() => {
                         setSearchParams({ color: color.value });
-                        setImages(color.images.map((image) => image.link));
+                        setImages(color?.images.map((image) => image.link));
                       }}
                       key={index}
                       className="w-8 h-8 rounded-full cursor-pointer"
@@ -127,7 +160,7 @@ const Product = () => {
             </div>
             <div>
               <div className="text-darkGold text-lg mt-4">Prices</div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {product?.variations?.map(
                   (variation: VariationInterface, index: number) => (
                     <div
@@ -344,7 +377,24 @@ const Product = () => {
                 </Accordion>
               </div>
               <div>
-                <div className="text-darkGold text-lg mt-4">Variation</div>
+                <div className="flex justify-between mt-4 item-center mb-2">
+                  <span className="text-darkGold text-lg ">Variation</span>
+                  <div>
+                    <Button
+                      onClick={() => {
+                        setNumberOfShownVariations(
+                          numberOfShownVariations === 5
+                            ? product?.variations?.length
+                            : 5,
+                        );
+                      }}
+                      color="primary"
+                      size="xs"
+                    >
+                      {numberOfShownVariations === 5 ? 'View All' : 'View Less'}
+                    </Button>
+                  </div>
+                </div>
                 <div className="hidden md:block">
                   <Table striped>
                     <Table.Head>
@@ -352,11 +402,13 @@ const Product = () => {
                       <Table.HeadCell>Color</Table.HeadCell>
                       <Table.HeadCell>Size</Table.HeadCell>
                       <Table.HeadCell>Price</Table.HeadCell>
+                      <Table.HeadCell>Discount</Table.HeadCell>
                       <Table.HeadCell>Quantity</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                      {product?.variations?.map(
-                        (variation: VariationInterface) => (
+                      {product?.variations
+                        ?.slice(0, numberOfShownVariations)
+                        ?.map((variation: VariationInterface) => (
                           <Table.Row key={variation.sku}>
                             <Table.Cell>{variation.sku}</Table.Cell>
                             <Table.Cell>
@@ -376,10 +428,16 @@ const Product = () => {
                               {currency?.symbol}
                               {numberWithCommas(variation.price)}
                             </Table.Cell>
+                            <Table.Cell>
+                              {variation.discount
+                                ? `${currency?.symbol}${numberWithCommas(
+                                    variation.discount,
+                                  )}`
+                                : 'N/A'}
+                            </Table.Cell>
                             <Table.Cell>{variation.quantity}</Table.Cell>
                           </Table.Row>
-                        ),
-                      )}
+                        ))}
                     </Table.Body>
                   </Table>
                 </div>
@@ -426,6 +484,16 @@ const Product = () => {
                             </span>
                           </p>
                           <p className="text-sm font-semibold">
+                            Discount:{' '}
+                            <span className="font-normal text-slate-400">
+                              {variation.discount
+                                ? `${currency?.symbol}${numberWithCommas(
+                                    variation.discount,
+                                  )}`
+                                : 'N/A'}
+                            </span>
+                          </p>
+                          <p className="text-sm font-semibold">
                             Quantity:{' '}
                             <span className="font-normal text-slate-400">
                               {variation.quantity}
@@ -437,17 +505,51 @@ const Product = () => {
                   ))}
                 </div>
               </div>
-
+              <div>
+                <div className="text-darkGold text-lg mt-4">Promo</div>
+                <div>
+                  <ProductPromo productId={product?.productId} />
+                </div>
+              </div>
               <div>
                 <div className="text-darkGold text-lg mt-4">Shop</div>
                 <div>
                   <ShopBar shop={product?.shop} />
                 </div>
               </div>
+
               <div>
                 <div className="text-darkGold text-lg mt-4">Posted By</div>
                 <div>
                   <UserTile user={product?.postedBy} />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between mt-4 item-center mb-2">
+                  <span className="text-darkGold text-lg ">TimeLine</span>
+                  <div>
+                    <Button
+                      onClick={() => {
+                        setViewAllTimeline(!viewAllTimeline);
+                      }}
+                      color="primary"
+                      size="xs"
+                    >
+                      {!viewAllTimeline ? 'Expand' : 'Collapse'}
+                    </Button>
+                  </div>
+                </div>
+                <div>
+                  <ProductTimeline
+                    timeLines={product?.timeLine}
+                    viewAll={viewAllTimeline}
+                  />
+                </div>
+              </div>
+              <div className="md:hidden ">
+                <div className="text-darkGold text-lg mt-4">Reviews</div>
+                <div>
+                  <ProductReview product={product} />
                 </div>
               </div>
             </div>
@@ -455,6 +557,7 @@ const Product = () => {
           <div></div>
         </div>
       )}
+      {product && <ProductActions product={product} />}
     </div>
   );
 };

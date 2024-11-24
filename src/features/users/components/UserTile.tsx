@@ -11,7 +11,7 @@ const UserTile = ({ user }: { user: UserInterface }) => {
       {' '}
       <div
         onClick={() => navigate(`/users/${user?.userId}`)}
-        className="overflow-scroll cursor-pointer   rounded shadow-md  light:shadow-slate-200 dark:shadow-slate-800 bg-slate-200 dark:bg-slate-700 dark:text-white mt-2 hover:shadow-2xl transition duration-300"
+        className="overflow-scroll cursor-pointer   rounded shadow-md  light:shadow-slate-200 dark:shadow-slate-800 bg-grey8 dark:bg-grey2 dark:text-white mt-2 hover:shadow-2xl transition duration-300"
       >
         <div className="p-2">
           <div className="flex items-center justify-between">

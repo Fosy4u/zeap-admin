@@ -5,15 +5,13 @@ import { shortenLongString } from '../../../utils/helpers';
 import NoPic from '../../../images/icon/noPhoto.png';
 import { HiChevronRight } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom';
+import { getProductTypeLabel } from '../../../utils/producttypes';
 
 const DraftProductList = ({
   draftProducts = [],
 }: {
   draftProducts: ProductInterface[];
 }) => {
-  const getProductTypeLabel = (type: string) => {
-    if (type === 'readyMadeCloth') return 'Ready Made Cloth';
-  };
   const getDefaultImageLink = (product: ProductInterface) => {
     if (product?.colors?.length > 0) {
       const colors = product.colors;

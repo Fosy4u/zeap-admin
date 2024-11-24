@@ -9,29 +9,32 @@ import ProductHeader from './components/ProductHeader';
 import { ProductInterface } from '../../interface/interface';
 import ProductTileList from './components/ProductTileList';
 import ProductNav from './components/ProductNav';
-import { Alert } from 'flowbite-react';
+import { Alert, Pagination } from 'flowbite-react';
 import ProductFilters from './components/ProductFilters';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { MobileProductFilters } from './components/MobileProductFilters';
 
 const Products = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageNumber = searchParams.get('pageNumber') || '1';
+  const limit = 100;
   const { status } = useParams<{ status: string }>();
   const token = useSelector(globalSelectors.selectAuthToken);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  console.log('filterPro', filteredProducts);
+
   const [input, setInput] = useState('');
 
   const param: { [key: string]: string } = {};
   searchParams.forEach((value, key) => {
     param[key] = value;
   });
-
+  console.log('param', param);
   const productsQuery = zeapApiSlice.useGetProductsQuery(
     {
       status: status || 'live',
-      limit: 100,
-      pageNumber: 1,
+      limit,
+      pageNumber: pageNumber ? parseInt(pageNumber) : 1,
+      ...(status === 'deleted' && { disabled: true }),
       ...param,
     },
     { skip: !token },
@@ -85,6 +88,10 @@ const Products = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input, products]);
+  const changePage = (page: number) => {
+    searchParams.set('pageNumber', page.toString());
+    setSearchParams(searchParams);
+  };
 
   return (
     <div>
@@ -92,7 +99,7 @@ const Products = () => {
 
       {isLoading && <Loading />}
       <ProductNav />
-      {products?.length === 0 && !productsQuery.isLoading && (
+      {totalCount === 0 && !productsQuery.isLoading && (
         <div className="m-2 mt-4">
           <Alert color="info">{`No ${status} products`}</Alert>
         </div>
@@ -111,8 +118,20 @@ const Products = () => {
               totalCount={totalCount}
             />
           </div>
-
-          <ProductTileList products={filteredProducts} />
+          <div className="flex flex-col gap-8">
+            <ProductTileList products={filteredProducts} />
+            <div className="flex overflow-x-auto sm:justify-center">
+              <Pagination
+                currentPage={pageNumber ? parseInt(pageNumber) : 1}
+                totalPages={Math.ceil(totalCount / limit)}
+                onPageChange={(page) => {
+                  console.log('page', page);
+                  changePage(page);
+                }}
+                showIcons
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

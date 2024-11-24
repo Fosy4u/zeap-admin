@@ -10,12 +10,9 @@ const ShopProfile = ({
   shop: ShopInterface;
 }) => {
   return (
-    <div className="my-4 w-full">
-      <div className="text-darkGold my-2">Profile</div>
-      <div className="flex flex-col gap-2">
-        <UserInfo user={user} />
-        <ShopInfo shop={shop} />
-      </div>
+    <div className="my-4 flex flex-col gap-4 w-full">
+      <UserInfo user={user} />
+      <ShopInfo shop={shop} />
     </div>
   );
 };

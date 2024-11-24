@@ -131,21 +131,19 @@ interface ProductCategoryInterface {
   heelHeight?: string;
   heelType?: string;
 }
-interface DiscountInterface {
-  discountPrice: number;
-  percentage: number;
-  startDate: Date;
-  endDate: Date;
-  promoId: string;
-  promoName: string;
-}
+
 interface VariationInterface {
   sku: string;
   price: number;
-  discount: DiscountInterface;
+  discount: number;
   colorValue: string;
   size: string;
   quantity: number;
+}
+interface TimelineInterface {
+  date: string;
+  description: string;
+  actionBy: UserInterface;
 }
 interface ProductInterface {
   productType: 'readyMadeCloth' | 'readyMadeShoe';
@@ -163,8 +161,57 @@ interface ProductInterface {
   shop: ShopInterface;
   category: ProductCategoryInterface;
   variations: VariationInterface[];
+  promo?: {
+    promoId: string;
+    discountPercentage: number;
+  };
   currency: CurrencyInterface;
   _id: string;
+  rejectionReasons: string[];
+  timeLine: TimelineInterface[];
+}
+interface LikeDislikeInterface {
+  value: number;
+  users: string[];
+}
+interface ProductReviewInterface {
+  _id: string;
+  review: string;
+  rating: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  user: UserInterface;
+  product: ProductInterface;
+  title: string;
+  displayName: string;
+  likes: LikeDislikeInterface;
+  dislikes: LikeDislikeInterface;
+}
+interface RangePercentageInterface {
+  min: number;
+  max: number;
+}
+interface PromoDiscountInterface {
+  type: 'range' | 'fixed';
+  fixedPercentage?: number;
+  rangePercentage?: RangePercentageInterface;
+}
+interface PromoInterface {
+  promoId: string;
+  title: string;
+  subTitle: string;
+  permittedProductTypes: string[];
+  productIds: string[];
+  description: string;
+  discount: PromoDiscountInterface;
+  status: string;
+  imageUrl: ImageUrlInterface;
+  startDate: string;
+  endDate: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
 }
 
 export {
@@ -180,4 +227,8 @@ export {
   ColorInterface,
   CurrencyInterface,
   VariationInterface,
+  TimelineInterface,
+  ProductReviewInterface,
+  LikeDislikeInterface,
+  PromoInterface,
 };

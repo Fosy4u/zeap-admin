@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer } from 'flowbite-react';
+import {  Drawer } from 'flowbite-react';
 import { useState } from 'react';
 import { HiAdjustments, HiMinus, HiPlus } from 'react-icons/hi';
 import { HiBars2 } from 'react-icons/hi2';
@@ -75,6 +75,7 @@ export function MobileProductFilters({
         />
 
         <Drawer.Items>
+          
           <div className="flex flex-col h-[78vh] overflow-scroll p-2">
             <div className="grid grid-cols-1 divide-y divide-gray-200 dark:divide-gray-700">
               <div className="flex justify-between items-center">

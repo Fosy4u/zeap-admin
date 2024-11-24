@@ -15,7 +15,7 @@ const adjustDate = (data: number) => {
   return data;
 };
 
-export const displayDate = (date: Date) => {
+export const displayDate = (date: Date, showTime = true) => {
   const parsedDate = new Date(date);
   const month = new Intl.DateTimeFormat('en-US', {
     month: 'long',
@@ -25,8 +25,10 @@ export const displayDate = (date: Date) => {
   const parsedDateHours = adjustDate(parsedDate.getHours());
   const parsedDateMinutes = adjustDate(parsedDate.getMinutes());
   const parsedDateSeconds = adjustDate(parsedDate.getSeconds());
-
-  return `${parsedDateDay} ${month} ${parsedDateValue} ${parsedDateHours}:${parsedDateMinutes}:${parsedDateSeconds}`;
+  if (showTime) {
+    return `${parsedDateDay} ${month} ${parsedDateValue} ${parsedDateHours}:${parsedDateMinutes}:${parsedDateSeconds}`;
+  }
+  return `${parsedDateDay} ${month} ${parsedDateValue}`;
 };
 
 export function kFormatter(num: number) {
@@ -47,4 +49,37 @@ export const scrollToTop = () => {
 };
 export const numberWithCommas = (x: number) => {
   return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+export const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'warning':
+      return 'info';
+    case 'live':
+      return 'success';
+    case 'under review':
+      return 'info';
+    case 'disabled':
+      return 'failure';
+    case 'rejected':
+      return 'failure';
+    default:
+      return 'info';
+  }
+};
+export const getStatusBg = (status: string) => {
+  switch (status) {
+    case 'draft':
+      return 'bg-warning text-black';
+    case 'live':
+      return 'bg-success text-white';
+    case 'under review':
+      return 'bg-info text-black';
+    case 'disabled':
+      return 'bg-danger text-white';
+    case 'rejected':
+      return 'bg-red-500 text-white';
+    default:
+      return 'bg-info text-black';
+  }
 };

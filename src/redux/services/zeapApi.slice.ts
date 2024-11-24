@@ -14,6 +14,8 @@ export default createApi({
     'Shop',
     'Products',
     'Product',
+    'Review',
+    'Promo',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -502,6 +504,7 @@ export default createApi({
         );
       },
     }),
+
     updateProductColorAndImages: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
@@ -670,6 +673,27 @@ export default createApi({
         );
       },
     }),
+    setProductStatus: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `product/update/status`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Products', 'Product'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Status Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
     addImagesToProductColor: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
@@ -726,6 +750,414 @@ export default createApi({
         responseHandler(
           {
             success: 'Product Successfully Enabled',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getProductReviews: builder.query({
+      query: (arg) => {
+        return {
+          url: `reviews/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Review'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductReview: builder.query({
+      query: (arg) => {
+        return {
+          url: `review/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Review'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    createProductReview: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `review/create`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Review'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Review Successfully Created',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updateProductReview: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `review/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Review'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Review Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    likeProductReview: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `review/update/likeReview`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Review'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Review Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    dislikeProductReview: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `review/update/dislikeReview`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Review'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Review Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deleteProductReview: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `review/delete`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Review'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Review Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getPromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getDraftPromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/draft`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getScheduledPromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/scheduled`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getAvailablePromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/available`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getLivePromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/live`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getFinishedPromos: builder.query({
+      query: (arg) => {
+        return {
+          url: `promos/finished`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+
+    getPromo: builder.query({
+      query: (arg) => {
+        return {
+          url: `promo/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductPromo: builder.query({
+      query: (arg) => {
+        return {
+          url: `/product/promo`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getPromoProducts: builder.query({
+      query: (arg) => {
+        return {
+          url: `promo/products`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    createPromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/create`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Created',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updatePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    joinPromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/join`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo', 'Product'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Joined',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    leavePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/leave`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo', 'Product'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Left',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    schedulePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/schedule`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Scheduled',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+
+    expirePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/expire`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Finished',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+
+    activatePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/activate`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Activated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deletePromo: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `promo/delete`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Promo'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Promo Successfully Deleted',
             successHandler,
             errorHandler,
           },

@@ -143,7 +143,7 @@ const AddReadyMadeCloth = () => {
       setDescription(product.description);
       setProductId(product.productId);
       setCategories({
-        main: product?.categories.main,
+        main: product?.categories?.main,
         style: product?.categories.style,
         gender: product?.categories.gender,
         age: product?.categories.age

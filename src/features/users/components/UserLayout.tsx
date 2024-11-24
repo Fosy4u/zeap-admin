@@ -47,7 +47,7 @@ const UserLayout = ({
 
         <div className="md:p-2">
           {value === 'Bio' && (
-            <div className="flex flex-col gap-4 flex  md:hidden w-full">
+            <div className="flex flex-col gap-4  md:hidden ">
               <UserInfo user={user} />
               <SignInInfo user={user} />
             </div>

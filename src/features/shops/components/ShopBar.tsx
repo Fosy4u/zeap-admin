@@ -8,7 +8,7 @@ const ShopBar = ({ shop }: { shop: ShopInterface }) => {
   return (
     <div
       onClick={() => navigate(`/shops/${shop?.shopId}`)}
-      className="flex justify-between items-center p-2 rounded-full shadow-md border cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700"
+      className="flex justify-between items-center p-2 rounded-full bg-grey8 dark:bg-grey2 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700"
     >
       <div className="flex justify-around items-center">
         <span>{shop?.shopId}</span>

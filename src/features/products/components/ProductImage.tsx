@@ -6,14 +6,14 @@ const ProductImage = ({ images }: { images: string[] }) => {
   const [hooveredImage, setHooveredImage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (images.length > 0 && !images.includes(selectedImage)) {
+    if (images && images?.length > 0 && !images.includes(selectedImage)) {
       setSelectedImage(images[0]);
     }
   }, [images, selectedImage]);
   return (
     <div className="flex flex-col-reverse md:flex-row gap-2">
       <div className="flex md:flex-col gap-2">
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <img
             key={index}
             src={image}
