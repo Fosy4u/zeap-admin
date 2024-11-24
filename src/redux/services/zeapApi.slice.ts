@@ -995,6 +995,18 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getLivePromoProducts: builder.query({
+      query: (arg) => {
+        return {
+          url: `products/live/promo`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Promo', 'Product', 'Products'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     createPromo: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
