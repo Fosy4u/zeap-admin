@@ -83,3 +83,12 @@ export const getStatusBg = (status: string) => {
       return 'bg-info text-black';
   }
 };
+
+export const getTextColor = (hex: string) => {
+  const red = parseInt(hex.substring(1, 3), 16);
+  const green = parseInt(hex.substring(3, 5), 16);
+  const blue = parseInt(hex.substring(5, 7), 16);
+  return red * 0.299 + green * 0.587 + blue * 0.114 > 186
+    ? 'text-black'
+    : 'text-white';
+};

@@ -13,6 +13,7 @@ import { ColorInterface, ProductInterface } from '../../../interface/interface';
 import zeapApiSlice from '../../../redux/services/zeapApi.slice';
 import Loading from '../../../lib/Loading';
 import DeleteProductColor from './DeleteProductColor';
+import { getTextColor } from '../../../utils/helpers';
 
 const BadgeThem = {
   root: {
@@ -67,14 +68,6 @@ const ImagesAndColor = ({
     }
   }, [error]);
 
-  const getTextColor = (hex: string) => {
-    const red = parseInt(hex.substring(1, 3), 16);
-    const green = parseInt(hex.substring(3, 5), 16);
-    const blue = parseInt(hex.substring(5, 7), 16);
-    return red * 0.299 + green * 0.587 + blue * 0.114 > 186
-      ? 'text-black'
-      : 'text-white';
-  };
   const getAccordionBg = (value: string) => {
     const color = colors.find((color) => color.name === value);
     return color?.hex || color?.background;

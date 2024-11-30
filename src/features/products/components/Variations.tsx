@@ -96,9 +96,9 @@ const Variations = ({
                     <Table.Cell>{variation.sku}</Table.Cell>
                     <Table.Cell>
                       <span
-                        className={`text-sm font-semibold p-1 rounded-md ${getTextColor(getColorBg(variation.colorValue) as string)}`}
+                        className={`text-sm font-semibold p-1 rounded-md ${getTextColor(getColorBg(variation?.colorValue || '') as string)}`}
                         style={{
-                          background: getColorBg(variation.colorValue),
+                          background: getColorBg(variation?.colorValue || ''),
                         }}
                       >
                         {variation.colorValue}
@@ -160,9 +160,9 @@ const Variations = ({
                     <p className="text-sm font-semibold">
                       Color:{' '}
                       <span
-                        className={`text-sm font-semibold ${getTextColor(getColorBg(variation.colorValue) as string)}`}
+                        className={`text-sm font-semibold ${getTextColor(getColorBg(variation.colorValue || '') as string)}`}
                         style={{
-                          background: getColorBg(variation.colorValue),
+                          background: getColorBg(variation.colorValue || ''),
                         }}
                       >
                         {variation.colorValue}

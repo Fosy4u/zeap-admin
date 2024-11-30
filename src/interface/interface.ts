@@ -135,15 +135,21 @@ interface ProductCategoryInterface {
 interface VariationInterface {
   sku: string;
   price: number;
-  discount: number;
-  colorValue: string;
-  size: string;
-  quantity: number;
+  discount?: number;
+  colorValue?: string;
+  size?: string;
+  quantity?: number;
+  bespoke?: BespokeInterface;
 }
 interface TimelineInterface {
   date: string;
   description: string;
   actionBy: UserInterface;
+}
+interface BespokeInterface {
+  isBespoke: boolean;
+  colorType: 'single' | 'multiple';
+  availableColors: string[];
 }
 interface ProductInterface {
   productType: 'readyMadeCloth' | 'readyMadeShoe';

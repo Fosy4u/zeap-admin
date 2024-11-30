@@ -18,6 +18,8 @@ import AddReadyMadeShoe from '../features/products/view/AddReadyMadeShoe';
 import AddAccessorie from '../features/products/view/AddAccessories';
 import Product from '../features/products/components/Product';
 import PromoProducts from '../features/promos/view/PromoProducts';
+import AddBespokeCloth from '../features/products/view/AddBespokeCloth';
+import AddBespokeShoe from '../features/products/view/AddBespokeShoe';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -59,6 +61,22 @@ const routes: RouteInterface[] = [
   {
     path: '/products/:shopId/add-product/readyMadeCloth/:id',
     component: AddReadyMadeCloth,
+  },
+  {
+    path: '/products/:shopId/add-product/bespokeCloth',
+    component: AddBespokeCloth,
+  },
+  {
+    path: '/products/:shopId/add-product/bespokeCloth/:id',
+    component: AddBespokeCloth,
+  },
+  {
+    path: '/products/:shopId/add-product/bespokeShoe',
+    component: AddBespokeShoe,
+  },
+  {
+    path: '/products/:shopId/add-product/bespokeShoe/:id',
+    component: AddBespokeShoe,
   },
   {
     path: '/products/:shopId/add-product/readyMadeShoe',

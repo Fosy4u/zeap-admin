@@ -84,10 +84,10 @@ const AddVariationModal = ({
 
   useEffect(() => {
     if (currVariation) {
-      setColor(currVariation?.colorValue);
-      setSize(currVariation?.size);
+      setColor(currVariation?.colorValue || '');
+      setSize(currVariation?.size || '');
       setPrice(currVariation?.price);
-      setQuantity(currVariation?.quantity);
+      setQuantity(currVariation?.quantity || 0);
     }
   }, [currVariation]);
 

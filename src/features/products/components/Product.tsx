@@ -47,15 +47,18 @@ const Product = () => {
   const options = productOptionsQuery?.data?.data;
   const colors: ColInterface[] = options?.readyMadeClothes?.colorEnums;
   const isLoading = productQuery.isLoading || productOptionsQuery.isLoading;
-
+  const variations = product?.variations;
+  const bespokeVariation = variations?.find(
+    (variation: VariationInterface) => variation.colorValue === 'Bespoke',
+  )?.bespoke;
   const [images, setImages] = useState<string[]>([]);
   const [numberOfShownVariations, setNumberOfShownVariations] =
     useState<number>(5);
   const [viewAllTimeline, setViewAllTimeline] = useState<boolean>(false);
   const getTextColor = (hex: string) => {
-    const red = parseInt(hex.substring(1, 3), 16);
-    const green = parseInt(hex.substring(3, 5), 16);
-    const blue = parseInt(hex.substring(5, 7), 16);
+    const red = parseInt(hex?.substring(1, 3), 16);
+    const green = parseInt(hex?.substring(3, 5), 16);
+    const blue = parseInt(hex?.substring(5, 7), 16);
     return red * 0.299 + green * 0.587 + blue * 0.114 > 186
       ? 'text-black'
       : 'text-white';
@@ -79,6 +82,8 @@ const Product = () => {
   }, [product, searchParams]);
 
   const getBg = (value: string) => {
+    if (value.toLocaleLowerCase() === 'bespoke')
+      return 'radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(204,23,195,0.09147408963585435) 4%, rgba(205,64,138,0.5172443977591037) 25%, rgba(207,136,39,1) 37%, rgba(13,15,25,1) 44%, rgba(32,37,4,1) 45%, rgba(72,84,9,0.4472163865546218) 100%)';
     const color = colors.find((color) => color.name === value);
     return color?.hex || color?.background;
   };
@@ -128,7 +133,7 @@ const Product = () => {
             <div>
               <div className="text-darkGold text-lg mt-4">Colors</div>
               <p>{color}</p>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {product?.colors?.map(
                   (color: ColorInterface, index: number) => (
                     <div
@@ -413,9 +418,9 @@ const Product = () => {
                             <Table.Cell>{variation.sku}</Table.Cell>
                             <Table.Cell>
                               <span
-                                className={`text-sm font-semibold p-1 rounded-md ${getTextColor(getBg(variation.colorValue) as string)}`}
+                                className={`text-sm font-semibold p-1 rounded-md ${getTextColor(getBg(variation.colorValue || '') as string)}`}
                                 style={{
-                                  background: getBg(variation.colorValue),
+                                  background: getBg(variation.colorValue || ''),
                                 }}
                               >
                                 {variation.colorValue}
@@ -440,6 +445,32 @@ const Product = () => {
                         ))}
                     </Table.Body>
                   </Table>
+                  {bespokeVariation && (
+                    <div className="flex flex-col shadow-md p-4">
+                      <div className="flex justify-between">
+                        <span>Colour Type:</span>{' '}
+                        <span>
+                          <Badge>{bespokeVariation.colorType}</Badge>
+                        </span>
+                      </div>
+                      {bespokeVariation.availableColors?.length > 0 && (
+                        <div className="flex justify-between">
+                          <span>Available Colours:</span>{' '}
+                          <span className="flex gap-2 flex-wrap">
+                            {bespokeVariation.availableColors?.map(
+                              (color: string) => (
+                                <div
+                                  key={color}
+                                  className="w-8 h-8 rounded-full cursor-pointer"
+                                  style={{ background: getBg(color) }}
+                                ></div>
+                              ),
+                            )}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="md:hidden">
                   {product?.variations?.map((variation: VariationInterface) => (
@@ -460,9 +491,9 @@ const Product = () => {
                           <p className="text-sm font-semibold">
                             Color:{' '}
                             <span
-                              className={`text-sm font-semibold ${getTextColor(getBg(variation.colorValue) as string)}`}
+                              className={`text-sm font-semibold ${getTextColor(getBg(variation.colorValue || '') as string)}`}
                               style={{
-                                background: getBg(variation.colorValue),
+                                background: getBg(variation.colorValue || ''),
                               }}
                             >
                               {variation.colorValue}

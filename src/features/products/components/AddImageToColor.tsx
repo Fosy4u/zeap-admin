@@ -37,11 +37,13 @@ const AddImageToColor = ({
   color,
   productId,
   currColor,
+  title,
 }: {
   openModal: boolean;
   close: () => void;
-  color: string;
+  color?: string;
   productId: string;
+  title?: string;
   currColor?: ColorInterface;
 }) => {
   const myRef = useRef<HTMLImageElement | null>(null);
@@ -79,15 +81,15 @@ const AddImageToColor = ({
   }, [selectedFiles]);
 
   useEffect(() => {
-    const MAX_FILE_SIZE = 1120; // 1MB
+    const MAX_FILE_SIZE = 1500; // 1.5MB
     if (selectedFiles) {
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        const fileSizeKiloBytes = file.size / 1024;
+        const fileSizeKiloBytes = file.size / MAX_FILE_SIZE;
         if (fileSizeKiloBytes > MAX_FILE_SIZE) {
           executeScroll();
           setErrorMsg(
-            'Selected file size is greater than 1MB. Please select a smaller file',
+            'Selected file size is greater than 1.5MB. Please select a smaller file',
           );
           setTimeout(() => {
             setSelectedFiles(null);
@@ -113,7 +115,9 @@ const AddImageToColor = ({
     Array.from(selectedFiles).forEach((file) => {
       formData.append('images', file);
     });
-    formData.append('color', color);
+    if (color) {
+      formData.append('color', color);
+    }
     formData.append('productId', productId);
     const payload = formData;
     if (currColor) {
@@ -147,7 +151,9 @@ const AddImageToColor = ({
       show={openModal}
       onClose={() => close()}
     >
-      <Modal.Header>{`Add Images to colour ${currColor?.value || color}`}</Modal.Header>
+      <Modal.Header>
+        {title || `Add Images to colour ${currColor?.value || color}`}
+      </Modal.Header>
       <Modal.Body>
         {isLoading && <Loading />}
         {errorMsg && (

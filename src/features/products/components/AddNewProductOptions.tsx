@@ -24,7 +24,8 @@ const AddNewProductOptions = ({ shopId }: { shopId: string }) => {
         <div
           className={`${cardClass}`}
           onClick={() => {
-            setOption('ReadyMadeClothes');
+            setOption('bespokeCloth');
+            navigate(`/products/${shopId}/add-product/bespokeCloth/`);
           }}
         >
           <div className="bg-grey7 p-2 rounded-lg w-12 h-12 flex items-center justify-center">
@@ -68,6 +69,7 @@ const AddNewProductOptions = ({ shopId }: { shopId: string }) => {
           className={`${cardClass}`}
           onClick={() => {
             setOption('ReadyMadeFootwears');
+            navigate(`/products/${shopId}/add-product/bespokeShoe/`);
           }}
         >
           <div className="bg-grey7 p-2 rounded-lg w-12 h-12 flex items-center justify-center">
