@@ -534,6 +534,32 @@ const Product = () => {
                       </div>
                     </div>
                   ))}
+                  {bespokeVariation && (
+                    <div className="flex flex-col shadow-md p-4">
+                      <div className="flex justify-between">
+                        <span>Colour Type:</span>{' '}
+                        <span>
+                          <Badge>{bespokeVariation.colorType}</Badge>
+                        </span>
+                      </div>
+                      {bespokeVariation.availableColors?.length > 0 && (
+                        <div className="flex justify-between">
+                          <span>Available Colours:</span>{' '}
+                          <span className="flex gap-2 flex-wrap">
+                            {bespokeVariation.availableColors?.map(
+                              (color: string) => (
+                                <div
+                                  key={color}
+                                  className="w-8 h-8 rounded-full cursor-pointer"
+                                  style={{ background: getBg(color) }}
+                                ></div>
+                              ),
+                            )}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div>

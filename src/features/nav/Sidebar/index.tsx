@@ -219,6 +219,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Orders --> */}
               <li onClick={() => setSidebarOpen(false)}>
                 <NavLink
+                  to="/baskets"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
+                    pathname.includes('baskets') &&
+                    'bg-graydark dark:bg-meta-4 text-white'
+                  }`}
+                >
+                  <svg
+                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
+                    />
+                  </svg>
+                  Basket
+                </NavLink>
+              </li>
+              <li onClick={() => setSidebarOpen(false)}>
+                <NavLink
                   to="/orders"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
                     pathname.includes('orders') &&

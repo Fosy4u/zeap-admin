@@ -16,6 +16,8 @@ export default createApi({
     'Product',
     'Review',
     'Promo',
+    'Basket',
+    'Order',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1175,6 +1177,159 @@ export default createApi({
           },
           queryArgs,
         );
+      },
+    }),
+    getBasket: builder.query({
+      query: (arg) => {
+        return {
+          url: `basket/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getBaskets: builder.query({
+      query: (arg) => {
+        return {
+          url: `baskets/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getBasketsTotal: builder.query({
+      query: (arg) => {
+        return {
+          url: `basket/total`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    addProductToBasket: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `basket/addProduct`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Successfully Added to Basket',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    removeProductFromBasket: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `basket/removeProduct`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Successfully Removed from Basket',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    increaseProductQuantityInBasket: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `basket/product/increase`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Quantity Successfully Increased',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    decreaseProductQuantityInBasket: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `basket/product/decrease`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Quantity Successfully Decreased',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    addProductBodyMeasurement: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `bodyMeasurement/add`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Products', 'Product'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Body Measurement Successfully Added',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getProductBodyMeasurement: builder.query({
+      query: (arg) => {
+        return {
+          url: `bodyMeasurement/product`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Products', 'Product'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
       },
     }),
   }),

@@ -20,6 +20,7 @@ import Product from '../features/products/components/Product';
 import PromoProducts from '../features/promos/view/PromoProducts';
 import AddBespokeCloth from '../features/products/view/AddBespokeCloth';
 import AddBespokeShoe from '../features/products/view/AddBespokeShoe';
+import Baskets from '../features/basket';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -32,6 +33,10 @@ const routes: RouteInterface[] = [
     path: '/404/',
     component: Default404Page,
     //isDefault: true,
+  },
+  {
+    path: '/baskets/',
+    component: Baskets,
   },
   {
     path: '/orders/',

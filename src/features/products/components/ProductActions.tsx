@@ -29,7 +29,8 @@ const ProductActions = ({ product }: { product: ProductInterface }) => {
     { skip: !token || !product?.productId },
   );
   const isLoading = promoProductsQuery.isLoading;
-  const promo = promoProductsQuery?.data?.data;
+  const data = promoProductsQuery?.data?.data;
+  const promo = data?.promo;
 
   return (
     <>

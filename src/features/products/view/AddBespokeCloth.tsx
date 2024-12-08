@@ -19,7 +19,11 @@ import { ThemeContext } from '../../../contexts/themeContext';
 import SubmitProductModal from '../components/SubmitProductModal';
 import BespokeImages from '../components/BespokeImages';
 import BespokeVariation from '../components/BespokeVariation';
-import { VariationInterface } from '../../../interface/interface';
+import {
+  MeasurementInterface,
+  VariationInterface,
+} from '../../../interface/interface';
+import BespokeBodyMeasurement from '../components/BespokeBodyMeasurement';
 
 // import ProductHeader from '../components/ProductHeader'
 
@@ -75,6 +79,7 @@ const AddBespokeCloth = () => {
     fastening: [],
     fit: [],
   });
+  const [measurements, setMeasurements] = useState<MeasurementInterface[]>([]);
 
   const [error, setError] = useState({
     title: '',
@@ -93,6 +98,8 @@ const AddBespokeCloth = () => {
     zeapApiSlice.useAddProductVariationMutation();
   const [editVariation, editVariationStatus] =
     zeapApiSlice.useEditProductVariationMutation();
+  const [addProductBodyMeasurement, addProductBodyMeasurementStatus] =
+    zeapApiSlice.useAddProductBodyMeasurementMutation();
   const productOptionsQuery = zeapApiSlice.useGetProductsOptionsQuery(
     {},
     { skip: !token },
@@ -125,7 +132,7 @@ const AddBespokeCloth = () => {
   const fitOptionEnums = options?.bespokeClothes?.fitEnums
     ?.map((str: string, index: number) => ({ value: str, id: index + 1 }))
     .sort((a: any, b: any) => a.value.localeCompare(b.value));
-
+  const bodyMeasurementEnums = options?.bespokeClothes?.bodyMeasurementEnums;
   const productQuery = zeapApiSlice.useGetProductByIdQuery(
     { _id: id || product_id },
     { skip: !token || (stage === 1 && !id) },
@@ -138,7 +145,8 @@ const AddBespokeCloth = () => {
     productQuery.isLoading ||
     updateProductStatus.isLoading ||
     addVariationStatus.isLoading ||
-    editVariationStatus.isLoading;
+    editVariationStatus.isLoading ||
+    addProductBodyMeasurementStatus.isLoading;
 
   useEffect(() => {
     if (product) {
@@ -180,14 +188,17 @@ const AddBespokeCloth = () => {
     if (stage === 2) {
       return 'Categories';
     }
-
     if (stage === 3) {
+      return 'Body Measurement';
+    }
+
+    if (stage === 4) {
       return 'Images';
     }
-    if (stage === 4) {
+    if (stage === 5) {
       return 'Variations';
     }
-    if (stage === 5) {
+    if (stage === 6) {
       return 'Review';
     }
   };
@@ -239,8 +250,14 @@ const AddBespokeCloth = () => {
       }
       return true;
     }
-
     if (stage === 3) {
+      if (measurements.length === 0) {
+        setServerError('Please add at least one body measurement');
+        return false;
+      }
+    }
+
+    if (stage === 4) {
       if (!productId) {
         setServerError(
           'Please save the product before adding images and colors',
@@ -254,7 +271,7 @@ const AddBespokeCloth = () => {
         return false;
       }
     }
-    if (stage === 4) {
+    if (stage === 5) {
       if (!colorType) {
         setServerError('Please select color type');
         return false;
@@ -271,13 +288,6 @@ const AddBespokeCloth = () => {
   };
 
   const handleCreateProduct = async (payload: PayloadInterface) => {
-    // const payload = {
-    //     title,
-    //     subtitle,
-    //     description,
-    //     shopId,
-    //     productType: "bespokeCloth"
-    // }
     createProduct({ payload })
       .unwrap()
       .then((res) => {
@@ -304,12 +314,27 @@ const AddBespokeCloth = () => {
         setServerError(err?.data?.error);
       });
   };
+  const handleAddBodyMeasurement = () => {
+    const payload = {
+      productId: product?.productId,
+      measurements: measurements,
+    };
+    addProductBodyMeasurement({ payload })
+      .unwrap()
+      .then(() => {
+        setStage(stage + 1);
+      })
+      .catch((err) => {
+        setServerError(err.data.error);
+      });
+  };
+
   const handleAddVariation = () => {
     const variations = product?.variations;
     const bespoke = variations?.find(
-      (item: VariationInterface) => item.colorValue === 'bespoke',
+      (item: VariationInterface) =>
+        item.colorValue?.toLocaleLowerCase() === 'bespoke',
     );
-    console.log('bespoke', bespoke);
 
     const payload = {
       productId: product?.productId,
@@ -320,6 +345,7 @@ const AddBespokeCloth = () => {
         ...(bespoke && { sku: bespoke.sku }),
       },
     };
+
     if (product?.variation?.sku) {
       editVariation({ payload })
         .unwrap()
@@ -382,9 +408,12 @@ const AddBespokeCloth = () => {
     }
 
     if (stage === 3) {
-      return setStage(stage + 1);
+      return handleAddBodyMeasurement();
     }
     if (stage === 4) {
+      return setStage(stage + 1);
+    }
+    if (stage === 5) {
       return handleAddVariation();
     }
 
@@ -447,8 +476,30 @@ const AddBespokeCloth = () => {
             </svg>
           </div>
         </li>
+        <li className={`${getClass(3)} md:after:content-['Body_Measurement']`}>
+          <div
+            className={`flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12  shrink-0 ${stage === 2 && 'bg-blue-100'}`}
+          >
+            <svg
+              className="w-4 h-4 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth="1.9"
+                d="M5 7h14M5 12h14M5 17h10"
+              />
+            </svg>
+          </div>
+        </li>
 
-        <li className={`${getClass(3)} md:after:content-['Images_and_Colors']`}>
+        <li className={`${getClass(4)} md:after:content-['Images_and_Colors']`}>
           <div
             className={`flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12  shrink-0 ${stage === 3 && 'bg-blue-100'}`}
           >
@@ -465,7 +516,7 @@ const AddBespokeCloth = () => {
             </svg>
           </div>
         </li>
-        <li className={`${getClass(4)} md:after:content-['Variations']`}>
+        <li className={`${getClass(5)} md:after:content-['Variations']`}>
           <div
             className={`flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12  shrink-0 ${stage === 4 && 'bg-blue-100'}`}
           >
@@ -1014,8 +1065,16 @@ const AddBespokeCloth = () => {
             </div>
           )}
 
-          {stage === 3 && <BespokeImages product={product} />}
-          {stage === 4 && (
+          {stage === 3 && (
+            <BespokeBodyMeasurement
+              product={product}
+              bodyMeasurementEnums={bodyMeasurementEnums}
+              measurements={measurements}
+              setMeasurements={setMeasurements}
+            />
+          )}
+          {stage === 4 && <BespokeImages product={product} />}
+          {stage === 5 && (
             <div>
               <BespokeVariation
                 product={product}
@@ -1051,11 +1110,11 @@ const AddBespokeCloth = () => {
           </Button>
           <Button
             onClick={nextStep}
-            disabled={stage === 5}
+            disabled={stage === 6}
             size="sm"
             color="success"
           >
-            {stage === 4 ? 'Save and Submit' : 'Save and Continue'}
+            {stage === 5 ? 'Save and Submit' : 'Save and Continue'}
           </Button>
         </div>
       </div>

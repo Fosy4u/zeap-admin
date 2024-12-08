@@ -23,7 +23,9 @@ const BadgeThem = {
 
 const BespokeImages = ({ product }: { product: ProductInterface }) => {
   const images = product?.colors?.map((color) => color.images).flat();
-  const currColor = product?.colors?.find((color) => color.value === 'bespoke');
+  const currColor = product?.colors?.find(
+    (color) => color.value.toLocaleLowerCase() === 'bespoke',
+  );
   const { setDimBackground } = useContext(ThemeContext);
 
   const [openModal, setOpenModal] = useState(false);
@@ -90,7 +92,7 @@ const BespokeImages = ({ product }: { product: ProductInterface }) => {
                   onClick={() => {
                     const payload = {
                       productId: product?.productId,
-                      color: 'bespoke',
+                      color: 'Bespoke',
                       imageName: image?.name,
                     };
                     deleteProductImage({ payload })
@@ -126,7 +128,7 @@ const BespokeImages = ({ product }: { product: ProductInterface }) => {
                     : () => {
                         const payload = {
                           productId: product?.productId,
-                          color: 'bespoke',
+                          color: 'Bespoke',
                           imageName: image?.name,
                         };
                         setAsDefault({ payload })
@@ -167,7 +169,7 @@ const BespokeImages = ({ product }: { product: ProductInterface }) => {
           }}
           title="Add Image"
           currColor={currColor}
-          color="bespoke"
+          color="Bespoke"
         />
       )}
       {openDeleteModal && (

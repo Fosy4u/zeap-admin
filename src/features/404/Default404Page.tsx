@@ -725,16 +725,16 @@ const Default404Page = () => {
 
               <div>
                 <div
-                  className="inline-flex items-center justify-center rounded-md bg-darkGold my-4 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                  className="inline-flex cursor-pointer items-center justify-center rounded-md bg-darkGold my-4 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                   onClick={() => {
                     if (user) {
-                      navigate(`/dashboard`);
+                      navigate(`/`);
                     } else {
                       navigate('/signIn');
                     }
                   }}
                 >
-                  <h3 className="font-medium ">
+                  <h3 className="font-medium  ">
                     {user
                       ? 'Go to Zeap-Admin Home Page'
                       : 'Go to Zeap-Admin Sign In Page'}

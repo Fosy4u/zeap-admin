@@ -65,13 +65,15 @@ const ProductCard = ({
             </p>
           )}
         </div>
-        <div className="absolute right-0 top-0 h-16 w-16 ">
-          <div
-            className={`absolute transform rotate-45 ${getStatusBg(product?.status)} text-center  font-semibold py-1 right-[-35px] top-[32px] w-[170px]`}
-          >
-            {product?.status}
+        {showStatus && (
+          <div className="absolute right-0 top-0 h-16 w-16 ">
+            <div
+              className={`absolute transform rotate-45 ${getStatusBg(product?.status)} text-center  font-semibold py-1 right-[-35px] top-[32px] w-[170px]`}
+            >
+              {product?.status}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className=" hidden md:block mx-auto mt-2  transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <img
@@ -84,26 +86,30 @@ const ProductCard = ({
             {product?.title}
           </h2>
 
-          <div className="flex items-center">
-            {product?.variations[0]?.price ? (
-              <p className="mr-2 text-lg font-semibold text-gray-900 dark:text-white">
-                {currency?.symbol}
-                {product?.variations[0]?.price}
-              </p>
-            ) : (
-              <Badge color="failure">No price set </Badge>
-            )}
-            {product?.variations[0]?.discount && (
-              <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">
-                {currency?.symbol}
-                {product?.variations[0]?.discount}
-              </p>
-            )}
-            {product?.variations[0]?.discount && (
-              <p className="text-xs text-green-500">
-                {product?.promo?.discountPercentage}% off
-              </p>
-            )}
+          <div className="flex  justify-between">
+            <span className="flex flex-col">
+              {product?.variations[0]?.price ? (
+                <p className="mr-2 text-lg font-semibold text-gray-900 dark:text-white">
+                  {currency?.symbol}
+                  {product?.variations[0]?.price}
+                </p>
+              ) : (
+                <Badge color="failure">No price set </Badge>
+              )}
+              {product?.variations[0]?.discount && (
+                <p className="text-xs text-green-500">
+                  {product?.promo?.discountPercentage}% off
+                </p>
+              )}
+            </span>
+            <span>
+              {product?.variations[0]?.discount && (
+                <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">
+                  {currency?.symbol}
+                  {product?.variations[0]?.discount}
+                </p>
+              )}
+            </span>
           </div>
 
           {showStatus && (

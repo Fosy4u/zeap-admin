@@ -167,6 +167,7 @@ interface ProductInterface {
   shop: ShopInterface;
   category: ProductCategoryInterface;
   variations: VariationInterface[];
+  bodyMeasurement: string;
   promo?: {
     promoId: string;
     discountPercentage: number;
@@ -194,6 +195,22 @@ interface ProductReviewInterface {
   likes: LikeDislikeInterface;
   dislikes: LikeDislikeInterface;
 }
+
+interface BodyMeasurementInterface {
+  productId: string;
+  measurements: [
+    {
+      name: string;
+      measurements: [
+        {
+          field: string;
+          value: number;
+          unit: string;
+        },
+      ];
+    },
+  ];
+}
 interface RangePercentageInterface {
   min: number;
   max: number;
@@ -220,6 +237,25 @@ interface PromoInterface {
   __v: number;
 }
 
+interface BasketItemIterface {
+  product: ProductInterface;
+  quantity: number;
+  sku: string;
+  price: number;
+}
+interface BasketInterface {
+  user: UserInterface;
+  basketId: string;
+  updatedAt: Date;
+  createdAt: Date;
+  basketItems: BasketItemIterface[];
+  total: number;
+}
+interface MeasurementInterface {
+  name: string;
+  fields: string[];
+}
+
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -237,4 +273,8 @@ export {
   ProductReviewInterface,
   LikeDislikeInterface,
   PromoInterface,
+  BasketInterface,
+  BasketItemIterface,
+  BodyMeasurementInterface,
+  MeasurementInterface,
 };
