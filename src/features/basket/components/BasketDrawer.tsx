@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer } from 'flowbite-react';
+import { Alert, Drawer } from 'flowbite-react';
 import { BasketInterface } from '../../../interface/interface';
 import BasketItem from './BasketItem';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { numberWithCommas } from '../../../utils/helpers';
 
 const drawerTheme = {
   root: {
-    base: 'fixed z-99999  overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800',
+    base: 'fixed z-99999  overflow-y-auto bg-slate-100  p-4 transition-transform ',
 
     position: {
       right: {
@@ -30,7 +30,9 @@ export function BasketDrawer({
   basket: BasketInterface;
 }) {
   const currency = useSelector(globalSelectors.selectCurrency);
-  console.log('basket', basket);
+
+  const totalWithoutVoucher = basket?.totalWithoutVoucher;
+  const appliedVoucherAmount = basket?.appliedVoucherAmount ?? 0;
 
   const basketItems = basket?.basketItems;
   const handleClose = () => setIsOpen(false);
@@ -53,14 +55,28 @@ export function BasketDrawer({
             ))}
           </div>
         </div>
+        {appliedVoucherAmount > 0 && (
+          <Alert color="success" className="w-full">
+            Voucher applied: {currency?.symbol}
+            {numberWithCommas(Number(appliedVoucherAmount))}
+          </Alert>
+        )}
         <div className="flex justify-between p-4 text-black font-semibold">
           <span>
             Subtotal
             <p className="text-sm text-slate-500">Delivery fee not included</p>
           </span>
-          <span>
-            {currency?.symbol}
-            {numberWithCommas(Number(basket?.total))}
+          <span className="flex justify-between gap-2 ">
+            {totalWithoutVoucher && (
+              <span className="line-through text-slate-400">
+                {currency?.symbol}
+                {numberWithCommas(Number(totalWithoutVoucher))}
+              </span>
+            )}
+            <span>
+              {currency?.symbol}
+              {numberWithCommas(Number(basket?.total))}
+            </span>
           </span>
         </div>
       </Drawer.Items>

@@ -250,10 +250,140 @@ interface BasketInterface {
   createdAt: Date;
   basketItems: BasketItemIterface[];
   total: number;
+  totalWithoutVoucher?: number;
+  appliedVoucherAmount?: number;
 }
 interface MeasurementInterface {
   name: string;
   fields: string[];
+}
+interface deliveryAddressInterface {
+  user: UserInterface;
+  address: string;
+  region: string;
+  country: string;
+  postCode: string;
+  phoneNumber: string;
+  isDefault: boolean;
+  disabled: boolean;
+}
+interface PaymentInterface {
+  _id: string;
+  user: UserInterface;
+  fullName: string;
+  email: string;
+  status: string;
+  reference: string;
+  amount: number;
+  deliveryFee: number;
+  itemsTotal: number;
+  paidAt: Date;
+  updatedAt: Date;
+  channel: string;
+  transactionDate: Date;
+  cardType: string;
+  bank: string;
+  currency: string;
+  countryCode: string;
+  fees: number;
+  gatewayResponse: string;
+  log: any;
+}
+interface ProductOrdersInterface {
+  _id: string;
+  order: OrderInterface;
+  orderId: string;
+  disabled: boolean;
+  itemNo: number;
+  shop: ShopInterface;
+  product: ProductInterface;
+  user: UserInterface;
+  quantity: number;
+  sku: string;
+  color?: string;
+  size?: string;
+  deliveryAddress: deliveryAddressInterface;
+  bespokeColor?: string;
+  images: [
+    {
+      name: string;
+      link: string;
+    },
+  ];
+  bodyMeasurements?: [
+    {
+      name: string;
+      measurements: [
+        {
+          field: string;
+          value: number;
+          unit: string;
+        },
+      ];
+    },
+  ];
+  status: {
+    name: string;
+    value: string;
+  };
+  amount: [
+    {
+      currency: string;
+      value: number;
+    },
+  ];
+  promo?: {
+    promoId: string;
+    discountPercentage: number;
+  };
+  deliveryDate: Date;
+  deliveryTime: string;
+  deliveryFee: number;
+  deliveryCompany: string;
+  deliveryTrackingNumber?: string;
+  deliveryTrackingLink?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface VoucherInterface {
+  _id: string;
+  user: UserInterface;
+  source: string;
+  code: string;
+  amount: number;
+  currency: string;
+  status: string;
+  isUsed: boolean;
+  expiryDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
+interface OrderInterface {
+  _id: string;
+  user: UserInterface;
+  disabled: boolean;
+  orderId: string;
+  deliveryAddress: deliveryAddressInterface;
+  payment: PaymentInterface;
+  productOrders: ProductOrdersInterface[];
+  voucher: VoucherInterface;
+  cancel: {
+    isCancelled: boolean;
+    reason: string;
+    cancelledAt: Date;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+interface PointInterface {
+  user: UserInterface;
+  availablePoints: number;
+  redeemedPoints: number;
+  totalPoints: number;
 }
 
 export {
@@ -277,4 +407,10 @@ export {
   BasketItemIterface,
   BodyMeasurementInterface,
   MeasurementInterface,
+  deliveryAddressInterface,
+  PaymentInterface,
+  ProductOrdersInterface,
+  OrderInterface,
+  VoucherInterface,
+  PointInterface,
 };

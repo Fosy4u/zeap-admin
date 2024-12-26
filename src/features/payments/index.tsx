@@ -4,17 +4,17 @@ import { globalSelectors } from '../../redux/services/global.slice';
 
 import Loading from '../../lib/Loading';
 import { useEffect, useState } from 'react';
-import { BasketInterface } from '../../interface/interface';
-import BasketList from './components/BasketList';
-import BasketHeader from './components/BasketHeader';
-import { Alert } from 'flowbite-react';
 
-const Baskets = () => {
+import { PaymentInterface } from '../../interface/interface';
+import PaymentHeader from './components/PaymentHeader';
+import PaymentTable from './components/PaymentTable';
+
+const Payments = () => {
   const token = useSelector(globalSelectors.selectAuthToken);
-  const [filteredBasket, setFilteredBasket] = useState([]);
+  const [filteredPayments, setFilteredPayments] = useState([]);
   const [input, setInput] = useState('');
-  const basketsQuery = zeapApiSlice.useGetBasketsQuery({}, { skip: !token });
-  const baskets = basketsQuery?.data?.data;
+  const paymentsQuery = zeapApiSlice.useGetPaymentsQuery({}, { skip: !token });
+  const payments = paymentsQuery?.data?.data;
 
   const escapeRegExp = (value: string) => {
     return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -46,34 +46,32 @@ const Baskets = () => {
   };
 
   useEffect(() => {
-    if (baskets?.length > 0) {
-      const result = baskets?.filter((row: BasketInterface) => {
+    if (payments?.length > 0) {
+      const result = payments?.filter((row: PaymentInterface) => {
         const keys = Object.keys(row);
         return keys.some((field) => {
-          return search(row[field as keyof BasketInterface]);
+          return search(row[field as keyof PaymentInterface]);
         });
       });
 
-      setFilteredBasket(result);
+      setFilteredPayments(result);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input, baskets]);
+  }, [input, payments]);
 
   return (
     <div>
-      <BasketHeader setInput={setInput} title={'Basket'} />
+      <PaymentHeader setInput={setInput} title={'Payments'} />
 
-      {baskets?.length === 0 && basketsQuery.status === 'fulfilled' && (
-        <div>
-          <Alert color="info" className="mb-4">
-            No active basket found
-          </Alert>
-        </div>
+      {payments?.length === 0 && !paymentsQuery.isLoading && (
+        <div>No payments found</div>
       )}
-      {basketsQuery.isLoading && <Loading />}
-      {filteredBasket?.length > 0 && <BasketList baskets={filteredBasket} />}
+      {paymentsQuery.isLoading && <Loading />}
+      {filteredPayments?.length > 0 && (
+        <PaymentTable payments={filteredPayments} />
+      )}
     </div>
   );
 };
 
-export default Baskets;
+export default Payments;

@@ -35,7 +35,7 @@ const UserProfileCompletion = ({ user }: { user: UserInterface }) => {
           value={progress}
           className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
         >
-          50%
+          {progress}%
         </progress>
       </div>
       {/*<!-- End Progress bar 50% with trailing label --> */}

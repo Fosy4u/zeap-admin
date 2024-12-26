@@ -13,6 +13,7 @@ const BasketItem = ({ item }: { item: BasketItemIterface }) => {
   const variation = variations?.find((variation) => variation.sku === sku);
   const size = variation?.size;
   const color = variation?.colorValue;
+  const price = variation?.discount ? variation?.discount : variation?.price;
   const getDefaultImageLink = () => {
     if (product?.colors?.length > 0) {
       const colors = product.colors;
@@ -35,9 +36,7 @@ const BasketItem = ({ item }: { item: BasketItemIterface }) => {
           className="w-16 h-16 object-cover rounded-lg"
         />
         <div>
-          <div className="text-xs md:text-sm text-gray-900 dark:text-white">
-            {product?.title}
-          </div>
+          <div className="text-xs md:text-sm text-black">{product?.title}</div>
           <div className="text-sm text-slate-400 flex flex-col md:flex-row gap-2">
             {size && <span>Size: {size}</span>}
             {color && <span>Color: {color}</span>}
@@ -50,7 +49,7 @@ const BasketItem = ({ item }: { item: BasketItemIterface }) => {
         </div>
         <div className="text-sm font-semibold text-black">
           {currency?.symbol}
-          {numberWithCommas(Number(item?.price))}
+          {numberWithCommas(Number(price) * quantity)}
         </div>
       </div>
     </div>

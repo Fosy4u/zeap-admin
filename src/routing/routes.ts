@@ -21,6 +21,12 @@ import PromoProducts from '../features/promos/view/PromoProducts';
 import AddBespokeCloth from '../features/products/view/AddBespokeCloth';
 import AddBespokeShoe from '../features/products/view/AddBespokeShoe';
 import Baskets from '../features/basket';
+import UnitOrdersIndex from '../features/orders/views/UnitOrdersIndex';
+import ProductOrderOptions from '../features/orders/views/ProductOrderOptions';
+import ProductOrders from '../features/orders/views/ProductOrders';
+import Payments from '../features/payments';
+import Payment from '../features/payments/Payment';
+import ProductOrder from '../features/orders/views/ProductOrder';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -42,6 +48,23 @@ const routes: RouteInterface[] = [
     path: '/orders/',
     component: Orders,
   },
+  {
+    path: '/orders/unitOrders',
+    component: UnitOrdersIndex,
+  },
+  {
+    path: '/orders/product-orders',
+    component: ProductOrderOptions,
+  },
+  {
+    path: '/orders/product-order/:productOrder_id',
+    component: ProductOrder,
+  },
+  {
+    path: '/orders/product-orders/:status',
+    component: ProductOrders,
+  },
+
   {
     path: '/product/:id',
     component: Product,
@@ -135,6 +158,15 @@ const routes: RouteInterface[] = [
     path: 'vouchers',
     component: Vouchers,
   },
+  {
+    path: 'payments',
+    component: Payments,
+  },
+  {
+    path: 'payment/:reference',
+    component: Payment,
+  },
+
   {
     path: '/SignIn',
     component: SignIn,

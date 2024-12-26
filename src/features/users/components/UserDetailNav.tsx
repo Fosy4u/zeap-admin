@@ -42,16 +42,22 @@ const UserDetailNav = ({
         <span>Shops</span>
       </button>
       <button
-        onClick={() => setValue('Favorites')}
+        onClick={() => setValue('Favourites')}
         className={`hidden md:inline-flex h-10 ${value === 'Favorites' && 'bg-darkGold text-white'} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}
       >
-        <span>Favorites</span>
+        <span>Favourites</span>
       </button>
       <button
         onClick={() => setValue('Cart')}
         className={`hidden md:inline-flex h-10 ${value === 'Cart' && 'bg-darkGold text-white'} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}
       >
         <span>Cart</span>
+      </button>
+      <button
+        onClick={() => setValue('Points')}
+        className={`hidden md:inline-flex h-10 ${value === 'Points' && 'bg-darkGold text-white'} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}
+      >
+        <span>Points</span>
       </button>
 
       <button
@@ -75,19 +81,22 @@ const UserDetailNav = ({
                 Shops
               </li>
               <li
-                onClick={() => setValue('Favorites')}
+                onClick={() => setValue('Favourites')}
                 className=" text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base cursor-pointer"
               >
                 Favourites
               </li>
-              <li className="text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base cursor-pointer">
+              <li
+                onClick={() => setValue('Cart')}
+                className="text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base cursor-pointer"
+              >
                 Cart
               </li>
               <li
-                onClick={() => setValue('Comments')}
+                onClick={() => setValue('Points')}
                 className="text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base cursor-pointer"
               >
-                Comments
+                Points
               </li>
             </ul>
           </div>

@@ -64,7 +64,7 @@ const Header = (props: {
         <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
-              <strong className=" text-2xl text-darkGold gap-2">
+              <strong className=" text-2xl text-darkGold dark:text-lightGold gap-2">
                 Admin Panel
               </strong>
             </div>

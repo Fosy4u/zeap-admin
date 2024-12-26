@@ -50,6 +50,12 @@ export const scrollToTop = () => {
 export const numberWithCommas = (x: number) => {
   return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+export const formatCurrency = (amount: number, currency: string) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(amount);
+};
 
 export const getStatusColor = (status: string) => {
   switch (status) {
@@ -91,4 +97,40 @@ export const getTextColor = (hex: string) => {
   return red * 0.299 + green * 0.587 + blue * 0.114 > 186
     ? 'text-black'
     : 'text-white';
+};
+
+export const getProductOrderStatusBg = (status: string) => {
+  switch (status) {
+    case 'order placed':
+      return 'text-warning bg-lightWarning';
+    case 'order confirmed':
+      return 'bg-lightInfo text-info';
+    case 'order processing':
+      return 'bg-lightInfo text-info';
+    case 'order ready for delivery':
+      return 'bg-lightInfo text-info';
+    case 'order dispatched':
+      return 'bg-lightInfo text-info';
+    case 'order delivered':
+      return 'bg-lightSuccess text-success';
+    case 'order cancelled':
+      return 'bg-lightDanger text-danger';
+    default:
+      return 'bg-info text-black';
+  }
+};
+
+export const getCurrencySmallSymbol = (currency: string) => {
+  switch (currency) {
+    case 'USD':
+      return '$';
+    case 'EUR':
+      return '€';
+    case 'GBP':
+      return '£';
+    case 'NGN':
+      return '₦';
+    default:
+      return currency;
+  }
 };

@@ -18,6 +18,9 @@ export default createApi({
     'Promo',
     'Basket',
     'Order',
+    'Payment',
+    'Voucher',
+    'Point',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1328,6 +1331,147 @@ export default createApi({
         };
       },
       providesTags: ['Products', 'Product'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getOrders: builder.query({
+      query: (arg) => {
+        return {
+          url: `orders/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getOrder: builder.query({
+      query: (arg) => {
+        return {
+          url: `order/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductOrders: builder.query({
+      query: (arg) => {
+        return {
+          url: `orders/products`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductOrder: builder.query({
+      query: (arg) => {
+        return {
+          url: `orders/product`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductOrderStatusHistory: builder.query({
+      query: (arg) => {
+        return {
+          url: `orders/product-order/status/history`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductOrderStatusOptions: builder.query({
+      query: (arg) => {
+        return {
+          url: `orders/status/options`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    updateProductOrderStatus: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `order/status`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Order Status Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getPayments: builder.query({
+      query: (arg) => {
+        return {
+          url: `payments/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Payment'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getPayment: builder.query({
+      query: (arg) => {
+        return {
+          url: `payment/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Payment'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getVouchers: builder.query({
+      query: (arg) => {
+        return {
+          url: `vouchers/`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Voucher', 'Basket', 'Point', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getPoints: builder.query({
+      query: (arg) => {
+        return {
+          url: `point/user`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Point', 'User', 'Voucher'],
       onQueryStarted: async (_, queryArgs) => {
         responseHandler({}, queryArgs);
       },
