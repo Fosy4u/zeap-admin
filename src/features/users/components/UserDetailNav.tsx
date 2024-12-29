@@ -42,10 +42,10 @@ const UserDetailNav = ({
         <span>Shops</span>
       </button>
       <button
-        onClick={() => setValue('Favourites')}
+        onClick={() => setValue('Wishes')}
         className={`hidden md:inline-flex h-10 ${value === 'Favorites' && 'bg-darkGold text-white'} items-center justify-center gap-2 whitespace-nowrap border border-2 border-darkGold px-2 md:px-5 text-sm sm:text-xs font-medium tracking-wide dark:text-white transition duration-300 hover:bg-darkGold focus-visible:outline-none`}
       >
-        <span>Favourites</span>
+        <span>Wishes</span>
       </button>
       <button
         onClick={() => setValue('Cart')}
@@ -81,10 +81,10 @@ const UserDetailNav = ({
                 Shops
               </li>
               <li
-                onClick={() => setValue('Favourites')}
+                onClick={() => setValue('Wishes')}
                 className=" text-sm font-medium duration-300 ease-in-out hover:text-darkGold lg:text-base cursor-pointer"
               >
-                Favourites
+                Wishes
               </li>
               <li
                 onClick={() => setValue('Cart')}

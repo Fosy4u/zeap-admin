@@ -336,6 +336,14 @@ interface ProductOrdersInterface {
     promoId: string;
     discountPercentage: number;
   };
+  expectedVendorCompletionDate: {
+    min: Date;
+    max: Date;
+  };
+  expectedDeliveryDate: {
+    min: Date;
+    max: Date;
+  };
   deliveryDate: Date;
   deliveryTime: string;
   deliveryFee: number;
@@ -386,6 +394,14 @@ interface PointInterface {
   totalPoints: number;
 }
 
+interface WishlistInterface {
+  _id: string;
+  user: UserInterface;
+  product: ProductInterface;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -413,4 +429,5 @@ export {
   OrderInterface,
   VoucherInterface,
   PointInterface,
+  WishlistInterface,
 };

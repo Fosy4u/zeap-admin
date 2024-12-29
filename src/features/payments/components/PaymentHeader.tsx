@@ -5,7 +5,7 @@ const PaymentHeader = ({
   title,
   showSearchBar = true,
 }: {
-  setInput: (input: string) => void;
+  setInput?: (input: string) => void;
   title: string;
   showSearchBar?: boolean;
 }) => {
@@ -17,7 +17,7 @@ const PaymentHeader = ({
       </div>
 
       <div className="flex items-center gap-2">
-        {showSearchBar && (
+        {showSearchBar && setInput && (
           <SearchBar setInput={setInput} placeHolder="Search Payment" />
         )}
       </div>

@@ -7,6 +7,7 @@ import { Alert, Button } from 'flowbite-react';
 import ProductImage from '../../products/components/ProductImage';
 import {
   capitalizeFirstLetter,
+  displayDate,
   getCurrencySmallSymbol,
   getProductOrderStatusBg,
   numberWithCommas,
@@ -143,6 +144,75 @@ const ProductOrder = () => {
                 <span className="text-lg font-semibold">
                   {' '}
                   <ReactTimeAgo date={productOrder?.updatedAt} locale="en-US" />
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-md ">
+                  Expected Vendor Completion Date
+                </span>
+                <span className="text-lg font-semibold">
+                  {productOrder?.expectedVendorCompletionDate ? (
+                    <span>
+                      from{' '}
+                      {displayDate(
+                        productOrder?.expectedVendorCompletionDate?.min,
+                        false,
+                      )}{' '}
+                      to{' '}
+                      {displayDate(
+                        productOrder?.expectedVendorCompletionDate?.max,
+                        false,
+                      )}
+                    </span>
+                  ) : (
+                    'N/A'
+                  )}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-md ">Expected Delivery Date</span>
+                <span className="text-lg font-semibold">
+                  {productOrder?.expectedDeliveryDate ? (
+                    <span>
+                      from{' '}
+                      {displayDate(
+                        productOrder?.expectedDeliveryDate?.min,
+                        false,
+                      )}{' '}
+                      to{' '}
+                      {displayDate(
+                        productOrder?.expectedDeliveryDate?.max,
+                        false,
+                      )}
+                    </span>
+                  ) : (
+                    'N/A'
+                  )}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-md ">Delivery Company</span>
+                <span className="text-lg font-semibold">
+                  {productOrder?.deliveryCompany || 'N/A'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-md ">Delivery Tracking Number</span>
+                <span className="text-lg font-semibold">
+                  {productOrder?.deliveryTrackingNumber || 'N/A'}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-md ">Delivery Tracking Link</span>
+                <span className="text-lg font-semibold">
+                  <a
+                    href={productOrder?.deliveryTrackingLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-darkGold"
+                  >
+                    {productOrder?.deliveryTrackingLink || 'N/A'}
+                  </a>
                 </span>
               </div>
               <div className="flex justify-between items-center">

@@ -6,7 +6,7 @@ import UserTile from '../../users/components/UserTile';
 const PaymentSideA = ({ payment }: { payment: PaymentInterface }) => {
   const user = payment?.user;
   return (
-    <div className="flex flex-col gap-8  divide-y divide-slate-300">
+    <div className="flex flex-col gap-8  divide-y divide-slate-300 p-4">
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-1">
           <span className="text-md ">Amount</span>

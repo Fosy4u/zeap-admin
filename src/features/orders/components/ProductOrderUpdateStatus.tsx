@@ -1,4 +1,4 @@
-import { Alert, Button, Modal } from 'flowbite-react';
+import { Alert, Button, Modal, TextInput } from 'flowbite-react';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
 import {
   HiArrowNarrowLeft,
@@ -15,7 +15,15 @@ const ProductOrderUpdateStatus = ({
   setServerError,
   openModal,
   setOpenModal,
-  setDimBackground
+  setDimBackground,
+  deliveryTrackingLink,
+  setDeliveryTrackingLink,
+  deliveryCompany,
+  setDeliveryCompany,
+  deliveryTrackingNumber,
+  setDeliveryTrackingNumber,
+  deliveryDate,
+  setDeliveryDate,
 }: {
   nextStatus?: {
     name: string;
@@ -31,6 +39,14 @@ const ProductOrderUpdateStatus = ({
   openModal: boolean;
   setOpenModal: (openModal: boolean) => void;
   setDimBackground: (openModal: boolean) => void;
+  deliveryTrackingLink: string;
+  setDeliveryTrackingLink: (link: string) => void;
+  deliveryCompany: string;
+  setDeliveryCompany: (company: string) => void;
+  deliveryTrackingNumber: string;
+  setDeliveryTrackingNumber: (trackingNumber: string) => void;
+  deliveryDate: Date | null;
+  setDeliveryDate: (date: Date) => void;
 }) => {
   const [statusValue, setStatusValue] = useState('');
   const [modalQuestion, setModalQuestion] = useState('');
@@ -104,6 +120,59 @@ const ProductOrderUpdateStatus = ({
                   {modalQuestion}
                 </p>
               </div>
+              {statusValue === 'order dispatched' && (
+                <div className="flex flex-col gap-4 my-6">
+                  <Alert color="warning">
+                    This action will update the status to order dispatched and
+                    will notify the customer
+                  </Alert>
+                  <div className="flex flex-col gap-2">
+                    <span>Delivery Company</span>
+                    <TextInput
+                      value={deliveryCompany}
+                      onChange={(e) => {
+                        setDeliveryCompany(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <span>Delivery Tracking Number</span>
+                    <TextInput
+                      value={deliveryTrackingNumber}
+                      onChange={(e) => {
+                        setDeliveryTrackingNumber(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <span>Delivery Tracking Link</span>
+                    <TextInput
+                      value={deliveryTrackingLink}
+                      onChange={(e) => {
+                        setDeliveryTrackingLink(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+              {statusValue === 'order delivered' && (
+                <div className="flex flex-col gap-4 my-6">
+                  <Alert color="warning">
+                    This action will update the status to order delivered and
+                    will notify the customer
+                  </Alert>
+                  <div className="flex flex-col gap-2">
+                    <span>Delivery Date</span>
+                    <TextInput
+                      type="date"
+                      value={deliveryDate?.toISOString().split('T')[0]}
+                      onChange={(e) => {
+                        setDeliveryDate(new Date(e.target.value));
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
               <div className="flex justify-center gap-4">
                 <Button
                   color="success"

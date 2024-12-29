@@ -5,13 +5,13 @@ import {
   ShopInterface,
   UserInterface,
   VoucherInterface,
+  WishlistInterface,
 } from '../../../interface/interface';
 import UserDetailNav from './UserDetailNav';
 import UserProfilePaper from './UserProfilePaper';
 import UserTile from './UserTile';
 import UserProfileOverview from './UserProfileOverview';
 import UserInfo from './UserInfo';
-import Banner from '../../../lib/Banner';
 import UserActions from './UserActions';
 import SignInInfo from './SignInInfo';
 import UserShops from './UserShops';
@@ -24,6 +24,7 @@ import { Alert } from 'flowbite-react';
 import UserVoucher from './UserVoucher';
 import BasketCard from '../../basket/components/BasketCard';
 import UserPoints from './UserPoints';
+import ProductCard from '../../products/components/ProductCard';
 
 const UserLayout = ({
   users,
@@ -56,15 +57,22 @@ const UserLayout = ({
     { user_id: user?._id },
     { skip: !token || !user?._id },
   );
+  const getWishlistQuery = zeapApiSlice.useGetWishListQuery(
+    { user_id: user?._id },
+    { skip: !token || !user?._id },
+  );
+
   const baskets = basketsQuery?.data?.data;
   const orders = ordersQuery?.data?.data;
   const vouchers = voucherQuery?.data?.data;
   const points = getPointsQuery?.data?.data;
+  const wishlist = getWishlistQuery?.data?.data;
   const isLoading =
     ordersQuery.isLoading ||
     voucherQuery.isLoading ||
     basketsQuery.isLoading ||
-    getPointsQuery.isLoading;
+    getPointsQuery.isLoading ||
+    getWishlistQuery.isLoading;
   const [value, setValue] = useState('Overview');
   return (
     <div className="grid grid-cols-6 gap-4 md:divide-x h-screen">
@@ -151,13 +159,19 @@ const UserLayout = ({
               )}
             </div>
           )}
-          {value === 'Favourites' && (
-            <div>
-              <Banner
-                title="Favourites"
-                variant="info"
-                message="This feature is under development. Please check back later."
-              />
+          {value === 'Wishes' && (
+            <div className=" grid grid-cols-2   gap-5 w-full items-center justify-center cursor-pointer">
+              {wishlist.map((wish: WishlistInterface) => (
+                <div key={wish._id}>
+                  <ProductCard
+                    key={wish.product?.productId}
+                    product={wish.product}
+                  />
+                </div>
+              ))}
+              {baskets?.length === 0 && (
+                <Alert color="info">No product in wishlist</Alert>
+              )}
             </div>
           )}
 

@@ -63,6 +63,10 @@ export function ProductOrderStatusHistoryDrawer({
 }) {
   const { setDimBackground } = useContext(ThemeContext);
   const token = useSelector(globalSelectors.selectAuthToken);
+  const [deliveryCompany, setDeliveryCompany] = useState('');
+  const [deliveryTrackingNumber, setDeliveryTrackingNumber] = useState('');
+  const [deliveryTrackingLink, setDeliveryTrackingLink] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [serverError, setServerError] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [openRevertModal, setOpenRevertModal] = useState(false);
@@ -88,6 +92,10 @@ export function ProductOrderStatusHistoryDrawer({
     const payload = {
       status,
       productOrder_id,
+      deliveryCompany,
+      deliveryTrackingNumber,
+      deliveryTrackingLink,
+      deliveryDate,
     };
     updateProductOrderStatus({ payload })
       .unwrap()
@@ -95,6 +103,7 @@ export function ProductOrderStatusHistoryDrawer({
         setServerError('');
         setDimBackground(false);
         setOpenModal(false);
+        setOpenRevertModal(false);
       })
       .catch((err) => {
         setServerError(err.data.error);
@@ -123,9 +132,11 @@ export function ProductOrderStatusHistoryDrawer({
             <Timeline.Item key={index}>
               <Timeline.Point icon={IoIosDoneAll} />
               <Timeline.Content>
-                <Timeline.Time>
-                  <ReactTimeAgo date={status?.date} locale="en-US" />
-                </Timeline.Time>
+                {status?.date && (
+                  <Timeline.Time>
+                    <ReactTimeAgo date={status?.date} locale="en-US" />
+                  </Timeline.Time>
+                )}
                 {/* <Timeline.Title>{status?.name}</Timeline.Title> */}
                 <Timeline.Body
                   className={`${status?.value === currentStatus?.value && 'text-success'}`}
@@ -141,6 +152,14 @@ export function ProductOrderStatusHistoryDrawer({
                     openModal={openRevertModal}
                     setOpenModal={setOpenRevertModal}
                     setDimBackground={setDimBackground}
+                    deliveryTrackingLink={deliveryTrackingLink}
+                    setDeliveryTrackingLink={setDeliveryTrackingLink}
+                    deliveryCompany={deliveryCompany}
+                    setDeliveryCompany={setDeliveryCompany}
+                    deliveryTrackingNumber={deliveryTrackingNumber}
+                    setDeliveryTrackingNumber={setDeliveryTrackingNumber}
+                    deliveryDate={deliveryDate}
+                    setDeliveryDate={setDeliveryDate}
                   />
                 )}
               </Timeline.Content>
@@ -157,6 +176,14 @@ export function ProductOrderStatusHistoryDrawer({
               openModal={openModal}
               setOpenModal={setOpenModal}
               setDimBackground={setDimBackground}
+              deliveryTrackingLink={deliveryTrackingLink}
+              setDeliveryTrackingLink={setDeliveryTrackingLink}
+              deliveryCompany={deliveryCompany}
+              setDeliveryCompany={setDeliveryCompany}
+              deliveryTrackingNumber={deliveryTrackingNumber}
+              setDeliveryTrackingNumber={setDeliveryTrackingNumber}
+              deliveryDate={deliveryDate}
+              setDeliveryDate={setDeliveryDate}
             />
           </div>
         )}

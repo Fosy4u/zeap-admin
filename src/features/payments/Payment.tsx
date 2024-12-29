@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 import Loading from '../../lib/Loading';
 import { Alert } from 'flowbite-react';
 import PaymentSideA from './components/PaymentSideA';
+import PaymentSideB from './components/PaymentSideB';
+import PaymentHeader from './components/PaymentHeader';
 const Payment = () => {
   const { reference } = useParams();
   const token = useSelector(globalSelectors.selectAuthToken);
@@ -20,13 +22,15 @@ const Payment = () => {
 
   return (
     <div>
+      <PaymentHeader showSearchBar={false} title={`Payment - ${reference}`} />
       {paymentQuery.isLoading && <Loading />}
       {paymentQuery.status === 'fulfilled' && !payment && (
         <Alert color="info">Payment with reference {reference} not found</Alert>
       )}
       {payment && (
-        <div className="grid grid-cols-1  sm:grid-cols-2  ">
+        <div className="grid grid-cols-1  sm:grid-cols-2 ">
           <PaymentSideA payment={payment} />
+          <PaymentSideB payment={payment} />
         </div>
       )}
     </div>

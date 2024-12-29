@@ -21,6 +21,7 @@ export default createApi({
     'Payment',
     'Voucher',
     'Point',
+    'Wish',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1472,6 +1473,18 @@ export default createApi({
         };
       },
       providesTags: ['Point', 'User', 'Voucher'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getWishList: builder.query({
+      query: (arg) => {
+        return {
+          url: `wish/user`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Wish', 'User', 'Product'],
       onQueryStarted: async (_, queryArgs) => {
         responseHandler({}, queryArgs);
       },
