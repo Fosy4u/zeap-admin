@@ -13,6 +13,7 @@ import { capitalizeFirstLetter } from '../../../utils/helpers';
 import ProductOrderUpdateStatus from './ProductOrderUpdateStatus';
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../../../contexts/themeContext';
+import ProductOrderCancellation from './ProductOrderCancellation';
 //import { useSelector } from 'react-redux';
 //import { globalSelectors } from '../../../redux/services/global.slice';
 // import { numberWithCommas } from '../../../utils/helpers';
@@ -187,6 +188,9 @@ export function ProductOrderStatusHistoryDrawer({
             />
           </div>
         )}
+        <div className="flex justify-center items-center gap-2 mt-6">
+          <ProductOrderCancellation productOrder_id={productOrder_id} />
+        </div>
       </Drawer.Items>
     </Drawer>
   );

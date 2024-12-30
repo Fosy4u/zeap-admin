@@ -1429,6 +1429,27 @@ export default createApi({
         );
       },
     }),
+    cancelProductOrder: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `order/cancel`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Basket', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Order Successfully Cancelled',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
     getPayments: builder.query({
       query: (arg) => {
         return {

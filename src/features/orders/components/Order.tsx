@@ -18,7 +18,7 @@ const Order = ({ order }: { order: OrderInterface }) => {
     const completed = productOrders?.filter(
       (productOrder) => productOrder.status.value === 'order delivered',
     ).length;
-    return (completed / total) * 100;
+    return ((completed / total) * 100).toFixed(2);
   };
   return (
     <div className="flex flex-col text-black gap-4">
@@ -33,7 +33,7 @@ const Order = ({ order }: { order: OrderInterface }) => {
               id={order?.orderId}
               max="100"
               value={calcProgress()}
-              className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
+              className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-white [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
             >
               {calcProgress()}%
             </progress>

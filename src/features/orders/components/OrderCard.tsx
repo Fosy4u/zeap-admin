@@ -31,7 +31,7 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
     const completed = productOrders?.filter(
       (productOrder) => productOrder?.status?.value === 'order delivered',
     ).length;
-    return (completed / total) * 100;
+    return ((completed / total) * 100).toFixed(2);
   };
   return (
     <div
@@ -79,23 +79,25 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
             </span>
           </div>
         </div>
-        <div className="flex justify-between items-center mt-2">
-          <div className="flex flex-col">
-            <span className="dark:text-slate-300 text-slate-500 text-xs">
-              Progress - <strong>{calcProgress()}%</strong>
-            </span>
-            <div className="flex items-center">
-              <progress
-                id={order?.orderId}
-                max="100"
-                value={calcProgress()}
-                className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
-              >
-                {calcProgress()}%
-              </progress>
+        {productOrders?.length > 0 && (
+          <div className="flex justify-between items-center mt-2">
+            <div className="flex flex-col">
+              <span className="dark:text-slate-300 text-slate-500 text-xs">
+                Progress - <strong>{calcProgress()}%</strong>
+              </span>
+              <div className="flex items-center">
+                <progress
+                  id={order?.orderId}
+                  max="100"
+                  value={calcProgress()}
+                  className="block w-100% overflow-hidden rounded bg-white [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
+                >
+                  {calcProgress()}%
+                </progress>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       {isOpen && (
         <OrderDrawer
