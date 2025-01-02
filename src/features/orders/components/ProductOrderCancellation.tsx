@@ -8,8 +8,13 @@ import Loading from '../../../lib/Loading';
 
 const ProductOrderCancellation = ({
   productOrder_id,
+  currentStatus,
 }: {
   productOrder_id: string;
+  currentStatus: {
+    name: string;
+    value: string;
+  };
 }) => {
   const { setDimBackground } = useContext(ThemeContext);
   const [openModal, setOpenModal] = useState(false);
@@ -57,6 +62,11 @@ const ProductOrderCancellation = ({
 
           setOpenModal(true);
         }}
+        disabled={
+          isLoading ||
+          currentStatus?.value === 'order cancelled' ||
+          currentStatus?.value === 'order delivered'
+        }
         className=" text-danger hover:text-white"
       >
         <HiTrash className="mr-2 h-5 w-5" />

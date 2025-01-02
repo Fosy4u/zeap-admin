@@ -19,6 +19,8 @@ import ShopBar from '../../shops/components/ShopBar';
 import OrderCard from '../components/OrderCard';
 import { useState } from 'react';
 import { ProductOrderStatusHistoryDrawer } from '../components/ProductOrderStatusHistoryDrawer';
+import ProductOrderPayShop from '../components/ProductOrderPayShop';
+import ProductOrderShopRevenue from '../components/ProductOrderShopRevenue';
 
 const ProductOrder = () => {
   const token = useSelector(globalSelectors.selectAuthToken);
@@ -58,6 +60,7 @@ const ProductOrder = () => {
           <Button color="info" size="sm" onClick={() => setIsOpen(true)}>
             View Status History
           </Button>
+          <ProductOrderPayShop productOrder={productOrder} />
         </div>
       </div>
       {isLoading && <Loading />}
@@ -80,16 +83,31 @@ const ProductOrder = () => {
               {/* <span className="text-lg font-semibold">{product?.title}</span> */}
               <ProductImage images={images || []} />
               <div className="hidden md:block">
-                <span className="font-bold">Body Measurements</span>
+                <span className="font-bold">Main Parent Order</span>
                 <div className="flex flex-col gap-2 bg-grey8 p-2">
-                  {bodyMeasurements?.length > 0 ? (
-                    <ProductOrderBodyMeasurementDisplay
-                      bodyMeasurements={bodyMeasurements}
-                    />
-                  ) : (
-                    <Alert color="info">No body measurements</Alert>
-                  )}
+                  <OrderCard order={order} />
                 </div>
+              </div>
+
+              <div className="hidden md:block">
+                <span className="font-bold">Customer</span>
+                <div className=" bg-grey8 p-2 ">
+                  <div>
+                    <UserTile user={user} />
+                  </div>
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <span className="font-bold">Shop</span>
+                <div className=" bg-grey8 p-2 ">
+                  <div>
+                    <ShopBar shop={shop} />
+                  </div>
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <span className="font-bold">Shop Revenue</span>
+                <ProductOrderShopRevenue productOrder={productOrder} />
               </div>
             </div>
             <div className="flex flex-col gap-8  divide-y divide-slate-300 m-2 p-4 bg-grey8 dark:bg-boxdark">
@@ -219,7 +237,7 @@ const ProductOrder = () => {
                 <span className="text-md ">Size</span>
                 <span className="text-lg font-semibold">{size}</span>
               </div>
-              <div className="block md:hidden">
+              <div>
                 <span className="font-bold">Body Measurements</span>
                 <div className="flex flex-col gap-2 bg-grey8 p-2">
                   {bodyMeasurements?.length > 0 ? (
@@ -229,22 +247,6 @@ const ProductOrder = () => {
                   ) : (
                     <Alert color="info">No body measurements</Alert>
                   )}
-                </div>
-              </div>
-              <div>
-                <span className="font-bold">Customer</span>
-                <div className=" bg-grey8 p-2 ">
-                  <div>
-                    <UserTile user={user} />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span className="font-bold">Shop</span>
-                <div className=" bg-grey8 p-2 ">
-                  <div>
-                    <ShopBar shop={shop} />
-                  </div>
                 </div>
               </div>
 
@@ -276,11 +278,31 @@ const ProductOrder = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="md:hidden">
                 <span className="font-bold">Main Parent Order</span>
                 <div className="flex flex-col gap-2 bg-grey8 p-2">
                   <OrderCard order={order} />
                 </div>
+              </div>
+              <div className="md:hidden">
+                <span className="font-bold">Customer</span>
+                <div className=" bg-grey8 p-2 ">
+                  <div>
+                    <UserTile user={user} />
+                  </div>
+                </div>
+              </div>
+              <div className="md:hidden">
+                <span className="font-bold">Shop</span>
+                <div className=" bg-grey8 p-2 ">
+                  <div>
+                    <ShopBar shop={shop} />
+                  </div>
+                </div>
+              </div>
+              <div className="md:hidden">
+                <span className="font-bold">Shop Revenue</span>
+                <ProductOrderShopRevenue productOrder={productOrder} />
               </div>
             </div>
           </div>

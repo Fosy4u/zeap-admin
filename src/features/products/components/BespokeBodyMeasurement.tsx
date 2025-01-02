@@ -30,7 +30,7 @@ const toggleTheme = {
 
 interface BodyMeasurementEnum {
   name: string;
-  measurements: string[];
+  fields: string[];
 }
 
 const BespokeBodyMeasurement = ({
@@ -139,7 +139,7 @@ const BespokeBodyMeasurement = ({
                                   if (item.name === bodyMeasurementEnum.name) {
                                     return {
                                       ...item,
-                                      fields: bodyMeasurementEnum.measurements,
+                                      fields: bodyMeasurementEnum.fields,
                                     };
                                   }
                                   return item;
@@ -151,7 +151,7 @@ const BespokeBodyMeasurement = ({
                                 ...(measurements || []),
                                 {
                                   name: bodyMeasurementEnum.name,
-                                  fields: bodyMeasurementEnum.measurements,
+                                  fields: bodyMeasurementEnum.fields,
                                 },
                               ]);
                             }
@@ -188,7 +188,7 @@ const BespokeBodyMeasurement = ({
                       </span>
 
                       <div className="flex flex-col gap-2">
-                        {bodyMeasurementEnum.measurements.map((field) => (
+                        {bodyMeasurementEnum.fields.map((field) => (
                           <div key={field} className="flex flex-col gap-2">
                             <ToggleSwitch
                               theme={toggleTheme}

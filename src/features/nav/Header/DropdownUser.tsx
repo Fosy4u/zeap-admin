@@ -18,10 +18,12 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            {capitalizeFirstLetter(user?.firstName as string)}{' '}
-            {capitalizeFirstLetter(user?.lastName as string)}
-          </span>
+          {user && (
+            <span className="block text-sm font-medium text-black dark:text-white">
+              {capitalizeFirstLetter(user?.firstName as string)}{' '}
+              {capitalizeFirstLetter(user?.lastName as string)}
+            </span>
+          )}
           <span className="block text-xs">{user?.role}</span>
         </span>
 

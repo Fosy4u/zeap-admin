@@ -350,6 +350,12 @@ interface ProductOrdersInterface {
   deliveryCompany: string;
   deliveryTrackingNumber?: string;
   deliveryTrackingLink?: string;
+  shopRevenue: {
+    currency: string;
+    value: number;
+    status: string;
+    reference?: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }

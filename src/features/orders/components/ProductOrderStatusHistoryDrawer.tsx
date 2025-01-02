@@ -189,7 +189,10 @@ export function ProductOrderStatusHistoryDrawer({
           </div>
         )}
         <div className="flex justify-center items-center gap-2 mt-6">
-          <ProductOrderCancellation productOrder_id={productOrder_id} />
+          <ProductOrderCancellation
+            productOrder_id={productOrder_id}
+            currentStatus={currentStatus}
+          />
         </div>
       </Drawer.Items>
     </Drawer>
