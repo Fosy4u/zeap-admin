@@ -355,6 +355,7 @@ interface ProductOrdersInterface {
     value: number;
     status: string;
     reference?: string;
+    paidAt?: Date;
   };
   createdAt: Date;
   updatedAt: Date;

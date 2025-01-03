@@ -1474,6 +1474,48 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    payShop: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `payment/shop`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Payment', 'Product', 'Products', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Payment Successfully Made',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    revertShopPayment: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `payment/revert/shop`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Payment', 'Product', 'Products', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Payment Successfully Reverted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
     getVouchers: builder.query({
       query: (arg) => {
         return {

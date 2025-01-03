@@ -6,6 +6,7 @@ import {
   getCurrencySmallSymbol,
   numberWithCommas,
 } from '../../../utils/helpers';
+import ReactTimeAgo from 'react-time-ago';
 
 const ProductOrderShopRevenue = ({
   productOrder,
@@ -47,6 +48,16 @@ const ProductOrderShopRevenue = ({
               <Badge color={getShopRevenueStatusColor(shopRevenue?.status)}>
                 {capitalizeFirstLetter(shopRevenue?.status)}
               </Badge>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-md ">Paid At</span>
+              <span className="text-lg font-semibold">
+                {shopRevenue?.paidAt ? (
+                  <ReactTimeAgo date={shopRevenue?.paidAt} locale="en-US" />
+                ) : (
+                  'N/A'
+                )}
+              </span>
             </div>
             <div className="flex flex-col">
               <span className="text-md ">Reference</span>
