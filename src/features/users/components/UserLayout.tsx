@@ -116,7 +116,11 @@ const UserLayout = ({
               <span className="w-full">
                 <UserProfileOverview
                   setValue={setValue}
-                  shopsNumber={shops?.length}
+                  shopsNumber={shops?.length || 0}
+                  wishesNumber={wishlist?.length || 0}
+                  ordersNumber={orders?.length || 0}
+                  vouchersNumber={vouchers?.length || 0}
+                  basketsNumber={baskets?.length || 0}
                 />
               </span>
             </div>

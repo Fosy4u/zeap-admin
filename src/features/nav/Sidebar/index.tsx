@@ -402,6 +402,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li onClick={() => setSidebarOpen(false)}>
                 <NavLink
+                  to="/helpDesk"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
+                    pathname.includes('helpDesk') &&
+                    'bg-graydark dark:bg-meta-4 text-white'
+                  }`}
+                >
+                  <svg
+                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+                    />
+                  </svg>
+                  Help Desk
+                </NavLink>
+              </li>
+              <li onClick={() => setSidebarOpen(false)}>
+                <NavLink
                   to="/marketplace"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium   duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4 ${
                     pathname.includes('chart') &&

@@ -344,6 +344,18 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getShopPayments: builder.query({
+      query: (arg) => {
+        return {
+          url: `shop/revenues`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Shops', 'Shop', 'Order', 'Payment', 'Basket'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     updateShop: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
@@ -1547,7 +1559,7 @@ export default createApi({
           params: { ...arg },
         };
       },
-      providesTags: ['Wish', 'User', 'Product'],
+      providesTags: ['Wish', 'User', 'Product', 'Products', 'Users'],
       onQueryStarted: async (_, queryArgs) => {
         responseHandler({}, queryArgs);
       },

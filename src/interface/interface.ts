@@ -409,6 +409,34 @@ interface WishlistInterface {
   updatedAt: Date;
   __v: number;
 }
+interface ShopPaymentInterface {
+  productOrder_id: string;
+  buyerPaid: {
+    currency: string;
+    value: number;
+    _id: string;
+  };
+  purchaseDate: Date;
+  purchasedProduct: {
+    title: string;
+    productId: string;
+    productType: string;
+    sku: string;
+    images: [
+      {
+        name: string;
+        link: string;
+      },
+    ];
+  };
+
+  shopRevenue: {
+    currency: string;
+    value: number;
+    status: string;
+    _id: string;
+  };
+}
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -437,4 +465,5 @@ export {
   VoucherInterface,
   PointInterface,
   WishlistInterface,
+  ShopPaymentInterface,
 };

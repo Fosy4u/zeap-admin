@@ -11,9 +11,17 @@ import {
 const UserProfileOverview = ({
   setValue,
   shopsNumber,
+  wishesNumber,
+  ordersNumber,
+  vouchersNumber,
+  basketsNumber,
 }: {
   setValue: (value: string) => void;
   shopsNumber: number;
+  wishesNumber: number;
+  ordersNumber: number;
+  vouchersNumber: number;
+  basketsNumber: number;
 }) => {
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -52,7 +60,7 @@ const UserProfileOverview = ({
         showDetail={true}
         handleClick={() => setValue('Orders')}
         className="cursor-pointer "
-        subTitle="0"
+        subTitle={ordersNumber?.toString()}
         titleClassName="text-darkGold"
       />
       <StatCard
@@ -65,7 +73,7 @@ const UserProfileOverview = ({
         showDetail={true}
         handleClick={() => setValue('Vouchers')}
         className="cursor-pointer "
-        subTitle="0"
+        subTitle={vouchersNumber?.toString()}
         titleClassName="text-darkGold"
       />
 
@@ -75,11 +83,11 @@ const UserProfileOverview = ({
             <FavouriteIcon />
           </span>
         }
-        title="Favorites"
+        title="Wishes"
         showDetail={true}
-        handleClick={() => setValue('Favorites')}
+        handleClick={() => setValue('Wishes')}
         className="cursor-pointer "
-        subTitle="0"
+        subTitle={wishesNumber?.toString()}
         titleClassName="text-darkGold"
       />
       <StatCard
@@ -92,7 +100,7 @@ const UserProfileOverview = ({
         showDetail={true}
         handleClick={() => setValue('Cart')}
         className="cursor-pointer "
-        subTitle="0"
+        subTitle={basketsNumber?.toString()}
         titleClassName="text-darkGold"
       />
     </div>

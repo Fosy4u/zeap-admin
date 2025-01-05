@@ -27,6 +27,7 @@ import ProductOrders from '../features/orders/views/ProductOrders';
 import Payments from '../features/payments';
 import Payment from '../features/payments/Payment';
 import ProductOrder from '../features/orders/views/ProductOrder';
+import NewFeature from '../features/NewFeature';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -174,6 +175,18 @@ const routes: RouteInterface[] = [
   {
     path: '/profile',
     component: MyProfile,
+  },
+  {
+    path: '/reports',
+    component: NewFeature,
+  },
+  {
+    path: '/marketplace',
+    component: NewFeature,
+  },
+  {
+    path: '/helpDesk',
+    component: NewFeature,
   },
 ];
 
