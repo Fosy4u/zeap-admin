@@ -28,7 +28,7 @@ const Products = () => {
   searchParams.forEach((value, key) => {
     param[key] = value;
   });
-  console.log('param', param);
+
   const productsQuery = zeapApiSlice.useGetProductsQuery(
     {
       status: status || 'live',

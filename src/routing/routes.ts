@@ -28,6 +28,8 @@ import Payments from '../features/payments';
 import Payment from '../features/payments/Payment';
 import ProductOrder from '../features/orders/views/ProductOrder';
 import NewFeature from '../features/NewFeature';
+import BodyMeasurement from '../features/controlPanel/bodymeasurement.tsx';
+import DeliveryFee from '../features/controlPanel/deliveryFee';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -166,6 +168,14 @@ const routes: RouteInterface[] = [
   {
     path: 'payment/:reference',
     component: Payment,
+  },
+  {
+    path: '/control-panel/body-measurement',
+    component: BodyMeasurement,
+  },
+  {
+    path: '/control-panel/delivery-fee',
+    component: DeliveryFee,
   },
 
   {

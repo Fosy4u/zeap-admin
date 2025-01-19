@@ -1,7 +1,7 @@
 import Chart from 'react-apexcharts';
-import DateFilter from '../../../lib/DateFilter';
-import { useState } from 'react';
-import { dateCalcHelper } from '../../../utils/dateCalcHelper';
+// import DateFilter from '../../../lib/DateFilter';
+// import { useState } from 'react';
+// import { dateCalcHelper } from '../../../utils/dateCalcHelper';
 
 const SalesCountChart = ({
   fillColors,
@@ -96,32 +96,39 @@ const SalesCountChart = ({
   return <Chart height={420} options={options} series={series} type="donut" />;
 };
 
-const thisYearFirstDay = dateCalcHelper.getThisYearFirstDay();
-const thisYearLastDay = dateCalcHelper.getThisYearLastDay();
+// const thisYearFirstDay = dateCalcHelper.getThisYearFirstDay();
+// const thisYearLastDay = dateCalcHelper.getThisYearLastDay();
 
-const ShopSalesCount = () => {
-  const [to, setTo] = useState<Date | string>(thisYearLastDay);
-  const [from, setFrom] = useState<Date | string>(thisYearFirstDay);
+const ShopSalesCount = ({
+  productGroupsCount,
+}: {
+  productGroupsCount: {
+    'Ready-Made': number;
+    Bespoke: number;
+  };
+}) => {
+  // const [to, setTo] = useState<Date | string>(thisYearLastDay);
+  // const [from, setFrom] = useState<Date | string>(thisYearFirstDay);
 
   return (
     <div className="bg-grey8 shadow-lg rounded-lg p-4 w-full text-grey2    dark:bg-slate-800 dark:text-white">
       <div className="flex justify-between my-1">
         <div className="text-sm">Sales Count</div>
-        <div>
+        {/* <div>
           <DateFilter from={from} setFrom={setFrom} to={to} setTo={setTo} />
-        </div>
+        </div> */}
       </div>
       <div className="flex justify-between my-3 flex-wrap">
         <div className="flex items-center text-center gap-1 text-sm flex-wrap">
           <div className="w-[16px] h-[16px] bg-baseGreen rounded-md"></div>
           <div>
-            Ready Made = <strong>{100}</strong>
+            Ready Made = <strong>{productGroupsCount['Ready-Made']}</strong>
           </div>
         </div>
         <div className="flex items-center text-center gap-1 text-sm flex-wrap">
           <div className="w-[16px] h-[16px] bg-gold rounded-md"></div>
           <div>
-            Bespoke = <strong>{50}</strong>
+            Bespoke = <strong>{productGroupsCount['Bespoke']}</strong>
           </div>
         </div>
       </div>
@@ -129,7 +136,10 @@ const ShopSalesCount = () => {
         <SalesCountChart
           fillColors={['#D5B07B', '#133522']}
           labels={['Bespoke', 'Ready Made']}
-          data={[40, 100]}
+          data={[
+            productGroupsCount['Bespoke'],
+            productGroupsCount['Ready-Made'],
+          ]}
           totalLabel="Total Sales"
         />
       </div>

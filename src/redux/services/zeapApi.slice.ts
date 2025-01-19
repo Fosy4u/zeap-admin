@@ -22,6 +22,9 @@ export default createApi({
     'Voucher',
     'Point',
     'Wish',
+    'Analytics',
+    'BodyMeasurement',
+    'DeliveryFee',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1562,6 +1565,160 @@ export default createApi({
       providesTags: ['Wish', 'User', 'Product', 'Products', 'Users'],
       onQueryStarted: async (_, queryArgs) => {
         responseHandler({}, queryArgs);
+      },
+    }),
+    getShopAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `analytics/shop`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Shop', 'Shops', 'Analytics'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getBodyMeasurementGuide: builder.query({
+      query: (arg) => {
+        return {
+          url: `bodyMeasurementGuide/bespoke`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['BodyMeasurement'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getBodyMeasurementGuideGallery: builder.query({
+      query: (arg) => {
+        return {
+          url: `bodyMeasurementGuide/bespoke/gallery`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['BodyMeasurement'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    uploadBodyMeasurementGuideImage: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/field/Image`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Image Successfully Uploaded',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deleteBodyMeasurementGuideFieldImage: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/field/Image/delete`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Image Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updateBodyMeasurementGuideField: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/field/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Field Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deleteBodyMeasurementGuideField: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/field/delete`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Field Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getDeliveryFee: builder.query({
+      query: (arg) => {
+        return {
+          url: `/deliveryFee`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['DeliveryFee', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+
+    updateDeliveryFee: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/deliveryFee/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['DeliveryFee', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Delivery Fee Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
       },
     }),
   }),

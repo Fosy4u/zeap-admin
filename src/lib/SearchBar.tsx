@@ -1,14 +1,16 @@
 const SearchBar = ({
   setInput,
   placeHolder,
+  className,
 }: {
   setInput: (input: string) => void;
   placeHolder: string;
+  className?: string;
 }) => {
   return (
     <>
       {/*<!-- Component: Rounded basic search input --> */}
-      <div className="relative my-6">
+      <div className={`relative my-6 ${className}`}>
         <input
           id="id-s03"
           type="search"

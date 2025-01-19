@@ -437,6 +437,51 @@ interface ShopPaymentInterface {
     _id: string;
   };
 }
+interface ShopAnaliticsInterface {
+  productSold: number;
+  ordersCountByStatus: {
+    placed: number;
+    confirmed: number;
+    processing: number;
+    ready: number;
+    dispatched: number;
+    delivered: number;
+    cancelled: number;
+  };
+  productGroupsCount: {
+    'Ready-Made': number;
+    Bespoke: number;
+  };
+
+  shopRevenuesByPaymentStatus: {
+    pending: {
+      currency: string;
+      value: number;
+    };
+    paid: {
+      currency: string;
+      value: number;
+    };
+  };
+}
+interface BodyMeasurementGuideInterface {
+  _id: string;
+  name: string;
+  fields: [
+    {
+      _id: string;
+      field: string;
+      imageUrl: {
+        name: string;
+        link: string;
+      };
+      description: string;
+    },
+  ];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -466,4 +511,6 @@ export {
   PointInterface,
   WishlistInterface,
   ShopPaymentInterface,
+  ShopAnaliticsInterface,
+  BodyMeasurementGuideInterface,
 };

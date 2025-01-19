@@ -22,14 +22,20 @@ const Shop = () => {
   );
   const shop = shopQuery?.data?.data;
   const user = shop?.user;
+  const shopAnalyticsQuery = zeapApiSlice.useGetShopAnalyticsQuery(
+    { shopId: id },
+    { skip: !shop || !token },
+  );
+  const shopAnalytics = shopAnalyticsQuery?.data?.data;
+  const isLoading = shopQuery.isLoading || shopAnalyticsQuery.isLoading;
 
   return (
     <div>
-      {shopQuery.isLoading && <Loading />}
-      {shop && (
+      {isLoading && <Loading />}
+      {shop && shopAnalytics && (
         <>
-          <TopSection shop={shop} />
-          <ShopOverview shop={shop} />
+          <TopSection shop={shop} shopAnalytics={shopAnalytics} />
+          <ShopOverview shopAnalytics={shopAnalytics} />
           <ShopProductOrders shop_id={shop._id} />
           <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
             <div className="col-span-1">

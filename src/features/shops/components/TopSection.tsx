@@ -1,10 +1,26 @@
 import { useNavigate } from 'react-router-dom';
 import NoPic from '../../../images/user/avatar-anika-visser.png';
-import { ShopInterface } from '../../../interface/interface';
-import { capitalizeFirstLetter } from '../../../utils/helpers';
+import {
+  ShopAnaliticsInterface,
+  ShopInterface,
+} from '../../../interface/interface';
+import {
+  capitalizeFirstLetter,
+  getCurrencySmallSymbol,
+  numberWithCommas,
+} from '../../../utils/helpers';
 
-const TopSection = ({ shop }: { shop: ShopInterface }) => {
+const TopSection = ({
+  shop,
+  shopAnalytics,
+}: {
+  shop: ShopInterface;
+  shopAnalytics: ShopAnaliticsInterface;
+}) => {
   const navigate = useNavigate();
+  const shopRevenuesByPaymentStatus = shopAnalytics.shopRevenuesByPaymentStatus;
+  const paid = shopRevenuesByPaymentStatus?.paid;
+
   return (
     <div className="bg-lightGreen text-black dark:text-white dark:bg-baseGreen  opacity-100 rounded-b-3xl p-2">
       <div className="flex flex-col gap-0.5">
@@ -47,16 +63,17 @@ const TopSection = ({ shop }: { shop: ShopInterface }) => {
             </span>
           )}
         </div>
-        <div className="my-3 w-full flex flex-1 justify-between items-center">
-          <div className="  bg-baseGreen dark:bg-lightGreen text-white dark:text-black rounded-2xl p-2  ">
-            <p className=" text-sm text-lightGold dark:text-darkGold ">
-              Total Revenue
+        <div className="my-3 w-full flex  flex-1 justify-between">
+          <div className=" bg-success  text-white  rounded-2xl p-2  ">
+            <p className=" text-xs md:text-sm text-lightSuccess ">
+              Paid Revenue
             </p>
-            <p className=" text-lg font-bold">
-              {' '}
-              {`${shop?.currency?.symbol}${shop?.totalRevenue || 0}`}
+            <p className=" text-md font-bold">
+              {getCurrencySmallSymbol(paid.currency)}
+              {numberWithCommas(paid?.value)}
             </p>
           </div>
+
           <button
             onClick={() => navigate(`/products/${shop?.shopId}/add-product`)}
             className="flex  w-fit h-fit items-center gap-1 px-3 py-1.5 text-sm font-medium text-white bg-darkGold rounded-md hover:bg-opacity-90"

@@ -1,32 +1,47 @@
-import { ShopInterface } from '../../../interface/interface';
+import { ShopAnaliticsInterface } from '../../../interface/interface';
 import StatCard2 from '../../../lib/StatCard2';
-import ShopReport from './ShopReport';
+import { capitalizeFirstLetter } from '../../../utils/helpers';
+// import ShopReport from './ShopReport';
 import ShopSalesCount from './ShopSalesCount';
 import ShopSalesRevenue from './ShopSalesRevenue';
-import ShopWeeklySales from './ShopWeeklySales';
+// import ShopWeeklySales from './ShopWeeklySales';
 
-const ShopOverview = ({ shop }: { shop: ShopInterface }) => {
+const ShopOverview = ({
+  shopAnalytics,
+}: {
+  shopAnalytics: ShopAnaliticsInterface;
+}) => {
+  const productSold = shopAnalytics?.productSold;
+  const ordersCountByStatus = shopAnalytics.ordersCountByStatus;
+  const productGroupsCount = shopAnalytics.productGroupsCount;
+  const shopRevenuesByPaymentStatus = shopAnalytics.shopRevenuesByPaymentStatus;
   return (
     <div className="my-4 w-full">
       <div className="text-darkGold my-2">Overview</div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard2 title="Product Sold" value={203} />
-        <StatCard2 title="Orders Received" value={203} />
-        <StatCard2 title="Orders Delivered" value={203} />
-        <StatCard2 title="Orders Pending" value={203} />
+        <StatCard2 title="Product Sold" value={productSold} />
+        {Object.keys(ordersCountByStatus).map((key) => (
+          <StatCard2
+            key={key}
+            title={`${capitalizeFirstLetter(key)} Orders`}
+            value={ordersCountByStatus[key as keyof typeof ordersCountByStatus]}
+          />
+        ))}
       </div>
       <div className="flex flex-col my-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ShopSalesCount />
-          <ShopSalesRevenue shop={shop} />
+          <ShopSalesCount productGroupsCount={productGroupsCount} />
+          <ShopSalesRevenue
+            shopRevenuesByPaymentStatus={shopRevenuesByPaymentStatus}
+          />
         </div>
       </div>
-      <div>
+      {/* <div>
         <ShopReport />
-      </div>
-      <div>
+      </div> */}
+      {/* <div>
         <ShopWeeklySales shop={shop} />
-      </div>
+      </div> */}
     </div>
   );
 };
