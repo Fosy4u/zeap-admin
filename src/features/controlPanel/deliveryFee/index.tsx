@@ -48,7 +48,12 @@ const DeliveryFee = () => {
   console.log('deliveryFee', deliveryFee);
   const fee = deliveryFee?.fee;
   const currency = deliveryFee?.currency;
-  const logs = deliveryFee?.logs;
+  const logs =
+    (deliveryFee?.logs &&
+      [...deliveryFee?.logs].sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      })) ||
+    [];
   const isLoading =
     getDeliveryFeeQuery.isLoading || updateDeliveryFeeStatus.isLoading;
 
@@ -125,7 +130,7 @@ const DeliveryFee = () => {
       )}
       {logs?.length > 0 && (
         <div className="flex flex-col max-h-96 overflow-y-auto gap-4 p-4 text-gray-500 dark:text-gray-400 border p-4 m-4 rounded-lg">
-          <h5 className="text-lg font-semibold">Delivery Fee Update History</h5>
+          <p className="text-sm font-semibold">Delivery Fee Update History</p>
           <Timeline>
             {logs.map(
               (
@@ -202,10 +207,11 @@ const DeliveryFee = () => {
             <div className="flex flex-col gap-4 p-4  text-gray-500 dark:text-gray-400">
               <Label htmlFor="fieldTitle">Delivery Fee</Label>
               <TextInput
-                id="fieldTitle"
-                name="fieldTitle"
+                id="deliveryFee"
+                name="deliveryFee"
                 value={newDeliveryFee}
                 onChange={(e) => setNewDeliveryFee(Number(e.target.value))}
+                addon={currency}
               />
             </div>
           </Modal.Body>

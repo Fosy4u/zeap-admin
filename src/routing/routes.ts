@@ -30,6 +30,7 @@ import ProductOrder from '../features/orders/views/ProductOrder';
 import NewFeature from '../features/NewFeature';
 import BodyMeasurement from '../features/controlPanel/bodymeasurement.tsx';
 import DeliveryFee from '../features/controlPanel/deliveryFee';
+import ExchangeRate from '../features/controlPanel/exchangeRate';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -176,6 +177,10 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/delivery-fee',
     component: DeliveryFee,
+  },
+  {
+    path: '/control-panel/exchange-rate',
+    component: ExchangeRate,
   },
 
   {

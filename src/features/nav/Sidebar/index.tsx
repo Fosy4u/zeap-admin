@@ -459,6 +459,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Delivery Fee
                             </NavLink>
                           </li>
+                          <li>
+                            <NavLink
+                              to="/control-panel/exchange-rate"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Exchange Rate
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}

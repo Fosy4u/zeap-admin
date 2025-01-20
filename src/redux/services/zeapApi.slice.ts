@@ -25,6 +25,7 @@ export default createApi({
     'Analytics',
     'BodyMeasurement',
     'DeliveryFee',
+    'ExchangeRate',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1714,6 +1715,39 @@ export default createApi({
         responseHandler(
           {
             success: 'Delivery Fee Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getExchangeRate: builder.query({
+      query: (arg) => {
+        return {
+          url: `/exchangeRate`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['ExchangeRate', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    updateExchangeRate: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/exchangeRate/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['ExchangeRate', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Exchange Rate Successfully Updated',
             successHandler,
             errorHandler,
           },
