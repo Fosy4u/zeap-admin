@@ -1,10 +1,53 @@
 'use client';
 
-import {  Drawer } from 'flowbite-react';
+import { Drawer } from 'flowbite-react';
 import { useState } from 'react';
 import { HiAdjustments, HiMinus, HiPlus } from 'react-icons/hi';
 import { HiBars2 } from 'react-icons/hi2';
 import { useSearchParams } from 'react-router-dom';
+
+const drawerTmem = {
+  root: {
+    base: 'fixed z-40 overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800',
+    backdrop: 'fixed inset-0 z-30 bg-gray-900/50 dark:bg-gray-900/80',
+    edge: 'bottom-35',
+    position: {
+      top: {
+        on: 'left-0 right-0 top-0 w-full transform-none',
+        off: 'left-0 right-0 top-0 w-full -translate-y-full',
+      },
+      right: {
+        on: 'right-0 top-0 h-screen w-80 transform-none',
+        off: 'right-0 top-0 h-screen w-80 translate-x-full',
+      },
+      bottom: {
+        on: 'bottom-0 left-0 right-0 w-full transform-none h-[70vh] md:h-full overflow-y-scroll',
+        off: 'bottom-0 left-0 right-0 w-full translate-y-full',
+      },
+      left: {
+        on: 'left-0 top-0 h-screen w-80 transform-none',
+        off: 'left-0 top-0 h-screen w-80 -translate-x-full',
+      },
+    },
+  },
+  header: {
+    inner: {
+      closeButton:
+        'absolute end-2.5 top-2.5 flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white',
+      closeIcon: 'h-4 w-4',
+      titleIcon: 'me-2.5 h-4 w-4',
+      titleText:
+        'mb-4 inline-flex items-center text-base font-semibold text-gray-500 dark:text-gray-400',
+    },
+    collapsed: {
+      on: 'hidden',
+      off: 'block',
+    },
+  },
+  items: {
+    base: '',
+  },
+};
 
 export function MobileProductFilters({
   dynamicFilters,
@@ -56,6 +99,7 @@ export function MobileProductFilters({
   return (
     <>
       <Drawer
+        theme={drawerTmem}
         edge
         open={isOpen}
         onClose={handleClose}
@@ -75,7 +119,6 @@ export function MobileProductFilters({
         />
 
         <Drawer.Items>
-          
           <div className="flex flex-col h-[78vh] overflow-scroll p-2">
             <div className="grid grid-cols-1 divide-y divide-gray-200 dark:divide-gray-700">
               <div className="flex justify-between items-center">

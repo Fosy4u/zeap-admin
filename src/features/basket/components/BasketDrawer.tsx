@@ -30,7 +30,6 @@ export function BasketDrawer({
   basket: BasketInterface;
 }) {
   const currency = useSelector(globalSelectors.selectCurrency);
-  console.log('basket', basket);
 
   const totalWithoutVoucher = basket?.totalWithoutVoucher;
   const appliedVoucherAmount = basket?.appliedVoucherAmount ?? 0;
