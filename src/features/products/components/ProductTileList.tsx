@@ -24,7 +24,7 @@ const ProductTileList = ({
         ))}
       </div>
 
-      <div className="hidden md:grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-5 w-full  items-center justify-center cursor-pointer">
+      <div className="hidden md:grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3  gap-5 w-full  items-center justify-center cursor-pointer">
         {products?.map((product: ProductInterface) => (
           <ProductCard key={product?.productId} product={product} />
         ))}

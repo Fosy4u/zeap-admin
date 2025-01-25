@@ -92,7 +92,7 @@ const Order = ({ order }: { order: OrderInterface }) => {
       </div>
       <div className="flex flex-col gap-2 shadow-md w-full p-2">
         <span className="font-bold">Sub Product Orders</span>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  ">
+        <div className="grid grid-cols-1 gap-4   ">
           {productOrders.map((productOrder: ProductOrdersInterface) => (
             <div key={productOrder?._id}>
               <ProductOrderCard productOrder={productOrder} />

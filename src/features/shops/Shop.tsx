@@ -37,12 +37,12 @@ const Shop = () => {
           <TopSection shop={shop} shopAnalytics={shopAnalytics} />
           <ShopOverview shopAnalytics={shopAnalytics} />
           <ShopProductOrders shop_id={shop._id} />
-          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
-            <div className="col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-8 md:gap-4">
+            <div className="col-span-3">
               <ShopProfile user={user} shop={shop} />
               <ShopPayments shopId={shop.shopId} />
             </div>
-            <div className="col-span-3">
+            <div className="col-span-5">
               <ShopProducts shopId={shop.shopId} />
             </div>
           </div>

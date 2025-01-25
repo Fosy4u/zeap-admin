@@ -67,7 +67,7 @@ const ShopProducts = ({ shopId }: { shopId: string }) => {
             </div>
           </div>
 
-          <div className="hidden md:grid grid-cols-2 md:grid-cols-3   gap-5 w-full  items-center justify-center cursor-pointer ">
+          <div className="hidden md:grid grid-cols-2    gap-5 w-full  items-center justify-center cursor-pointer ">
             {products?.length > 0 &&
               products?.map((product: ProductInterface) => (
                 <ProductCard
