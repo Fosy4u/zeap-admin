@@ -30,6 +30,7 @@ export function BasketDrawer({
   basket: BasketInterface;
 }) {
   const currency = useSelector(globalSelectors.selectCurrency);
+  console.log('basket', basket);
 
   const totalWithoutVoucher = basket?.totalWithoutVoucher;
   const appliedVoucherAmount = basket?.appliedVoucherAmount ?? 0;
@@ -61,23 +62,36 @@ export function BasketDrawer({
             {numberWithCommas(Number(appliedVoucherAmount))}
           </Alert>
         )}
-        <div className="flex justify-between p-4 text-black font-semibold">
-          <span>
-            Subtotal
-            <p className="text-sm text-slate-500">Delivery fee not included</p>
-          </span>
-          <span className="flex justify-between gap-2 ">
-            {totalWithoutVoucher && (
-              <span className="line-through text-slate-400">
+        <div className="flex flex-col ">
+          <div className="flex text-sm justify-between p-4 text-black font-semibold">
+            <span>Subtotal</span>
+            <span className="flex justify-between gap-2 ">
+              {totalWithoutVoucher && (
+                <span className="line-through text-slate-400">
+                  {currency?.symbol}
+                  {numberWithCommas(Number(totalWithoutVoucher))}
+                </span>
+              )}
+              <span>
                 {currency?.symbol}
-                {numberWithCommas(Number(totalWithoutVoucher))}
+                {numberWithCommas(Number(basket?.itemsTotal))}
               </span>
-            )}
+            </span>
+          </div>
+          <div className="flex text-sm justify-between p-4 text-black font-semibold">
+            <span>Delivery</span>
+            <span>
+              {currency?.symbol}
+              {numberWithCommas(Number(basket?.deliveryFee))}
+            </span>
+          </div>
+          <div className="flex justify-between p-4 text-black font-bold">
+            <span>Total</span>
             <span>
               {currency?.symbol}
               {numberWithCommas(Number(basket?.total))}
             </span>
-          </span>
+          </div>
         </div>
       </Drawer.Items>
     </Drawer>

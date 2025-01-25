@@ -252,6 +252,8 @@ interface BasketInterface {
   total: number;
   totalWithoutVoucher?: number;
   appliedVoucherAmount?: number;
+  itemsTotal: number;
+  deliveryFee: number;
 }
 interface MeasurementInterface {
   name: string;
