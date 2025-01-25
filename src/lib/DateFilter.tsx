@@ -13,6 +13,7 @@ const thisMonthLastDay = dateCalcHelper.getThisMonthLastDay();
 const yesterday = dateCalcHelper.getYesterday();
 const today = dateCalcHelper.getToday();
 const thisWeekFirstDay = dateCalcHelper.getThisWeekFirstDay();
+console.log('thisWeekFirstDay', thisWeekFirstDay);
 const thisWeekLastDay = dateCalcHelper.getThisWeekLastDay();
 const lastWeekFirstDay = dateCalcHelper.getLastWeekFirstDay();
 const lastWeekLastDay = dateCalcHelper.getLastWeekLastDay();
@@ -97,17 +98,29 @@ const DateFilter = ({
       to: lastYearLastDay,
     },
   ];
-
+  const getLabel = (from: Date | string, to: Date | string) => {
+    const found =
+      dateFilterOptions?.find(
+        (option) => option.from === from && option.to === to,
+      ) ||
+      dateFilterOptions.find(
+        (option) =>
+          option.from === moment(from).format('YYYY-MM-DD') &&
+          option.to === moment(to).format('YYYY-MM-DD'),
+      ) ||
+      dateFilterOptions.find(
+        (option) =>
+          new Date(option.from).getTime() === new Date(from).getTime() &&
+          new Date(option.to).getTime() === new Date(to).getTime(),
+      );
+    return found?.label || 'Custom';
+  };
   return (
     <span className="text-sm text-gray-600">
       <Dropdown
         color="success"
         size="xs"
-        label={
-          dateFilterOptions?.find(
-            (option) => option.from === from && option.to === to,
-          )?.label || 'Custom Date'
-        }
+        label={getLabel(from, to)}
         dismissOnClick={false}
       >
         <Dropdown.Divider />

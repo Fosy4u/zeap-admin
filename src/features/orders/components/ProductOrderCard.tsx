@@ -74,8 +74,24 @@ const ProductOrderCard = ({
           <ReactTimeAgo date={productOrder?.createdAt} locale="en-US" />
         </span>
       </div>
-      <div className="flex  ">
-        <Badge color="info">{shop?.shopName}</Badge>
+      <div className="flex justify-between ">
+        <div className="text-xs flex flex-col gap-1">
+          <span>Shop</span>
+          <Badge color="info">{shop?.shopName}</Badge>
+        </div>
+        <div className="text-xs flex flex-col gap-1">
+          <span>Shop Payment Status</span>
+          <Badge
+            className="w-fit"
+            color={
+              productOrder?.shopRevenue?.status === 'paid'
+                ? 'success'
+                : 'warning'
+            }
+          >
+            {productOrder?.shopRevenue?.status}
+          </Badge>
+        </div>
       </div>
     </NavLink>
   );

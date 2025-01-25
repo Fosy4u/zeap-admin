@@ -21,6 +21,7 @@ const BodyMeasurementGuide = ({
       link: string;
     };
     _id: string;
+    gender: string[];
   }) => void;
   setOpenEditModal: (open: boolean) => void;
 }) => {
@@ -49,12 +50,28 @@ const BodyMeasurementGuide = ({
             .map((field, index) => (
               <div key={index} className="p-4">
                 <div className="pb-9 pt-6">
-                  <h2
-                    className="mb-3 text-md font-semibold text-primary"
-                    id="option-1-heading"
-                  >
-                    {field.field}
-                  </h2>
+                  <div className="flex  gap-2 items-center justify-between">
+                    <h2
+                      className="mb-3 text-md font-semibold text-primary"
+                      id="option-1-heading"
+                    >
+                      {field.field}
+                    </h2>
+                    {field?.gender?.length > 0 && (
+                      <div className="flex gap-1">
+                        {field?.gender?.map((sex, index) => (
+                          <Badge
+                            className={`text-xs text-white ${sex === 'male' ? 'bg-blue-500' : 'bg-pink-500'}`}
+                            key={index}
+                            size="xs"
+                          >
+                            {sex}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   {field.description ? (
                     <p className="mb-4">{capitalize(field.description)} </p>
                   ) : (

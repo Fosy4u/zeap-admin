@@ -45,11 +45,13 @@ const BodyMeasurementEditModal = ({
       link: string;
     };
     _id: string;
+    gender: string[];
   };
 }) => {
   const [error, setError] = useState<string>('');
   const [fieldTitle, setFieldTitle] = useState<string>(field.field);
   const [description, setDescription] = useState<string>(field.description);
+
   const [
     updateBodyMeasurementGuideField,
     updateBodyMeasurementGuideFieldStatus,
@@ -109,6 +111,7 @@ const BodyMeasurementEditModal = ({
               id="fieldTitle"
               name="fieldTitle"
               value={fieldTitle}
+              disabled
               onChange={(e) => setFieldTitle(e.target.value)}
             />
             <Label htmlFor="description">Description</Label>
@@ -122,6 +125,7 @@ const BodyMeasurementEditModal = ({
           </div>
         </div>
       </Modal.Body>
+
       <Modal.Footer className="flex justify-between items-center">
         <Button
           color="success"

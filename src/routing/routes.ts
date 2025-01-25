@@ -31,6 +31,7 @@ import NewFeature from '../features/NewFeature';
 import BodyMeasurement from '../features/controlPanel/bodymeasurement.tsx';
 import DeliveryFee from '../features/controlPanel/deliveryFee';
 import ExchangeRate from '../features/controlPanel/exchangeRate';
+import BodyMeasurementGuideLayout from '../features/controlPanel/bodymeasurement.tsx/components/BodyMeasurementGuideLayout';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -173,6 +174,10 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/body-measurement',
     component: BodyMeasurement,
+  },
+  {
+    path: '/control-panel/body-measurement/:gender',
+    component: BodyMeasurementGuideLayout,
   },
   {
     path: '/control-panel/delivery-fee',

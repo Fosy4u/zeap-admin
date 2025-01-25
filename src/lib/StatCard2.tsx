@@ -7,7 +7,7 @@ const StatCard2 = ({
 }) => {
   return (
     <div className="bg-grey8 shadow-lg rounded-lg p-4 w-full text-grey2    dark:bg-slate-800 dark:text-white">
-      <div className="font-semibold">{value}</div>
+      <div className="font-bold text-md">{value}</div>
       <div className="text-sm">{title}</div>
     </div>
   );

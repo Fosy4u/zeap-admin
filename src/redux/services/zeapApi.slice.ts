@@ -1580,6 +1580,66 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getProductOrderAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `analytics/products/general`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Product', 'Products', 'Analytics'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getCountAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `analytics/count`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Analytics'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getUserShopCountAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `/analytics/users/shop/count`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Analytics'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductOrdersCountByDateAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `analytics/count/productOrders/date`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Analytics', 'Product', 'Products', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getProductAnalytics: builder.query({
+      query: (arg) => {
+        return {
+          url: `analytics/products`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Analytics', 'Product', 'Products', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     getBodyMeasurementGuide: builder.query({
       query: (arg) => {
         return {

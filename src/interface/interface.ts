@@ -464,6 +464,22 @@ interface ShopAnaliticsInterface {
     };
   };
 }
+interface ProductAnaliticsInterface {
+  productSold: number;
+  ordersCountByStatus: {
+    placed: number;
+    confirmed: number;
+    processing: number;
+    ready: number;
+    dispatched: number;
+    delivered: number;
+    cancelled: number;
+  };
+  productGroupsCount: {
+    'Ready-Made': number;
+    Bespoke: number;
+  };
+}
 interface BodyMeasurementGuideInterface {
   _id: string;
   name: string;
@@ -476,11 +492,28 @@ interface BodyMeasurementGuideInterface {
         link: string;
       };
       description: string;
+      gender: string[];
     },
   ];
   createdAt: Date;
   updatedAt: Date;
   __v: number;
+}
+interface CountAnalyticsInterface {
+  basket: {
+    label: string;
+    count: number;
+  };
+  order: {
+    label: string;
+    count: number;
+  };
+  productType: [
+    {
+      label: string;
+      count: number;
+    },
+  ];
 }
 export {
   RouteInterface,
@@ -513,4 +546,6 @@ export {
   ShopPaymentInterface,
   ShopAnaliticsInterface,
   BodyMeasurementGuideInterface,
+  ProductAnaliticsInterface,
+  CountAnalyticsInterface,
 };

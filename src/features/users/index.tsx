@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import UserTileList from './components/UserTileList';
 import UserDisplaySwitcher from './components/UserDisplaySwitcher';
 import { UserInterface } from '../../interface/interface';
+import DownloadCSV from '../../lib/DownloadCSV';
 
 const tileLink = '/table';
 
@@ -20,6 +21,16 @@ const Users = () => {
   const [input, setInput] = useState('');
   const usersQuery = zeapApiSlice.useGetUsersQuery({}, { skip: !token });
   const users = usersQuery?.data?.data;
+  const csvData = users?.map((user: UserInterface) => {
+    return {
+      'First Name': user.firstName,
+      'Last Name': user.lastName,
+      Email: user.email,
+      'Phone Number': user.phoneNumber,
+      'Preffered Currency': user.prefferedCurrency,
+      'Shop Enabled': user.shopEnabled,
+    };
+  });
 
   const escapeRegExp = (value: string) => {
     return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -72,7 +83,12 @@ const Users = () => {
         <div>No users found</div>
       )}
       {usersQuery.isLoading && <Loading />}
-      {users && <UserDisplaySwitcher view={view} />}
+      <div className="flex justify-between">
+        {users && <UserDisplaySwitcher view={view} />}
+        {users && (
+          <DownloadCSV data={csvData} fileName={`users-${new Date()}`} />
+        )}
+      </div>
       {users && view === 'table' ? (
         <UserTable users={filteredUsers} />
       ) : (
