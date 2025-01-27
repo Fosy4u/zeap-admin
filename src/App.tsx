@@ -7,6 +7,7 @@ import {
   SocketContext,
 } from './contexts/WebSocketContext';
 import DisplayTopSideBar from './features/displayControl/DisplayTopSideBar';
+import NotificationProvider from './features/notification';
 import ToastContainer from './features/toast';
 
 import AllRoutes from './routing/AllRoutes';
@@ -23,10 +24,12 @@ function App() {
       <ThemeProvider>
         <FlowBiteTheme>
           <AuthProvider>
-            <DisplayTopSideBar>
-              <AllRoutes routes={routes} />
-            </DisplayTopSideBar>
-            <ToastContainer />
+            <NotificationProvider>
+              <DisplayTopSideBar>
+                <AllRoutes routes={routes} />
+              </DisplayTopSideBar>
+              <ToastContainer />
+            </NotificationProvider>
           </AuthProvider>
         </FlowBiteTheme>
       </ThemeProvider>

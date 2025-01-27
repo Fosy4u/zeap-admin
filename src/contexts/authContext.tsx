@@ -1,5 +1,5 @@
 import { UserInterface } from '../interface/interface';
-import firebase from '../features/Authentication/firebase';
+import { firebase } from '../features/Authentication/firebase';
 import {
   getAuth,
   onAuthStateChanged,

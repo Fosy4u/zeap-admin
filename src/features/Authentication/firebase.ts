@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getMessaging } from 'firebase/messaging';
 
 const env = process.env.ENV || 'dev';
 const bucket =
@@ -17,5 +18,6 @@ const firebaseConfig = {
 };
 
 const firebase = initializeApp(firebaseConfig);
+const messaging = getMessaging(firebase);
 
-export default firebase;
+export { messaging, firebase };

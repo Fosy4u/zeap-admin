@@ -4,7 +4,6 @@ import {
   OrderInterface,
   ShopInterface,
   UserInterface,
-  VoucherInterface,
   WishlistInterface,
 } from '../../../interface/interface';
 import UserDetailNav from './UserDetailNav';
@@ -21,10 +20,10 @@ import zeapApiSlice from '../../../redux/services/zeapApi.slice';
 import Loading from '../../../lib/Loading';
 import OrderCard from '../../orders/components/OrderCard';
 import { Alert } from 'flowbite-react';
-import UserVoucher from './UserVoucher';
 import BasketCard from '../../basket/components/BasketCard';
 import UserPoints from './UserPoints';
 import ProductCard from '../../products/components/ProductCard';
+import UserVoucherList from './UserVoucherList';
 
 const UserLayout = ({
   users,
@@ -140,11 +139,7 @@ const UserLayout = ({
           {value === 'Vouchers' && (
             <div>
               {vouchers?.length > 0 && (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  ">
-                  {vouchers.map((voucher: VoucherInterface) => (
-                    <UserVoucher key={voucher?._id} voucher={voucher} />
-                  ))}
-                </div>
+                <UserVoucherList vouchers={vouchers} user={user} />
               )}
               {vouchers?.length === 0 && (
                 <Alert color="info">No vouchers found</Alert>

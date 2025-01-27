@@ -26,6 +26,8 @@ export default createApi({
     'BodyMeasurement',
     'DeliveryFee',
     'ExchangeRate',
+    'Notification',
+    'PushToken',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1556,6 +1558,27 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    issueVoucher: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `voucher/issue`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Voucher', 'Basket', 'Point', 'Order'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Voucher Successfully Issued',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
     getWishList: builder.query({
       query: (arg) => {
         return {
@@ -1808,6 +1831,27 @@ export default createApi({
         responseHandler(
           {
             success: 'Exchange Rate Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    registerPushToken: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/notification/pushToken/register`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['PushToken'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Push Token Successfully Registered',
             successHandler,
             errorHandler,
           },
