@@ -74,7 +74,7 @@ const PaymentTable = ({ payments }: { payments: PaymentInterface[] }) => {
               </td>
               <td className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500">
                 {getCurrencySmallSymbol(payment.currency)}
-                {numberWithCommas(payment?.amount)}
+                {numberWithCommas(payment?.amount / 100)}
               </td>
               <td className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500">
                 <span

@@ -12,6 +12,8 @@ import BodyMeasurementGuideImageButton from './BodyMeasurementGuideImageButton';
 import BodyMeasurementGuideImageDeleteButton from './BodyMeasurementGuideImageDeleteButton';
 import BodyMeasurementEditModal from './BodyMeasurementEditModal';
 import { useParams } from 'react-router-dom';
+import { capitalizeFirstLetter } from '../../../../utils/helpers';
+import AddBodyMeasurementGuideModal from './AddBodyMeasurementGuideModal';
 
 const modalTheme = {
   root: {
@@ -48,7 +50,6 @@ const BodyMeasurementGuideLayout = () => {
       link: string;
     };
     _id: string;
-    gender: string[];
   }>({
     field: '',
     description: '',
@@ -57,7 +58,6 @@ const BodyMeasurementGuideLayout = () => {
       link: '',
     },
     _id: '',
-    gender: [],
   });
 
   const token = useSelector(globalSelectors.selectAuthToken);
@@ -125,12 +125,13 @@ const BodyMeasurementGuideLayout = () => {
       <div className="flex justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark  rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
           {' '}
-          <h1 className="text-xl md:text-2xltext-dark">
-            Body Measurement Guide
+          <h1 className="text-md md:text-2xltext-dark">
+            Body Measurement Guide - {capitalizeFirstLetter(gender || '')}
           </h1>
         </div>
+        <AddBodyMeasurementGuideModal />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {bodyMeasurementGuide?.length > 0 &&
           bodyMeasurementGuide.map((guide: BodyMeasurementGuideInterface) => (
             <BodyMeasurementGuide

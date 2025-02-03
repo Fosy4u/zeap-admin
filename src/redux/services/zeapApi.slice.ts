@@ -1354,6 +1354,7 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+
     getOrders: builder.query({
       query: (arg) => {
         return {
@@ -1764,6 +1765,90 @@ export default createApi({
         responseHandler(
           {
             success: 'Field Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deleteBodyMeasurementGuide: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/delete`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Measurement Guide Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updateBodyMeasurementGuideName: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/name/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Measurement Guide Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    addBodyMeasurementGuideField: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/field/add`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Measurement Guide Field Successfully Added',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    addBodyMeasurementGuide: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/bodyMeasurementGuide/bespoke/add`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['BodyMeasurement'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Measurement Guide Successfully Added',
             successHandler,
             errorHandler,
           },

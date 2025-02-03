@@ -45,7 +45,6 @@ const BodyMeasurementEditModal = ({
       link: string;
     };
     _id: string;
-    gender: string[];
   };
 }) => {
   const [error, setError] = useState<string>('');
@@ -111,7 +110,6 @@ const BodyMeasurementEditModal = ({
               id="fieldTitle"
               name="fieldTitle"
               value={fieldTitle}
-              disabled
               onChange={(e) => setFieldTitle(e.target.value)}
             />
             <Label htmlFor="description">Description</Label>

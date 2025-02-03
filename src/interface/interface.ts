@@ -485,6 +485,7 @@ interface ProductAnaliticsInterface {
 interface BodyMeasurementGuideInterface {
   _id: string;
   name: string;
+  gender: string;
   fields: [
     {
       _id: string;
@@ -494,7 +495,6 @@ interface BodyMeasurementGuideInterface {
         link: string;
       };
       description: string;
-      gender: string[];
     },
   ];
   createdAt: Date;
