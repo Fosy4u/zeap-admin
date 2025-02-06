@@ -89,7 +89,9 @@ const ProductCard = ({
           <div className="flex  justify-between">
             <span className="flex flex-col">
               {product?.variations[0]?.price ? (
-                <p className="mr-2 text-lg font-semibold text-gray-900 dark:text-white">
+                <p
+                  className={`mr-2 text-lg font-semibold text-gray-900 dark:text-white ${product?.variations[0]?.discount && 'line-through'}`}
+                >
                   {currency?.symbol}
                   {product?.variations[0]?.price}
                 </p>
@@ -104,7 +106,7 @@ const ProductCard = ({
             </span>
             <span>
               {product?.variations[0]?.discount && (
-                <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">
+                <p className="text-base  font-medium text-gray-500  dark:text-gray-300">
                   {currency?.symbol}
                   {product?.variations[0]?.discount}
                 </p>

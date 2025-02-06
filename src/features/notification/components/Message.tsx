@@ -10,7 +10,7 @@ const Message = ({
   };
 }) => {
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-2 z-999999">
       <div className="flex gap-2">
         {/* image is optional */}
         {notification.image && (

@@ -1688,6 +1688,18 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getBodyMeasurementGuideFields: builder.query({
+      query: (arg) => {
+        return {
+          url: `bodyMeasurementGuide/bespoke/fields`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['BodyMeasurement'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     uploadBodyMeasurementGuideImage: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
@@ -1937,6 +1949,39 @@ export default createApi({
         responseHandler(
           {
             success: 'Push Token Successfully Registered',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getAdminsNotificationInbox: builder.query({
+      query: (arg) => {
+        return {
+          url: `/notification/inbox/admins`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Notification'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    deleteNotification: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/notification/inbox/delete`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Notification'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Notification Successfully Deleted',
             successHandler,
             errorHandler,
           },

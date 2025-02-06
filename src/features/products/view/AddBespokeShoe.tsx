@@ -1016,6 +1016,7 @@ const AddBespokeShoe = () => {
               bodyMeasurementEnums={bodyMeasurementEnums}
               measurements={measurements}
               setMeasurements={setMeasurements}
+              genders={categories.gender}
             />
           )}
           {stage === 4 && <BespokeImages product={product} />}

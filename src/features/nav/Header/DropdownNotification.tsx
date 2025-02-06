@@ -1,17 +1,47 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../../../utils/ClickOutside';
+import { globalSelectors } from '../../../redux/services/global.slice';
+import { useSelector } from 'react-redux';
+import zeapApiSlice from '../../../redux/services/zeapApi.slice';
+import ReactTimeAgo from 'react-time-ago';
+import NoPic from '../../../images/icon/noPhoto.png';
+import { HiTrash } from 'react-icons/hi';
+import Loading from '../../../lib/Loading';
+import { Alert } from 'flowbite-react';
 
 const DropdownNotification = () => {
+  const token = useSelector(globalSelectors.selectAuthToken);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
+  const [error, setError] = useState<string>('');
+  // const [notifying, setNotifying] = useState(true);
+  const getAdminNotificationInboxQery =
+    zeapApiSlice.useGetAdminsNotificationInboxQuery({}, { skip: !token });
+  const notifications = getAdminNotificationInboxQery.data?.data?.notifications;
+  const [deleteNotification, deleteNotificationStatus] =
+    zeapApiSlice.useDeleteNotificationMutation();
+  const isLoading =
+    deleteNotificationStatus.isLoading ||
+    getAdminNotificationInboxQery.isLoading;
+
+  const handleDelete = (notification_id: string) => {
+    const payload = { notification_id, isAdminPanel: true };
+    deleteNotification({ payload })
+      .unwrap()
+      .then(() => {})
+      .catch((err) => {
+        setError(err.data.error);
+        setTimeout(() => {
+          setError('');
+        }, 5000);
+      });
+  };
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <li>
         <Link
           onClick={() => {
-            setNotifying(false);
             setDropdownOpen(!dropdownOpen);
           }}
           to="#"
@@ -19,14 +49,16 @@ const DropdownNotification = () => {
         >
           <span
             className={`absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1 ${
-              notifying === false ? 'hidden' : 'inline'
+              notifications?.length > 0 ? 'inline' : 'hidden'
             }`}
           >
-            <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"></span>
+            <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75 text-success font-bold">
+              {notifications?.length}
+            </span>
           </span>
 
           <svg
-            className="fill-current duration-300 ease-in-out"
+            className="fill-current duration-700 ease-in-out"
             width="18"
             height="18"
             viewBox="0 0 18 18"
@@ -51,69 +83,58 @@ const DropdownNotification = () => {
             </div>
 
             <ul className="flex h-auto flex-col overflow-y-auto">
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      Edit your information in a swipe
-                    </span>{' '}
-                    Sint occaecat cupidatat non proident, sunt in culpa qui
-                    officia deserunt mollit anim.
-                  </p>
+              {error && (
+                <div className="p-4 mb-2">
+                  <Alert color="failure">Error - {error}</Alert>{' '}
+                </div>
+              )}
 
-                  <p className="text-xs">12 May, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      It is a long established fact
-                    </span>{' '}
-                    that a reader will be distracted by the readable.
-                  </p>
-
-                  <p className="text-xs">24 Feb, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      There are many variations
-                    </span>{' '}
-                    of passages of Lorem Ipsum available, but the majority have
-                    suffered
-                  </p>
-
-                  <p className="text-xs">04 Jan, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      There are many variations
-                    </span>{' '}
-                    of passages of Lorem Ipsum available, but the majority have
-                    suffered
-                  </p>
-
-                  <p className="text-xs">01 Dec, 2024</p>
-                </Link>
-              </li>
+              {isLoading && <Loading />}
+              {notifications?.map(
+                (notification: {
+                  createdAt: Date;
+                  title: string;
+                  body: string;
+                  image: string;
+                  _id: string;
+                }) => (
+                  <li>
+                    <Link
+                      className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+                      to="#"
+                    >
+                      <div className="flex  gap-2">
+                        <img
+                          src={notification?.image || NoPic}
+                          alt="notification"
+                          className="h-6 w-6 rounded-full"
+                        />
+                        <h5 className="text-sm font-bold text-slate-900 dark:text-white">
+                          {notification?.title}
+                        </h5>
+                      </div>
+                      <p className="text-xs">{notification?.body}</p>
+                      <div className="flex justify-between items-center">
+                        <p className="text-xs text-success">
+                          {' '}
+                          <ReactTimeAgo
+                            date={notification?.createdAt}
+                            locale="en-US"
+                          />
+                        </p>
+                        <div
+                          className="bg-lightDanger p-2 rounded-full"
+                          onClick={() => {
+                            handleDelete(notification._id);
+                          }}
+                        >
+                          <HiTrash className="text-danger" />
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
         )}

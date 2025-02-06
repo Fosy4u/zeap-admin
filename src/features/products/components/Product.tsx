@@ -185,6 +185,16 @@ const Product = () => {
                 <Accordion className="w-full">
                   <Accordion.Panel>
                     <Accordion.Title className=" h-8 text-md rounded-md items-center  flex">
+                      Product ID
+                    </Accordion.Title>
+                    <Accordion.Content>
+                      <div className="flex gap-2 flex-wrap">
+                        {product?.productId}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                  <Accordion.Panel>
+                    <Accordion.Title className=" h-8 text-md rounded-md items-center  flex">
                       Main
                     </Accordion.Title>
                     <Accordion.Content>

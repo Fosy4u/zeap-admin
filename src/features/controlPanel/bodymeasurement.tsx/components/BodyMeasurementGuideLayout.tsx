@@ -74,8 +74,11 @@ const BodyMeasurementGuideLayout = () => {
   const isLoading =
     getBodyMeasurementGuideQuery.isLoading ||
     uploadImageMutationStatus.isLoading;
-  const bodyMeasurementGuide = getBodyMeasurementGuideQuery.data?.data;
-  console.log('bodyMeasurementGuide', bodyMeasurementGuide);
+  const bodyMeasurementGuide = getBodyMeasurementGuideQuery.data?.data
+    ? [...getBodyMeasurementGuideQuery.data?.data].sort((a, b) =>
+        a.name.localeCompare(b.name),
+      )
+    : [];
 
   // useEffect(
   //   () => {
@@ -122,7 +125,7 @@ const BodyMeasurementGuideLayout = () => {
   return (
     <div>
       {isLoading && <Loading />}
-      <div className="flex justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark  rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+      <div className="flex flex-col md:flex-row justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark  rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
           {' '}
           <h1 className="text-md md:text-2xltext-dark">

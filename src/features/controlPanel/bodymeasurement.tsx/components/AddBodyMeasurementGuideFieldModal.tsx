@@ -2,16 +2,18 @@ import { useState } from 'react';
 import {
   Alert,
   Button,
+  Dropdown,
   Label,
   Modal,
   Textarea,
-  TextInput,
 } from 'flowbite-react';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 
 import { BodyMeasurementGuideInterface } from '../../../../interface/interface';
 import { HiPlus } from 'react-icons/hi';
+import { useSelector } from 'react-redux';
+import { globalSelectors } from '../../../../redux/services/global.slice';
 
 const modalTheme = {
   root: {
@@ -24,14 +26,20 @@ const AddBodyMeasurementGuideFieldModal = ({
 }: {
   guide: BodyMeasurementGuideInterface;
 }) => {
+  const token = useSelector(globalSelectors.selectAuthToken);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string>('');
   const [field, setField] = useState<string>();
   const [description, setDescription] = useState<string>();
-
+  const getBodyMeasurementGuideFieldsQuery =
+    zeapApiSlice.useGetBodyMeasurementGuideFieldsQuery({}, { skip: !token });
+  const bodyMeasurementGuideFields =
+    getBodyMeasurementGuideFieldsQuery?.data?.data || [];
   const [addBodyMeasurementGuideField, addBodyMeasurementGuideFieldStatus] =
     zeapApiSlice.useAddBodyMeasurementGuideFieldMutation();
-  const isLoading = addBodyMeasurementGuideFieldStatus.isLoading;
+  const isLoading =
+    addBodyMeasurementGuideFieldStatus.isLoading ||
+    getBodyMeasurementGuideFieldsQuery.isLoading;
 
   const handleDelete = () => {
     if (!field) {
@@ -94,13 +102,23 @@ const AddBodyMeasurementGuideFieldModal = ({
             {isLoading && <Loading />}
             {error && <Alert color="failure">Error - {error}</Alert>}
             <div className="flex flex-col gap-4 p-4 w-full  text-gray-500 dark:text-gray-400">
-              <Label htmlFor="fieldTitle">Name</Label>
-              <TextInput
-                id="fieldTitle"
-                name="fieldTitle"
-                value={field}
-                onChange={(e) => setField(e.target.value)}
-              />
+              {bodyMeasurementGuideFields.length > 0 && (
+                <Dropdown
+                  color={field ? 'success' : 'primary'}
+                  label={field || 'Select Field'}
+                >
+                  {bodyMeasurementGuideFields.map(
+                    (field: { _id: string; field: string }) => (
+                      <Dropdown.Item
+                        key={field._id}
+                        onClick={() => setField(field.field)}
+                      >
+                        {field.field}
+                      </Dropdown.Item>
+                    ),
+                  )}
+                </Dropdown>
+              )}
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"

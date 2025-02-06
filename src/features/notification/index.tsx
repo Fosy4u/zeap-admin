@@ -8,17 +8,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Message from './components/Message';
 import zeapApiSlice from '../../redux/services/zeapApi.slice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { globalSelectors } from '../../redux/services/global.slice';
 const vapidKey = process.env.REACT_APP_FIREBASE_CLOUD_MESSAGING_PUBLIC_KEY;
 const NotificationProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const dispatch = useDispatch();
   const token = useSelector(globalSelectors.selectAuthToken);
   const [registerPushToken] = zeapApiSlice.useRegisterPushTokenMutation();
 
   onMessage(messaging, (payload) => {
     console.log('Message received. ', payload);
+    // invalidate redux cache with flag notification
+    dispatch(zeapApiSlice.util.invalidateTags(['Notification']));
+
     if (payload.notification) {
       toast(
         <Message

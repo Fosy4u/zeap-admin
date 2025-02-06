@@ -20,7 +20,7 @@ import ProductOrderCancellation from './ProductOrderCancellation';
 
 const drawerTheme = {
   root: {
-    base: 'fixed z-99999  overflow-y-auto bg-white    p-4 transition-transform dark:bg-boxdark',
+    base: 'fixed z-9999  overflow-y-auto bg-white    p-4 transition-transform dark:bg-boxdark',
 
     position: {
       right: {

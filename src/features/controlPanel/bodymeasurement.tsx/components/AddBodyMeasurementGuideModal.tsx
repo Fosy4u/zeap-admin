@@ -9,7 +9,7 @@ import {
 } from 'flowbite-react';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
-import { smallScreen } from '../../../../utils/screenSizes';
+// import { smallScreen } from '../../../../utils/screenSizes';
 import { useParams } from 'react-router-dom';
 
 const modalTheme = {
@@ -80,7 +80,7 @@ const AddBodyMeasurementGuideModal = () => {
           e.stopPropagation();
           setOpen(true);
         }}
-        className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-white bg-darkGold rounded-md hover:bg-opacity-90"
+        className="flex w-fit items-center gap-1 px-3 py-1.5 text-sm font-medium text-white bg-darkGold rounded-md hover:bg-opacity-90"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +96,7 @@ const AddBodyMeasurementGuideModal = () => {
             d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-
-        {smallScreen ? 'Add' : 'Add Category'}
+        Add Category
       </button>
 
       {open && (
