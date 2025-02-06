@@ -159,7 +159,7 @@ const BodyMeasurementGuideLayout = () => {
               <img
                 src={preview || field.imageUrl.link || NoPic}
                 alt="guide"
-                className=" object-contain rounded-lg"
+                className=" object-contain rounded-lg w-full h-full"
               />
             </div>
           </Modal.Body>
