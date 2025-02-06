@@ -21,6 +21,10 @@ const modalTheme = {
   },
 };
 
+const dropDownTheme = {
+  content: 'py-1 focus:outline-none max-h-70 overflow-y-auto',
+};
+
 const AddBodyMeasurementGuideFieldModal = ({
   guide,
 }: {
@@ -33,8 +37,13 @@ const AddBodyMeasurementGuideFieldModal = ({
   const [description, setDescription] = useState<string>();
   const getBodyMeasurementGuideFieldsQuery =
     zeapApiSlice.useGetBodyMeasurementGuideFieldsQuery({}, { skip: !token });
-  const bodyMeasurementGuideFields =
-    getBodyMeasurementGuideFieldsQuery?.data?.data || [];
+  const bodyMeasurementGuideFields: { _id: string; field: string }[] =
+    getBodyMeasurementGuideFieldsQuery?.data?.data
+      ? [...getBodyMeasurementGuideFieldsQuery?.data?.data].sort(
+          (a: { field: string }, b: { field: string }) =>
+            a.field.localeCompare(b.field),
+        )
+      : [];
   const [addBodyMeasurementGuideField, addBodyMeasurementGuideFieldStatus] =
     zeapApiSlice.useAddBodyMeasurementGuideFieldMutation();
   const isLoading =
@@ -104,6 +113,7 @@ const AddBodyMeasurementGuideFieldModal = ({
             <div className="flex flex-col gap-4 p-4 w-full  text-gray-500 dark:text-gray-400">
               {bodyMeasurementGuideFields.length > 0 && (
                 <Dropdown
+                  theme={dropDownTheme}
                   color={field ? 'success' : 'primary'}
                   label={field || 'Select Field'}
                 >
