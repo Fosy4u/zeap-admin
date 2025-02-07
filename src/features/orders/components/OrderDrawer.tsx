@@ -17,7 +17,7 @@ const drawerTheme = {
 
     position: {
       right: {
-        on: 'right-0 top-0 h-screen w-100 md:w-[40vw] transform-none',
+        on: 'right-0 top-0 h-screen w-100 lg:w-[40vw] transform-none',
         off: 'right-0 top-0 h-screen w-80 translate-x-full',
       },
     },

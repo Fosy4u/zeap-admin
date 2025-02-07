@@ -23,7 +23,7 @@ const drawerTheme = {
 
     position: {
       bottom: {
-        on: 'bottom-0  right-0 w-100 md:w-[40vw] transform-none',
+        on: 'bottom-0  right-0 w-100 lg:w-[40vw] transform-none',
         off: 'bottom-0 left-0 right-0 w-full translate-y-full',
       },
     },
