@@ -101,7 +101,7 @@ const BodyMeasurementGuide = ({
                   </div>
 
                   {field.description ? (
-                    <p className="mb-4">{capitalize(field.description)} </p>
+                    <p className="mb-4">{field.description} </p>
                   ) : (
                     <Alert color="info" className="text-sm m-2 mb-4">
                       No description available. Click on Edit to add a
