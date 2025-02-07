@@ -1945,16 +1945,16 @@ export default createApi({
         };
       },
       invalidatesTags: ['PushToken'],
-      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
-        responseHandler(
-          {
-            success: 'Push Token Successfully Registered',
-            successHandler,
-            errorHandler,
-          },
-          queryArgs,
-        );
-      },
+      // onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+      //   responseHandler(
+      //     {
+      //       success: 'Push Token Successfully Registered',
+      //       successHandler,
+      //       errorHandler,
+      //     },
+      //     queryArgs,
+      //   );
+      // },
     }),
     getAdminsNotificationInbox: builder.query({
       query: (arg) => {

@@ -19,7 +19,6 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
   const [registerPushToken] = zeapApiSlice.useRegisterPushTokenMutation();
 
   onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
     // invalidate redux cache with flag notification
     dispatch(zeapApiSlice.util.invalidateTags(['Notification']));
 
@@ -46,11 +45,11 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
         const pushToken = await getToken(messaging, {
           vapidKey,
         });
-        const localStoragePushToken = localStorage.getItem('pushToken');
-        if (pushToken === localStoragePushToken) {
-          console.log('Push token already registered');
-          return;
-        }
+        // const localStoragePushToken = localStorage.getItem('pushToken');
+        // if (pushToken === localStoragePushToken) {
+        //   console.log('Push token already registered');
+        //   return;
+        // }
         const payload = {
           pushToken,
         };
@@ -59,7 +58,7 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
           .then(() => {
             console.log('Push token registered and saved to server');
             // save push token to local storage
-            localStorage.setItem('pushToken', pushToken);
+            // localStorage.setItem('pushToken', pushToken);
           })
           .catch((err) => {
             console.error('Error while registering push token', err);
