@@ -6,7 +6,7 @@ const PageNav = () => {
   return (
     <div className="flex  gap-2">
       <div
-        className="bg-lightDanger p-2 rounded-full cursor-pointer"
+        className="bg-lightDanger p-2 rounded-full cursor-pointer items-center"
         onClick={() => {
           navigate(-1);
         }}

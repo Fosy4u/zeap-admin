@@ -19,6 +19,5 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebase);
-console.log('firebase', messaging);
 
 export { messaging, firebase };
