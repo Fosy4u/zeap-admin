@@ -45,11 +45,11 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
         const pushToken = await getToken(messaging, {
           vapidKey,
         });
-        // const localStoragePushToken = localStorage.getItem('pushToken');
-        // if (pushToken === localStoragePushToken) {
-        //   console.log('Push token already registered');
-        //   return;
-        // }
+        const localStoragePushToken = localStorage.getItem('pushToken');
+        if (pushToken === localStoragePushToken) {
+          console.log('Push token already registered');
+          return;
+        }
         const payload = {
           pushToken,
         };
@@ -57,8 +57,8 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
           .unwrap()
           .then(() => {
             console.log('Push token registered and saved to server');
-            // save push token to local storage
-            // localStorage.setItem('pushToken', pushToken);
+
+            localStorage.setItem('pushToken', pushToken);
           })
           .catch((err) => {
             console.error('Error while registering push token', err);
@@ -69,6 +69,32 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
       }
     }
     requestPermission();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return;
+    async function register() {
+      const pushToken = await getToken(messaging, {
+        vapidKey,
+      });
+      if (pushToken) {
+        const payload = {
+          pushToken,
+        };
+        registerPushToken({ payload })
+          .unwrap()
+          .then(() => {
+            console.log('Push token registered and saved to server');
+
+            localStorage.setItem('pushToken', pushToken);
+          })
+          .catch((err) => {
+            console.error('Error while registering push token', err);
+          });
+      }
+    }
+    register();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
   return (
