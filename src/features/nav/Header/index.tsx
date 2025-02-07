@@ -4,6 +4,7 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../../images/logo/app_logo.png';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import PageNav from './PageNav';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -65,15 +66,17 @@ const Header = (props: {
             />
           </Link>
         </div>
-
-        <div className="hidden sm:block">
-          <form action="https://formbold.com/s/unique_form_id" method="POST">
-            <div className="relative">
-              <strong className=" text-2xl text-darkGold dark:text-lightGold gap-2">
-                Admin Panel
-              </strong>
-            </div>
-          </form>
+        <div className="flex gap-8">
+          <PageNav />
+          <div className="hidden sm:block">
+            <form action="https://formbold.com/s/unique_form_id" method="POST">
+              <div className="relative">
+                <strong className=" text-2xl text-darkGold dark:text-lightGold gap-2">
+                  Admin Panel
+                </strong>
+              </div>
+            </form>
+          </div>
         </div>
         {/* <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">
