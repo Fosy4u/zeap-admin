@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
-importScripts('https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/8.6.8/firebase-messaging.js');
-importScripts('swEnv.js'); // Added
+importScripts('https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js');
+importScripts(
+  'https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging.js',
+);
 
 // const firebaseConfig = {
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,13 +15,13 @@ importScripts('swEnv.js'); // Added
 // };
 // access env variables in service worker
 const firebaseConfig = {
-  apiKey: swEnv.REACT_APP_FIREBASE_API_KEY, // Changed... repeat for other variables
-  authDomain: swEnv.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: swEnv.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: swEnv.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: swEnv.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: swEnv.REACT_APP_FIREBASE_APP_ID,
-  measurementId: swEnv.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: 'AIzaSyB040yGEcwK4e8YDwsJSlm_DtMO0wd2xLI',
+  authDomain: 'zeap-7de3d.firebaseapp.com',
+  projectId: 'zeap-7de3d',
+  storageBucket: 'zeap-7de3d.appspot.com',
+  messagingSenderId: '241723989064',
+  appId: '1:241723989064:web:96e8f0a4599343aac50c7d',
+  measurementId: 'G-V9G6DS0BS0',
 };
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();

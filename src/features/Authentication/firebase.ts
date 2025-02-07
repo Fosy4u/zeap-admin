@@ -13,11 +13,12 @@ const firebaseConfig = {
   // databaseURL: "your databaseURL here",
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: bucket,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  messagingSenderId: `241723989064`,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const firebase = initializeApp(firebaseConfig);
 const messaging = getMessaging(firebase);
+console.log('firebase', messaging);
 
 export { messaging, firebase };
