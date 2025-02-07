@@ -2,6 +2,7 @@ import { Alert, Button, Modal } from 'flowbite-react';
 import { useState } from 'react';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import Loading from '../../../../lib/Loading';
+import { useParams } from 'react-router-dom';
 
 const modalTheme = {
   root: {
@@ -16,6 +17,7 @@ const BodyMeasurementGuideImageDeleteButton = ({
   fieldId: string;
   setOpenModal: (open: boolean) => void;
 }) => {
+  const { gender } = useParams();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string>('');
   const [
@@ -25,7 +27,7 @@ const BodyMeasurementGuideImageDeleteButton = ({
   const isLoading = deleteBodyMeasurementGuideImageStatus.isLoading;
 
   const handleDeleteImage = () => {
-    const payload = { fieldId };
+    const payload = { fieldId, gender };
     deleteBodyMeasurementGuideImage({ payload })
       .unwrap()
       .then(() => {

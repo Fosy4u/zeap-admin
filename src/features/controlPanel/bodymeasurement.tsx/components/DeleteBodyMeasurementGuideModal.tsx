@@ -5,6 +5,7 @@ import { Alert, Button, Modal } from 'flowbite-react';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import { capitalizeFirstLetter } from '../../../../utils/helpers';
+import { useParams } from 'react-router-dom';
 
 const modalTheme = {
   root: {
@@ -17,6 +18,7 @@ const DeleteBodyMeasurementGuideModal = ({
 }: {
   guide: BodyMeasurementGuideInterface;
 }) => {
+  const { gender } = useParams();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string>('');
 
@@ -25,7 +27,7 @@ const DeleteBodyMeasurementGuideModal = ({
   const isLoading = deleteBodyMeasurementGuideStatus.isLoading;
 
   const handleDelete = () => {
-    const payload = { bodyMeasurementGuide_id: guide._id };
+    const payload = { bodyMeasurementGuide_id: guide._id, gender };
     deleteBodyMeasurementGuide({ payload })
       .unwrap()
       .then(() => {

@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import Loading from '../../../../lib/Loading';
+import { useParams } from 'react-router-dom';
 
 const modalTheme = {
   root: {
@@ -47,6 +48,7 @@ const BodyMeasurementEditModal = ({
     _id: string;
   };
 }) => {
+  const { gender } = useParams();
   const [error, setError] = useState<string>('');
   const [fieldTitle, setFieldTitle] = useState<string>(field.field);
   const [description, setDescription] = useState<string>(field.description);
@@ -72,10 +74,14 @@ const BodyMeasurementEditModal = ({
       }, 3000);
       return;
     }
+    if (!gender) {
+      return;
+    }
     const payload = {
       field: fieldTitle,
       description,
       fieldId: field._id,
+      gender,
     };
     updateBodyMeasurementGuideField({ payload })
       .unwrap()

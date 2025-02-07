@@ -22,14 +22,18 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
     // invalidate redux cache with flag notification
     dispatch(zeapApiSlice.util.invalidateTags(['Notification']));
 
-    if (payload.notification) {
-      console.log('Notification received. ', payload.notification);
+    if (payload.notification || payload?.data) {
+      console.log('Notification received. ', payload);
       toast(
         <Message
           notification={{
-            image: payload.notification.image || '',
-            title: payload.notification.title || 'No Title',
-            body: payload.notification.body || 'No Body',
+            image: payload?.notification?.image || payload?.data?.image || '',
+            title:
+              payload?.notification?.title ||
+              payload?.data?.title ||
+              'No Title',
+            body:
+              payload?.notification?.body || payload?.data?.body || 'No Body',
           }}
         />,
       );

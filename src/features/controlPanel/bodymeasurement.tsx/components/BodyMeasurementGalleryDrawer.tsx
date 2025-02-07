@@ -8,6 +8,7 @@ import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import Loading from '../../../../lib/Loading';
 import { useEffect, useState } from 'react';
 import SearchBar from '../../../../lib/SearchBar';
+import { useParams } from 'react-router-dom';
 
 //import { useSelector } from 'react-redux';
 //import { globalSelectors } from '../../../redux/services/global.slice';
@@ -37,6 +38,7 @@ export function BodyMeasurementGalleryDrawer({
   fieldId: string;
   setOpenModal: (open: boolean) => void;
 }) {
+  const { gender } = useParams();
   const [input, setInput] = useState('');
   const [filteredGallery, setFilteredGallery] = useState([]);
   const [error, setError] = useState<string>('');
@@ -94,9 +96,11 @@ export function BodyMeasurementGalleryDrawer({
   }, [input, gallery]);
 
   const handleImageUpload = (existingLink: string) => {
+    if (!gender) return;
     const payload = {
       existingLink,
       fieldId,
+      gender,
     };
     uploadImageMutation({ payload })
       .unwrap()

@@ -101,12 +101,13 @@ const BodyMeasurementGuideLayout = () => {
   }, [selectedFile]);
 
   const handleImageUpload = () => {
-    if (!selectedFile || !field._id) {
+    if (!selectedFile || !field._id || !gender) {
       return;
     }
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('fieldId', field._id);
+    formData.append('gender', gender);
     const payload = formData;
     uploadImageMutation({ payload })
       .unwrap()
