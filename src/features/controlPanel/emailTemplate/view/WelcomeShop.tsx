@@ -6,8 +6,8 @@ import { globalSelectors } from '../../../../redux/services/global.slice';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 
-const Welcome = () => {
-  const name = 'welcome';
+const WelcomeShop = () => {
+  const name = 'welcome-shop';
   const token = useSelector(globalSelectors.selectAuthToken);
   const [error, setError] = useState<string>('');
   const [subject, setSubject] = useState('Welcome to Zeap');
@@ -66,7 +66,7 @@ const Welcome = () => {
         <div>
           {' '}
           <h1 className="text-xl md:text-2xltext-dark">
-            Welcome Email Template
+            Welcome User Email Template
           </h1>
         </div>
       </div>
@@ -109,4 +109,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default WelcomeShop;

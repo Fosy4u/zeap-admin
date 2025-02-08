@@ -54,7 +54,7 @@ const PaymentTable = ({ payments }: { payments: PaymentInterface[] }) => {
 
           {payments?.map((payment: PaymentInterface) => (
             <tr
-              onClick={() => navigate(`/payment/${payment?.reference}`)}
+              onClick={() => navigate(`/payment/${payment.reference}`)}
               key={payment?._id}
               className="h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 cursor-pointer hover:bg-slate-100"
             >

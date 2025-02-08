@@ -18,7 +18,6 @@ const Payment = () => {
     { skip: !token || !reference },
   );
   const payment = paymentQuery?.data?.data;
-  console.log('payment', payment);
 
   return (
     <div>
