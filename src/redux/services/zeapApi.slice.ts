@@ -28,6 +28,7 @@ export default createApi({
     'ExchangeRate',
     'Notification',
     'PushToken',
+    'EmailTemplate',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -1982,6 +1983,39 @@ export default createApi({
         responseHandler(
           {
             success: 'Notification Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getEmailTemplate: builder.query({
+      query: (arg) => {
+        return {
+          url: `/emailTemplate`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['EmailTemplate'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    addEmailTemplate: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/emailTemplate/add`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['EmailTemplate'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Email Template Successfully Updated',
             successHandler,
             errorHandler,
           },

@@ -32,6 +32,7 @@ import BodyMeasurement from '../features/controlPanel/bodymeasurement.tsx';
 import DeliveryFee from '../features/controlPanel/deliveryFee';
 import ExchangeRate from '../features/controlPanel/exchangeRate';
 import BodyMeasurementGuideLayout from '../features/controlPanel/bodymeasurement.tsx/components/BodyMeasurementGuideLayout';
+import Welcome from '../features/controlPanel/emailTemplate/view/Welcome';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -186,6 +187,10 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/exchange-rate',
     component: ExchangeRate,
+  },
+  {
+    path: '/control-panel/welcome-email',
+    component: Welcome,
   },
 
   {

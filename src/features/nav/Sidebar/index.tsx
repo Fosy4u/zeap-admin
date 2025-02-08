@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../../../images/logo/app_logo.png';
 import SidebarLinkGroup from './SidebarLinkGroup';
+import { mediumScreen } from '../../../utils/screenSizes';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -56,6 +57,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded]);
 
+  useEffect(() => {
+    if (!mediumScreen) {
+      setSidebarOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mediumScreen]);
   return (
     <aside
       ref={sidebar}
@@ -469,6 +476,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               }
                             >
                               Exchange Rate
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/control-panel/welcome-email"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
+                                (isActive && '!text-white')
+                              }
+                            >
+                              Welcome Email
                             </NavLink>
                           </li>
                         </ul>

@@ -36,13 +36,14 @@ const statusList = [
     description:
       'The product will be on draft status and can be edited until you submit it for review',
   },
-  {
-    status: 'live',
-    description: 'The product will be live and visible to customers',
-  },
+
   {
     status: 'under review',
     description: 'The product will be under review by the admin',
+  },
+  {
+    status: 'live',
+    description: 'The product will be live and visible to customers',
   },
 
   {
