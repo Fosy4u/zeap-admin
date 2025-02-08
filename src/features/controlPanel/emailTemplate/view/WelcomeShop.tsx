@@ -66,7 +66,7 @@ const WelcomeShop = () => {
         <div>
           {' '}
           <h1 className="text-xl md:text-2xltext-dark">
-            Welcome User Email Template
+            Welcome Shop Email Template
           </h1>
         </div>
       </div>
@@ -74,8 +74,8 @@ const WelcomeShop = () => {
       <Alert color="info">
         <div className="flex flex-col gap-2">
           <span>
-            This is the email template that will be sent to the user when they
-            sign up.
+            This is the email template that will be sent to the shop when they
+            sign up
           </span>
         </div>
       </Alert>
@@ -84,12 +84,13 @@ const WelcomeShop = () => {
       <div className="w-full  ">
         <Label>Subject</Label>
         <TextInput
+          className="dark:text-slate-900"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Subject"
         />
       </div>
-      <div className="w-full  p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full  p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8  dark:border-gray-700 ">
         <Editor
           placeholder={'Write something...'}
           value={body}
