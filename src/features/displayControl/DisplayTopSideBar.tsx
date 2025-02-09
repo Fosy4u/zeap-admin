@@ -18,7 +18,7 @@ const DisplayTopSideBar = ({ children }: { children: ReactNode }) => {
 
   return noNavLinks.includes(location) ||
     noNavLinks.includes(location.slice(1).split('/')[0]) ? (
-    <div className=""> {children}</div>
+    <div className="bg-lightGold"> {children}</div>
   ) : (
     <div>
       <DefaultLayout>{children}</DefaultLayout>

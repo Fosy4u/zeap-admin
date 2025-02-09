@@ -1,5 +1,5 @@
-import { Button, Modal } from 'flowbite-react';
-import React, { useRef, useState } from 'react';
+import { Alert, Button, Modal } from 'flowbite-react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { OrderInterface } from '../../../interface/interface';
 import {
   displayDate,
@@ -9,6 +9,10 @@ import {
 } from '../../../utils/helpers';
 import LogoIcon from '../../../images/logo/app_logo.png';
 import { useReactToPrint } from 'react-to-print';
+import { HiDownload, HiPrinter } from 'react-icons/hi';
+import zeapApiSlice from '../../../redux/services/zeapApi.slice';
+import { SocketContext } from '../../../contexts/WebSocketContext';
+import FileDownloadProgressCardDIsplay from '../../../utils/FileDownloadProgressCardDIsplay copy';
 
 const modalTheme = {
   root: {
@@ -17,9 +21,30 @@ const modalTheme = {
 };
 
 const Reciept = ({ order }: { order: OrderInterface }) => {
+  const order_id = order?._id;
   const receiptRef = useRef<HTMLDivElement>(null);
   const currency = order?.payment?.currency;
+  const webSocket = useContext(SocketContext);
+  const thisSessionId = webSocket?.thisSessionId;
+  const type = 'receipt';
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [showDowloadModal, setShowDowloadModal] = useState(false);
+  const [progressStatus, setProgressStatus] = useState('pending');
+  const [fileName, setFileName] = useState('');
+  const [downloadOrderReceipt] = zeapApiSlice.useDownloadOrderReceiptMutation();
+
+  useEffect(() => {
+    if (order?.orderId && type) {
+      const today = new Date();
+      setFileName(
+        `${
+          type.charAt(0).toUpperCase() + type.slice(1)
+        }-${order?.orderId}-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`,
+      );
+    }
+  }, [order, type]);
 
   const getProductOrderAmount = (
     amount: [{ value: number; currency: string }],
@@ -34,6 +59,46 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
   const handlePrint = useReactToPrint({
     documentTitle: 'Receipt',
   });
+
+  const handleDownload = () => {
+    const payload = {
+      order_id,
+      fileName,
+      socketId: thisSessionId,
+    };
+    downloadOrderReceipt({ payload })
+      .then((res) => {
+        const pdf = res?.data?.pdf;
+        console.log('pdf', pdf);
+        // convert the data object to uint8array
+        const buffer = new Uint8Array(Object.values(pdf));
+
+        if (buffer.length === 0) {
+          setError(
+            'Error downloading file. Please try again later or contact support.',
+          );
+          return;
+        }
+        setError('');
+        setProgressStatus('received file...');
+        setProgress(98);
+        const blob = new Blob([buffer], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `${fileName}.pdf`;
+        link.click();
+        setProgress(100);
+        setProgressStatus('downloading now...');
+        setTimeout(() => {
+          setProgress(0);
+          setProgressStatus('pending');
+          setShowDowloadModal(false);
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <Button
@@ -58,6 +123,19 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
             <div className="text-sm md:text-lg font-bold">Reciept</div>
           </Modal.Header>
           <Modal.Body className="w-full overflow-auto">
+            {error && <Alert color="failure">Error - {error}</Alert>}
+            {showDowloadModal && (
+              <FileDownloadProgressCardDIsplay
+                progress={progress}
+                progressStatus={progressStatus}
+                setProgress={setProgress}
+                setProgressStatus={setProgressStatus}
+                thisSessionId={thisSessionId}
+                title="Downloading Receipt"
+                showModal={showDowloadModal}
+                setShowModal={setShowDowloadModal}
+              />
+            )}
             <div
               className="w-full mx-auto p-6 bg-white rounded shadow-sm my-6 overflow-auto min-w-[30rem]"
               id="receipt"
@@ -223,10 +301,21 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
           </Modal.Body>
           <Modal.Footer className="flex gap-4">
             <Button
-              color="success"
+              color="info"
               onClick={() => handlePrint(reactToPrintContent)}
             >
+              <HiPrinter className="mr-2 h-5 w-5" />
               Print
+            </Button>
+            <Button
+              color="success"
+              onClick={() => {
+                setShowDowloadModal(true);
+                handleDownload();
+              }}
+            >
+              <HiDownload className="mr-2 h-5 w-5" />
+              Download
             </Button>
           </Modal.Footer>
         </Modal>

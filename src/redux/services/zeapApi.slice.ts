@@ -1380,6 +1380,26 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    downloadOrderReceipt: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `order/reciept/download`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Receipt Successfully Downloaded',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
     getProductOrders: builder.query({
       query: (arg) => {
         return {
