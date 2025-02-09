@@ -139,7 +139,7 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
                       >
                         <td className=" w-full overflow-auto py-5 pr-3 text-sm pl-0">
                           <div className="font-medium text-gray-900">
-                            E-commerce Platform
+                            {productOrder?.product?.title}
                           </div>
                           <div className="mt-1 truncate text-gray-500">
                             {productOrder?.sku}
