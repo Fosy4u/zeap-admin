@@ -277,6 +277,8 @@ interface PaymentInterface {
   status: string;
   reference: string;
   amount: number;
+  appliedVoucherAmount: number;
+  total: number;
   deliveryFee: number;
   itemsTotal: number;
   paidAt: Date;
@@ -383,6 +385,7 @@ interface OrderInterface {
   user: UserInterface;
   disabled: boolean;
   orderId: string;
+
   deliveryAddress: deliveryAddressInterface;
   payment: PaymentInterface;
   productOrders: ProductOrdersInterface[];

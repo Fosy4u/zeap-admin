@@ -3,12 +3,8 @@ import NoPic from '../../../images/user/avatar-anika-visser.png';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
 import ReactTimeAgo from 'react-time-ago';
 import { Badge } from 'flowbite-react';
-import { OrderDrawer } from './OrderDrawer';
-import { useState } from 'react';
 
 const OrderCard = ({ order }: { order: OrderInterface }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const user = order?.user;
   const productOrders = order?.productOrders;
   const isCancelled = order?.cancel?.isCancelled;
@@ -34,12 +30,7 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
     return ((completed / total) * 100).toFixed(2);
   };
   return (
-    <div
-      onClick={() => {
-        setIsOpen(!isOpen);
-      }}
-      className="overflow-scroll cursor-pointer   rounded shadow-md  light:shadow-slate-200 dark:shadow-slate-800 bg-grey8 dark:bg-grey2 dark:text-white mt-2 hover:shadow-2xl transition duration-300"
-    >
+    <div className="overflow-scroll cursor-pointer   rounded shadow-md  light:shadow-slate-200 dark:shadow-slate-800 bg-grey8 dark:bg-grey2 dark:text-white mt-2 hover:shadow-2xl transition duration-300">
       <div className="p-2">
         <div className="flex items-center justify-between">
           <div className="flex gap-2 items-center">
@@ -99,13 +90,6 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
           </div>
         )}
       </div>
-      {isOpen && (
-        <OrderDrawer
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          order_id={order?._id}
-        />
-      )}
     </div>
   );
 };

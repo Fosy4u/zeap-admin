@@ -7,6 +7,7 @@ import UserTile from '../../users/components/UserTile';
 import ProductOrderCard from './ProductOrderCard';
 import { formatCurrency } from '../../../utils/helpers';
 import { NavLink } from 'react-router-dom';
+import Reciept from './Reciept';
 
 const Order = ({ order }: { order: OrderInterface }) => {
   const productOrders = order?.productOrders;
@@ -24,20 +25,23 @@ const Order = ({ order }: { order: OrderInterface }) => {
     <div className="flex flex-col text-black gap-4">
       <div className="flex flex-col gap-2 shadow-md w-full p-2">
         <span className="font-bold">Order ID: {order.orderId}</span>
-        <div className="flex flex-col ">
-          <span className=" text-xs">
-            Progress - <strong>{calcProgress()}%</strong>
-          </span>
-          <div className="flex items-center">
-            <progress
-              id={order?.orderId}
-              max="100"
-              value={calcProgress()}
-              className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-white [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
-            >
-              {calcProgress()}%
-            </progress>
+        <div className="flex justify-between">
+          <div className="flex flex-col ">
+            <span className=" text-xs">
+              Progress - <strong>{calcProgress()}%</strong>
+            </span>
+            <div className="flex items-center">
+              <progress
+                id={order?.orderId}
+                max="100"
+                value={calcProgress()}
+                className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-white [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
+              >
+                {calcProgress()}%
+              </progress>
+            </div>
           </div>
+          <Reciept order={order} />
         </div>
         <span className="dark:text-slate-300 text-slate-500 text-xs">
           {isCancelled && <Badge color="red">Cancelled</Badge>}

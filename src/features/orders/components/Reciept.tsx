@@ -1,0 +1,238 @@
+import { Button, Modal } from 'flowbite-react';
+import React, { useRef, useState } from 'react';
+import { OrderInterface } from '../../../interface/interface';
+import {
+  displayDate,
+  formatCurrency,
+  getCurrencySmallSymbol,
+  numberWithCommas,
+} from '../../../utils/helpers';
+import LogoIcon from '../../../images/logo/app_logo.png';
+import { useReactToPrint } from 'react-to-print';
+
+const modalTheme = {
+  root: {
+    base: 'fixed inset-x-0 top-0 z-999999 w-screen h-screen overflow-y-auto overflow-x-auto ',
+  },
+};
+
+const Reciept = ({ order }: { order: OrderInterface }) => {
+  const receiptRef = useRef<HTMLDivElement>(null);
+  const currency = order?.payment?.currency;
+  const [open, setOpen] = useState(false);
+
+  const getProductOrderAmount = (
+    amount: [{ value: number; currency: string }],
+  ) => {
+    const found = amount.find((item) => item.currency === currency);
+    return `${getCurrencySmallSymbol(found?.currency || '')}${numberWithCommas(found?.value || 0)}`;
+  };
+  const reactToPrintContent = () => {
+    return receiptRef.current;
+  };
+
+  const handlePrint = useReactToPrint({
+    documentTitle: 'Receipt',
+  });
+  return (
+    <div>
+      <Button
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault();
+          setOpen(true);
+        }}
+        size="xs"
+        color="primary"
+      >
+        View Reciept
+      </Button>
+      {open && (
+        <Modal
+          className="bg-black bg-opacity-50"
+          theme={modalTheme}
+          title="Delete Image"
+          onClose={() => setOpen(false)}
+          show={open}
+        >
+          <Modal.Header>
+            <div className="text-sm md:text-lg font-bold">Reciept</div>
+          </Modal.Header>
+          <Modal.Body className="w-full overflow-auto">
+            <div
+              className="w-full mx-auto p-6 bg-white rounded shadow-sm my-6 overflow-auto min-w-[30rem]"
+              id="receipt"
+              ref={receiptRef}
+            >
+              <div className="flex justify-between items-center w-full overflow-auto ">
+                <div>
+                  <img
+                    src={LogoIcon}
+                    alt="company-logo"
+                    className="object-contain rounded-lg w-24 h-24"
+                  />
+                </div>
+
+                <div className="text-right">
+                  <p>Zeap LTD.</p>
+                  <p className="text-gray-500 text-sm">admin@zeaper.com</p>
+                  <p className="text-gray-500 text-sm mt-1">+44-442341232</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center mt-8 w-full overflow-auto">
+                <div>
+                  <p className="font-bold text-gray-800">Receipt to :</p>
+                  <p className="text-gray-500">
+                    {order?.user?.firstName} {order?.user?.lastName}
+                    <br />
+                    {order?.user?.address}
+                  </p>
+                  <p className="text-gray-500">
+                    {order?.user?.region.split('~')[0]}, {order?.user?.country}
+                  </p>
+                  <p className="text-gray-500">{order?.user?.email}</p>
+                </div>
+
+                <div className="text-right w-100 overflow-auto">
+                  <p className="">
+                    Order ID:
+                    <span className="text-gray-500">{order?.orderId}</span>
+                  </p>
+                  <p>
+                    Date:{' '}
+                    <span className="text-gray-500">
+                      {displayDate(order?.createdAt, false)}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div className=" mt-8 flow-root mx-0 w-full overflow-auto">
+                <table className="w-full overflow-auto">
+                  <thead className="border-b border-gray-300 text-gray-900">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="py-3.5 pr-3 text-left text-sm font-semibold text-gray-900 pl-0"
+                      >
+                        Items
+                      </th>
+                      <th
+                        scope="col"
+                        className=" px-3 py-3.5 text-right text-sm font-semibold text-gray-900 table-cell"
+                      >
+                        Quantity
+                      </th>
+                      <th
+                        scope="col"
+                        className=" px-3 py-3.5 text-right text-sm font-semibold text-gray-900 table-cell"
+                      >
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order?.productOrders?.map((productOrder, index) => (
+                      <tr
+                        className="border-b border-gray-200 w-full overflow-auto"
+                        key={index}
+                      >
+                        <td className=" w-full overflow-auto py-5 pr-3 text-sm pl-0">
+                          <div className="font-medium text-gray-900">
+                            E-commerce Platform
+                          </div>
+                          <div className="mt-1 truncate text-gray-500">
+                            {productOrder?.sku}
+                          </div>
+                        </td>
+                        <td className="px-3 py-5 text-right text-sm text-gray-500 table-cell w-full overflow-auto">
+                          {productOrder?.quantity}
+                        </td>
+                        <td className="px-3 py-5 text-right text-sm text-gray-500 table-cell w-full overflow-auto">
+                          <p>{getProductOrderAmount(productOrder?.amount)}</p>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th
+                        scope="row"
+                        className="  pr-3 pt-6 text-right text-sm font-normal text-gray-500 table-cell pl-0"
+                      >
+                        Subtotal
+                      </th>
+
+                      <td className="pl-3  pt-6 text-right text-sm text-gray-500 pr-0">
+                        {formatCurrency(
+                          order?.payment?.itemsTotal / 100,
+                          order?.payment?.currency,
+                        )}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th
+                        scope="row"
+                        className="  pr-3 pt-4 text-right text-sm font-normal text-gray-500 table-cell pl-0"
+                      >
+                        Delivery Fee
+                      </th>
+
+                      <td className="pl-3 pt-4 text-right text-sm text-gray-500 pr-0">
+                        {formatCurrency(
+                          order?.payment?.deliveryFee / 100,
+                          order?.payment?.currency,
+                        )}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                        className=" pr-3 pt-4 text-right text-sm font-normal text-gray-500 table-cell pl-0"
+                      >
+                        Applied Voucher Discount
+                      </th>
+
+                      <td className="pl-3  pt-4 text-right text-sm text-gray-500 pr-0">
+                        {formatCurrency(
+                          order?.payment?.appliedVoucherAmount / 100,
+                          order?.payment?.currency,
+                        )}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                        className=" pr-3 pt-4 text-right text-sm font-semibold text-gray-900 table-cell pl-0"
+                      >
+                        Total
+                      </th>
+
+                      <td className="pl-3 pt-4 text-right text-sm font-semibold text-gray-900 pr-0">
+                        {formatCurrency(
+                          order?.payment?.total / 100,
+                          order?.payment?.currency,
+                        )}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="flex gap-4">
+            <Button
+              color="success"
+              onClick={() => handlePrint(reactToPrintContent)}
+            >
+              Print
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export default Reciept;
