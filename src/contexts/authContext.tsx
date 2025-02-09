@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 import { createContext } from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions, globalSelectors } from '../redux/services/global.slice';
 import zeapApiSlice from '../redux/services/zeapApi.slice';
@@ -36,6 +36,7 @@ export const AuthContext = createContext<{
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation().pathname;
   const auth = getAuth(firebase);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -94,7 +95,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setIsAuthenticated(false);
         setUser(null);
         dispatch(globalActions.setAuthToken(null));
-        navigate('/SignIn');
+        const noNavLinks = [
+          '/signIn',
+          '/SignIn',
+          '/404',
+          '/404/',
+          '/receipt-download',
+        ];
+        if (!noNavLinks.includes(location)) {
+          navigate('/SignIn');
+        }
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

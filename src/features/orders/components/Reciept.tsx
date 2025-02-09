@@ -73,7 +73,7 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
                 </div>
 
                 <div className="text-right">
-                  <p>Zeap LTD.</p>
+                  <p>Zona Empires & Partners LTD .</p>
                   <p className="text-gray-500 text-sm">admin@zeaper.com</p>
                   <p className="text-gray-500 text-sm mt-1">+44-442341232</p>
                 </div>

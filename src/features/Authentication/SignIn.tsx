@@ -65,7 +65,7 @@ const SignIn: React.FC = () => {
   };
   return (
     <>
-      <div className="flex h-screen items-center justify-center m-auto max-w-lg">
+      <div className="flex h-screen items-center justify-center m-auto max-w-lg bg-lightGold">
         <div className="w-full p-4 sm:p-12.5 xl:p-17.5 bg-white">
           <span className="flex justify-center mb-2">
             <img src={Logo} alt="Logo" width="30%" className="rounded-lg" />

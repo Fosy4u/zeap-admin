@@ -35,6 +35,7 @@ import BodyMeasurementGuideLayout from '../features/controlPanel/bodymeasurement
 import WelcomeUser from '../features/controlPanel/emailTemplate/view/WelcomeUser';
 import EmailTemplates from '../features/controlPanel/emailTemplate';
 import WelcomeShop from '../features/controlPanel/emailTemplate/view/WelcomeShop';
+import DownLoadReceipt from '../features/downloads/receipt/DownLoadReceipt';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -203,6 +204,10 @@ const routes: RouteInterface[] = [
     component: WelcomeShop,
   },
 
+  {
+    path: '/receiptDownload/:order_id',
+    component: DownLoadReceipt,
+  },
   {
     path: '/SignIn',
     component: SignIn,
