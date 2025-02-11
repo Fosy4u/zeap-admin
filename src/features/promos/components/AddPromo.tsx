@@ -9,6 +9,7 @@ import {
   Button,
   Radio,
   Alert,
+  Checkbox,
 } from 'flowbite-react';
 import Multiselect from 'multiselect-react-dropdown';
 import zeapApiSlice from '../../../redux/services/zeapApi.slice';
@@ -32,6 +33,7 @@ const AddPromo = ({
   const [showFileInput, setShowFileInput] = useState<boolean>(
     mode === 'add' ? true : false,
   );
+  const [type, setType] = useState<string>('image');
   const [preview, setPreview] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [title, setTitle] = useState<string>('');
@@ -78,6 +80,7 @@ const AddPromo = ({
       setPermittedProductTypes(promo.permittedProductTypes);
       setPreview(promo.imageUrl.link);
       setShowFileInput(false);
+      setType(promo?.imageUrl?.type || 'image');
     }
   }, [promo]);
 
@@ -87,8 +90,10 @@ const AddPromo = ({
   }, [productTypeOptions]);
   useEffect(() => {
     if (selectedFile) {
-      const MAX_FILE_SIZE = 1120; // 1MB
-
+      let MAX_FILE_SIZE = 1120; // 1MB
+      if (type === 'video') {
+        MAX_FILE_SIZE = 5120; // 5MB
+      }
       const fileSizeKiloBytes = selectedFile?.size / 1024;
 
       if (fileSizeKiloBytes > MAX_FILE_SIZE) {
@@ -103,6 +108,7 @@ const AddPromo = ({
 
       setErrorMsg('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFile]);
 
   const validate = () => {
@@ -197,6 +203,7 @@ const AddPromo = ({
     setSelectedFile(undefined);
     setPreview(null);
     setErrorMsg('');
+    setType('image');
   };
 
   const handleSavePromo = () => {
@@ -209,6 +216,7 @@ const AddPromo = ({
     formData.append('discount', JSON.stringify(discount));
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
+    formData.append('type', type);
     formData.append(
       'permittedProductTypes',
       JSON.stringify(permittedProductTypes),
@@ -422,6 +430,26 @@ const AddPromo = ({
             />
           </div>
           <div className="flex flex-col border rounded-md p-2 gap-4">
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  checked={type === 'image'}
+                  onChange={() => {
+                    setPreview(null);
+                    setSelectedFile(undefined);
+                    setType('image');
+                  }}
+                />
+                <Label>Image</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  checked={type === 'video'}
+                  onChange={() => setType('video')}
+                />
+                <Label>Video</Label>
+              </div>
+            </div>
             <Label className="text-darkGold">Image</Label>
             <Alert color="info" className="text-xs">
               Upload an image that represents the promo. This image will be use
@@ -431,7 +459,7 @@ const AddPromo = ({
             </Alert>
             {showFileInput && (
               <FileInput
-                accept="image/*"
+                accept={type === 'image' ? 'image/*' : 'video/*'}
                 id="file"
                 onChange={(e) => handleFileChange(e)}
               />
@@ -450,8 +478,13 @@ const AddPromo = ({
                 </Button>
               </>
             )}
-            {preview && (
+            {preview && type === 'image' && (
               <img src={preview} alt="preview" className="w-full h-full" />
+            )}
+            {preview && type === 'video' && (
+              <video autoPlay muted loop id="myVideo">
+                <source src={preview} type="video/mp4" />
+              </video>
             )}
           </div>
           {errorMsg && <Alert color="failure">{errorMsg}</Alert>}

@@ -15,6 +15,7 @@ interface ImageUrlInterface {
   link: string;
   name: string;
   isDefault?: boolean;
+  type?: string;
 }
 interface SocialInterface {
   facebook?: string;

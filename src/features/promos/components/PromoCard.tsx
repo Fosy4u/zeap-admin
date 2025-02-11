@@ -22,11 +22,18 @@ const PromoCard = ({ promo }: { promo: PromoInterface }) => {
       key={promo?.promoId}
       className="flex flex-col  my-2 p-2 rounded-lg shadow-md"
     >
-      <img
-        src={promo?.imageUrl?.link || NoPic}
-        alt={promo?.title}
-        className="w-full max-h-100 object-contain"
-      />
+      {promo?.imageUrl?.type === 'video' && (
+        <video autoPlay muted loop id="myVideo">
+          <source src={promo?.imageUrl?.link} type="video/mp4" />
+        </video>
+      )}
+      {promo?.imageUrl?.type !== 'video' && (
+        <img
+          src={promo?.imageUrl?.link || NoPic}
+          alt={promo?.title}
+          className="w-full max-h-100 object-contain"
+        />
+      )}
       <div className="flex flex-col m-2">
         <p className="text-md font-bold">{promo?.title}</p>
         <p className="text-xs text-gray-500 dark:text-gray-300">
