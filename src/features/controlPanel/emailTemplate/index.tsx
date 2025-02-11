@@ -26,6 +26,16 @@ const EmailTemplates = () => {
             <span className="font-semibold ">Welcome Shop Email Template</span>
           </div>
         </NavLink>
+        <NavLink
+          to="/control-panel/email-templates/successful-order"
+          className="shadow-md hover:shadow-success p-4 items-center text-center  flex rounded-full  flex-col w-full gap-4 items-center cursor-pointer dark:bg-slate-800"
+        >
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <span className="font-semibold ">
+              Successful Order Email Template
+            </span>
+          </div>
+        </NavLink>
       </div>
     </div>
   );

@@ -54,7 +54,9 @@ const DownLoadReceipt = () => {
                 {order?.user?.address}
               </p>
               <p className="text-gray-500">
-                {order?.user?.region.split('~')[0]}, {order?.user?.country}
+                {order?.user?.region &&
+                  order?.user?.region?.split('~')[0] + ','}{' '}
+                {order?.user?.country}
               </p>
               <p className="text-gray-500">{order?.user?.email}</p>
             </div>

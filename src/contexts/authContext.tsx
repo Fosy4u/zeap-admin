@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           '404',
           'receiptDownload',
         ];
-        if (!noNavLinks.includes(location.slice(1).split('/')[0])) {
+        if (!noNavLinks.includes(location.slice(1)?.split('/')[0])) {
           navigate('/SignIn');
         }
       }

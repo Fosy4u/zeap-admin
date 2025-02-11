@@ -70,9 +70,12 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
       .then((res) => {
         const pdf = res?.data?.pdf;
         console.log('pdf', pdf);
-        // convert the data object to uint8array
-        const buffer = new Uint8Array(Object.values(pdf));
-
+        let buffer;
+        if (typeof pdf === 'object') {
+          buffer = new Uint8Array(Object.values(pdf));
+        } else {
+          buffer = new Uint8Array(Object.values(pdf));
+        }
         if (buffer.length === 0) {
           setError(
             'Error downloading file. Please try again later or contact support.',
@@ -166,7 +169,9 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
                     {order?.user?.address}
                   </p>
                   <p className="text-gray-500">
-                    {order?.user?.region.split('~')[0]}, {order?.user?.country}
+                    {order?.user?.region &&
+                      order?.user?.region?.split('~')[0] + ','}{' '}
+                    {order?.user?.country}
                   </p>
                   <p className="text-gray-500">{order?.user?.email}</p>
                 </div>

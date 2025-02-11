@@ -7,11 +7,11 @@ import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import EmailTemplateVariables from '../components/EmailTemplateVariables';
 
-const WelcomeShop = () => {
-  const name = 'welcome-shop';
+const SuccessfulOrder = () => {
+  const name = 'successful-order';
   const token = useSelector(globalSelectors.selectAuthToken);
   const [error, setError] = useState<string>('');
-  const [subject, setSubject] = useState('Welcome to Zeap');
+  const [subject, setSubject] = useState('Order Confirmation');
   const [refresh, setRefresh] = useState(false);
 
   const [body, setBody] = useState('');
@@ -67,7 +67,7 @@ const WelcomeShop = () => {
         <div>
           {' '}
           <h1 className="text-xl md:text-2xltext-dark">
-            Welcome Shop Email Template
+            Successful Order Email Template
           </h1>
         </div>
         <EmailTemplateVariables />
@@ -76,8 +76,8 @@ const WelcomeShop = () => {
       <Alert color="info">
         <div className="flex flex-col gap-2">
           <span>
-            This is the email template that will be sent to the shop when they
-            sign up
+            This is the email template that will be sent to the user when they
+            place a successful order.
           </span>
         </div>
       </Alert>
@@ -86,13 +86,12 @@ const WelcomeShop = () => {
       <div className="w-full  ">
         <Label>Subject</Label>
         <TextInput
-          className="dark:text-slate-900"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Subject"
         />
       </div>
-      <div className="w-full  p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8  dark:border-gray-700 ">
+      <div className="w-full  p-4 bg-white border border-gray-200 text-black rounded-lg shadow sm:p-8 ">
         <Editor
           placeholder={'Write something...'}
           value={body}
@@ -112,4 +111,4 @@ const WelcomeShop = () => {
   );
 };
 
-export default WelcomeShop;
+export default SuccessfulOrder;

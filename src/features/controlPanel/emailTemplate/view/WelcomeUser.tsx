@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { globalSelectors } from '../../../../redux/services/global.slice';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
+import EmailTemplateVariables from '../components/EmailTemplateVariables';
 
 const WelcomeUser = () => {
   const name = 'welcome-user';
@@ -62,13 +63,14 @@ const WelcomeUser = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark  rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+      <div className="flex flex-col md:flex-row justify-between md:items-center md:justify-between mb-8 p-4 bg-white dark:bg-boxdark  rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div>
           {' '}
           <h1 className="text-xl md:text-2xltext-dark">
             Welcome User Email Template
           </h1>
         </div>
+        <EmailTemplateVariables />
       </div>
 
       <Alert color="info">

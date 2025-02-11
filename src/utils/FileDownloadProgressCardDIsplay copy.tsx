@@ -65,11 +65,11 @@ const FileDownloadProgressCardDIsplay = ({
   }, [socket, thisSessionId, updateState]);
 
   const getPrpgressVariant = () => {
-    if (progress === 10) return 'danger';
-    else if (progress === 20) return 'warning';
-    else if (progress === 70) return 'info';
-    else if (progress === 95) return 'primary';
-    else if (progress === 100) return 'success';
+    if (progress < 10) return 'red';
+    else if (progress < 20) return 'yellow';
+    else if (progress < 70) return 'cyan';
+    else if (progress > 80) return 'gold';
+    else if (progress > 85) return 'green';
   };
 
   return (

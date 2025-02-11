@@ -36,6 +36,7 @@ import WelcomeUser from '../features/controlPanel/emailTemplate/view/WelcomeUser
 import EmailTemplates from '../features/controlPanel/emailTemplate';
 import WelcomeShop from '../features/controlPanel/emailTemplate/view/WelcomeShop';
 import DownLoadReceipt from '../features/downloads/receipt/DownLoadReceipt';
+import SuccessfulOrder from '../features/controlPanel/emailTemplate/view/SuccessfulOrder';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -202,6 +203,10 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/email-templates/welcome-email/shop',
     component: WelcomeShop,
+  },
+  {
+    path: '/control-panel/email-templates/successful-order',
+    component: SuccessfulOrder,
   },
 
   {
