@@ -52,6 +52,7 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
 
         const payload = {
           pushToken,
+          isAdminPanel: true,
         };
         registerPushToken({ payload })
           .unwrap()
