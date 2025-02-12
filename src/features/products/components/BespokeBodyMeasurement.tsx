@@ -31,7 +31,6 @@ const BespokeBodyMeasurement = ({
   setMeasurements: (measurement: MeasurementInterface[]) => void;
   genders: string[];
 }) => {
-  console.log('genders', genders);
   const femaleBodyMeasurementEnums =
     bodyMeasurementEnums?.find((m) => m.gender === 'female')?.value || [];
   const maleBodyMeasurementEnums =
