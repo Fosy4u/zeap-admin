@@ -20,7 +20,7 @@ const AddNewProductOptions = ({ shopId }: { shopId: string }) => {
         New Product
       </div>
       <span className="mb-4">Select the product type you want to add</span>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div
           className={`${cardClass}`}
           onClick={() => {
