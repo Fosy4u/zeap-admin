@@ -169,6 +169,10 @@ interface ProductInterface {
   category: ProductCategoryInterface;
   variations: VariationInterface[];
   bodyMeasurement: string;
+  autoPriceAdjustment: {
+    isAdjustable: boolean;
+    adjustmentPercentage: number;
+  };
   promo?: {
     promoId: string;
     discountPercentage: number;
@@ -230,7 +234,8 @@ interface PromoInterface {
   description: string;
   discount: PromoDiscountInterface;
   status: string;
-  imageUrl: ImageUrlInterface;
+  smallScreenImageUrl: ImageUrlInterface;
+  largeScreenImageUrl: ImageUrlInterface;
   startDate: string;
   endDate: string;
   createdAt: Date;

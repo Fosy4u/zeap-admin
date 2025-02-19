@@ -455,8 +455,44 @@ const Product = () => {
                         ))}
                     </Table.Body>
                   </Table>
+                  <div className="flex flex-col shadow-md p-4 gap-2">
+                    <div className="flex justify-between">
+                      <span>Auto Price Adjustment:</span>{' '}
+                      <span>
+                        <Badge
+                          color={
+                            product?.autoPriceAdjustment?.isAdjustable
+                              ? 'success'
+                              : 'failure'
+                          }
+                        >
+                          {product?.autoPriceAdjustment?.isAdjustable
+                            ? 'Enabled'
+                            : 'Disabled'}
+                        </Badge>
+                      </span>
+                    </div>
+                    {product?.autoPriceAdjustment?.isAdjustable && (
+                      <div className="flex justify-between">
+                        <span>Adjustment Percentage:</span>{' '}
+                        <span>
+                          <Badge
+                            color={
+                              product?.autoPriceAdjustment?.adjustmentPercentage
+                                ? 'success'
+                                : 'failure'
+                            }
+                          >
+                            +-
+                            {product?.autoPriceAdjustment?.adjustmentPercentage}
+                            %
+                          </Badge>
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   {bespokeVariation && (
-                    <div className="flex flex-col shadow-md p-4">
+                    <div className="flex flex-col shadow-md p-4 gap-2">
                       <div className="flex justify-between">
                         <span>Colour Type:</span>{' '}
                         <span>

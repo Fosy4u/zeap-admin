@@ -29,12 +29,21 @@ const AddPromo = ({
   mode?: 'add' | 'edit';
 }) => {
   const { setDimBackground } = useContext(ThemeContext);
-  const [selectedFile, setSelectedFile] = useState<File>();
-  const [showFileInput, setShowFileInput] = useState<boolean>(
-    mode === 'add' ? true : false,
-  );
+  const [selectedSmallScreenFile, setSelectedSmallScreenFile] =
+    useState<File>();
+  const [showSmallScreenFileInput, setShowSmallScreenFileInput] =
+    useState<boolean>(mode === 'add' ? true : false);
+  const [showLargeScreenFileInput, setShowLargeScreenFileInput] =
+    useState<boolean>(false);
+  const [selectedLargeScreenFile, setSelectedLargeScreenFile] =
+    useState<File>();
   const [type, setType] = useState<string>('image');
-  const [preview, setPreview] = useState<string | null>(null);
+  const [smallScreenPreview, setSmallScreenPreview] = useState<string | null>(
+    null,
+  );
+  const [largeScreenPreview, setLargeScreenPreview] = useState<string | null>(
+    null,
+  );
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [subTitle, setSubTitle] = useState<string>('');
@@ -78,9 +87,12 @@ const AddPromo = ({
       setStartDate(promo.startDate);
       setEndDate(promo.endDate);
       setPermittedProductTypes(promo.permittedProductTypes);
-      setPreview(promo.imageUrl.link);
-      setShowFileInput(false);
-      setType(promo?.imageUrl?.type || 'image');
+      setSmallScreenPreview(promo.smallScreenImageUrl.link);
+      setLargeScreenPreview(promo.largeScreenImageUrl.link);
+
+      setShowSmallScreenFileInput(false);
+      setShowLargeScreenFileInput(false);
+      setType(promo?.smallScreenImageUrl?.type || 'image');
     }
   }, [promo]);
 
@@ -89,19 +101,19 @@ const AddPromo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productTypeOptions]);
   useEffect(() => {
-    if (selectedFile) {
+    if (selectedSmallScreenFile) {
       let MAX_FILE_SIZE = 1120; // 1MB
       if (type === 'video') {
         MAX_FILE_SIZE = 5120; // 5MB
       }
-      const fileSizeKiloBytes = selectedFile?.size / 1024;
+      const fileSizeKiloBytes = selectedSmallScreenFile?.size / 1024;
 
       if (fileSizeKiloBytes > MAX_FILE_SIZE) {
         setErrorMsg(
           'Selected file size is greater than 1MB. Please select a smaller file',
         );
         setTimeout(() => {
-          setSelectedFile(undefined);
+          setSelectedSmallScreenFile(undefined);
         }, 1000);
         return;
       }
@@ -109,7 +121,29 @@ const AddPromo = ({
       setErrorMsg('');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFile]);
+  }, [selectedSmallScreenFile]);
+  useEffect(() => {
+    if (selectedLargeScreenFile) {
+      let MAX_FILE_SIZE = 1120; // 1MB
+      if (type === 'video') {
+        MAX_FILE_SIZE = 5120; // 5MB
+      }
+      const fileSizeKiloBytes = selectedLargeScreenFile?.size / 1024;
+
+      if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+        setErrorMsg(
+          'Selected file size is greater than 1MB. Please select a smaller file',
+        );
+        setTimeout(() => {
+          setSelectedLargeScreenFile(undefined);
+        }, 1000);
+        return;
+      }
+
+      setErrorMsg('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLargeScreenFile]);
 
   const validate = () => {
     if (!title) {
@@ -133,8 +167,12 @@ const AddPromo = ({
       setErrorMsg('Please enter an end date');
       return false;
     }
-    if (!selectedFile && mode === 'add') {
-      setErrorMsg('Please select an image');
+    if (!selectedSmallScreenFile && mode === 'add') {
+      setErrorMsg('Please select an image for small screen');
+      return false;
+    }
+    if (!selectedLargeScreenFile && mode === 'add') {
+      setErrorMsg('Please select an image for large screen');
       return false;
     }
     if (
@@ -200,8 +238,10 @@ const AddPromo = ({
     setStartDate('');
     setEndDate('');
     setPermittedProductTypes(productTypeOptions.map((option) => option.value));
-    setSelectedFile(undefined);
-    setPreview(null);
+    setSelectedSmallScreenFile(undefined);
+    setSelectedLargeScreenFile(undefined);
+    setSmallScreenPreview(null);
+    setLargeScreenPreview(null);
     setErrorMsg('');
     setType('image');
   };
@@ -221,8 +261,11 @@ const AddPromo = ({
       'permittedProductTypes',
       JSON.stringify(permittedProductTypes),
     );
-    if (selectedFile) {
-      formData.append('file', selectedFile as Blob);
+    if (selectedSmallScreenFile) {
+      formData.append('smallScreenImageUrl', selectedSmallScreenFile as Blob);
+    }
+    if (selectedLargeScreenFile) {
+      formData.append('largeScreenImageUrl', selectedLargeScreenFile as Blob);
     }
     if (mode === 'edit' && promo?.promoId) {
       formData.append('promoId', promo?.promoId);
@@ -251,13 +294,28 @@ const AddPromo = ({
       });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSmallScreenFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedSmallScreenFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string);
+        setSmallScreenPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleLargeScreenFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedLargeScreenFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLargeScreenPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -430,62 +488,109 @@ const AddPromo = ({
             />
           </div>
           <div className="flex flex-col border rounded-md p-2 gap-4">
-            <div className="flex gap-4">
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  checked={type === 'image'}
-                  onChange={() => {
-                    setPreview(null);
-                    setSelectedFile(undefined);
-                    setType('image');
-                  }}
-                />
-                <Label>Image</Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  checked={type === 'video'}
-                  onChange={() => setType('video')}
-                />
-                <Label>Video</Label>
-              </div>
-            </div>
-            <Label className="text-darkGold">Image</Label>
+            <Label className="text-darkGold">Cover Image / Video</Label>
             <Alert color="info" className="text-xs">
-              Upload an image that represents the promo. This image will be use
-              as the background image for the promo on the market home page. The
-              image should be in landscape orientation and should be at least
-              1920px wide and 1080px tall.
+              Upload two images that represents the promo. This image will be
+              use as the background image for the promo on the market home
+              page.For responsive design, one image will be used for small
+              screens and the other for large screens.
             </Alert>
-            {showFileInput && (
-              <FileInput
-                accept={type === 'image' ? 'image/*' : 'video/*'}
-                id="file"
-                onChange={(e) => handleFileChange(e)}
-              />
-            )}
-            {!showFileInput && (
-              <>
-                {promo?.imageUrl.name && (
-                  <span className="text-darkGold">{promo?.imageUrl.name}</span>
-                )}
-                <Button
-                  size="sm"
-                  onClick={() => setShowFileInput(true)}
-                  color="primary"
-                >
-                  Change Image
-                </Button>
-              </>
-            )}
-            {preview && type === 'image' && (
-              <img src={preview} alt="preview" className="w-full h-full" />
-            )}
-            {preview && type === 'video' && (
-              <video autoPlay muted loop id="myVideo">
-                <source src={preview} type="video/mp4" />
-              </video>
-            )}
+            <div className="flex flex-col gap-4 border border-warning rounded-md p-2">
+              <h5 className="text-purple-700">Small Screen</h5>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={type === 'image'}
+                    onChange={() => {
+                      setSmallScreenPreview(null);
+                      setSelectedSmallScreenFile(undefined);
+                      setType('image');
+                    }}
+                  />
+                  <Label>Image</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={type === 'video'}
+                    onChange={() => setType('video')}
+                  />
+                  <Label>Video</Label>
+                </div>
+              </div>
+              {showSmallScreenFileInput && (
+                <FileInput
+                  accept={type === 'image' ? 'image/*' : 'video/*'}
+                  id="file"
+                  onChange={(e) => handleSmallScreenFileChange(e)}
+                />
+              )}
+              {!showSmallScreenFileInput && (
+                <>
+                  {promo?.smallScreenImageUrl.name && (
+                    <span className="text-darkGold">
+                      {promo?.smallScreenImageUrl.name}
+                    </span>
+                  )}
+                  <Button
+                    size="sm"
+                    onClick={() => setShowSmallScreenFileInput(true)}
+                    color="primary"
+                  >
+                    Change Small Screen Image / Video
+                  </Button>
+                </>
+              )}
+              {smallScreenPreview && type === 'image' && (
+                <img
+                  src={smallScreenPreview}
+                  alt="smallScreenPreview"
+                  className="w-full h-full"
+                />
+              )}
+              {smallScreenPreview && type === 'video' && (
+                <video autoPlay muted loop id="myVideo">
+                  <source src={smallScreenPreview} type="video/mp4" />
+                </video>
+              )}
+            </div>
+            <div className="flex flex-col gap-4 border border-warning rounded-md p-2">
+              <h5 className="text-purple-700">Large Screen</h5>
+              {showLargeScreenFileInput && (
+                <FileInput
+                  accept={type === 'image' ? 'image/*' : 'video/*'}
+                  id="file"
+                  onChange={(e) => handleLargeScreenFileChange(e)}
+                />
+              )}
+              {!showLargeScreenFileInput && (
+                <>
+                  {promo?.largeScreenImageUrl.name && (
+                    <span className="text-darkGold">
+                      {promo?.largeScreenImageUrl.name}
+                    </span>
+                  )}
+                  <Button
+                    size="sm"
+                    onClick={() => setShowLargeScreenFileInput(true)}
+                    color="primary"
+                  >
+                    Change Large Screen Image / Video
+                  </Button>
+                </>
+              )}
+              {largeScreenPreview && type === 'image' && (
+                <img
+                  src={largeScreenPreview}
+                  alt="largeScreenPreview"
+                  className="w-full h-full"
+                />
+              )}
+              {largeScreenPreview && type === 'video' && (
+                <video autoPlay muted loop id="myVideo">
+                  <source src={largeScreenPreview} type="video/mp4" />
+                </video>
+              )}
+            </div>
           </div>
           {errorMsg && <Alert color="failure">{errorMsg}</Alert>}
         </div>

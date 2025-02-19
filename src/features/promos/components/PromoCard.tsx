@@ -22,18 +22,60 @@ const PromoCard = ({ promo }: { promo: PromoInterface }) => {
       key={promo?.promoId}
       className="flex flex-col  my-2 p-2 rounded-lg shadow-md"
     >
-      {promo?.imageUrl?.type === 'video' && (
-        <video autoPlay muted loop id="myVideo">
-          <source src={promo?.imageUrl?.link} type="video/mp4" />
-        </video>
-      )}
-      {promo?.imageUrl?.type !== 'video' && (
-        <img
-          src={promo?.imageUrl?.link || NoPic}
-          alt={promo?.title}
-          className="w-full max-h-100 object-contain"
-        />
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+        <div className="md:col-span-2 flex flex-col gap-2">
+          <Badge color="warning" className="text-xs">
+            Small Screen Cover Image
+          </Badge>
+          {promo?.smallScreenImageUrl?.type === 'video' && (
+            <video
+              className="max-w-[20rem] h-full object-contain"
+              autoPlay
+              muted
+              loop
+              id="myVideo"
+            >
+              <source src={promo?.smallScreenImageUrl?.link} type="video/mp4" />
+            </video>
+          )}
+          {promo?.smallScreenImageUrl?.type !== 'video' && (
+            <img
+              src={promo?.smallScreenImageUrl?.link || NoPic}
+              alt={promo?.title}
+              className="max-w-[20rem] h-full object-contain"
+            />
+          )}
+          {!promo?.smallScreenImageUrl && (
+            <img src={NoPic} alt={promo?.title} className="w-full max-h-100" />
+          )}
+        </div>
+        <div className="md:col-span-2 flex flex-col gap-1">
+          <Badge color="warning" className="text-xs">
+            Large Screen Cover Image
+          </Badge>
+          {promo?.largeScreenImageUrl?.type === 'video' && (
+            <video
+              className="max-w-[20rem] h-full object-contain"
+              autoPlay
+              muted
+              loop
+              id="myVideo"
+            >
+              <source src={promo?.largeScreenImageUrl?.link} type="video/mp4" />
+            </video>
+          )}
+          {promo?.largeScreenImageUrl?.type !== 'video' && (
+            <img
+              src={promo?.largeScreenImageUrl?.link || NoPic}
+              alt={promo?.title}
+              className="w-full max-h-100 object-contain"
+            />
+          )}
+          {!promo?.largeScreenImageUrl && (
+            <img src={NoPic} alt={promo?.title} className="w-full max-h-100" />
+          )}
+        </div>
+      </div>
       <div className="flex flex-col m-2">
         <p className="text-md font-bold">{promo?.title}</p>
         <p className="text-xs text-gray-500 dark:text-gray-300">

@@ -529,6 +529,27 @@ export default createApi({
         );
       },
     }),
+    updateAutoPriceAdjustment: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `product/update/autoPriceAdjustment`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Products', 'Product'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Product Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
 
     updateProductColorAndImages: builder.mutation({
       query: (arg) => {
@@ -1326,7 +1347,7 @@ export default createApi({
       query: (arg) => {
         const { payload } = arg;
         return {
-          url: `bodyMeasurement/add`,
+          url: `product/bodyMeasurement/add`,
           method: 'POST',
           body: payload,
         };

@@ -24,6 +24,7 @@ import {
   VariationInterface,
 } from '../../../interface/interface';
 import BespokeBodyMeasurement from '../components/BespokeBodyMeasurement';
+import AutoPriceAdjustment from '../components/AutoPriceAdjustment';
 
 // import ProductHeader from '../components/ProductHeader'
 
@@ -199,6 +200,9 @@ const AddBespokeCloth = () => {
       return 'Variations';
     }
     if (stage === 6) {
+      return 'Auto Price Adjustment';
+    }
+    if (stage === 7) {
       return 'Review';
     }
   };
@@ -350,8 +354,7 @@ const AddBespokeCloth = () => {
       editVariation({ payload })
         .unwrap()
         .then(() => {
-          setDimBackground(true);
-          setOpenSubmitModal(true);
+          setStage(stage + 1);
         })
         .catch((err) => {
           setServerError(err.data.error);
@@ -361,8 +364,7 @@ const AddBespokeCloth = () => {
     addVariation({ payload })
       .unwrap()
       .then(() => {
-        setDimBackground(true);
-        setOpenSubmitModal(true);
+        setStage(stage + 1);
       })
       .catch((err) => {
         setServerError(err.data.error);
@@ -388,7 +390,11 @@ const AddBespokeCloth = () => {
       }, 1000);
       return;
     }
-
+    if (stage === 6) {
+      setDimBackground(true);
+      setOpenSubmitModal(true);
+      return;
+    }
     let payload = {};
     if (stage === 1) {
       payload = {
@@ -530,6 +536,25 @@ const AddBespokeCloth = () => {
               viewBox="0 0 24 24"
             >
               <path d="M12 7.205c4.418 0 8-1.165 8-2.602C20 3.165 16.418 2 12 2S4 3.165 4 4.603c0 1.437 3.582 2.602 8 2.602ZM12 22c4.963 0 8-1.686 8-2.603v-4.404c-.052.032-.112.06-.165.09a7.75 7.75 0 0 1-.745.387c-.193.088-.394.173-.6.253-.063.024-.124.05-.189.073a18.934 18.934 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.073a10.143 10.143 0 0 1-.852-.373 7.75 7.75 0 0 1-.493-.267c-.053-.03-.113-.058-.165-.09v4.404C4 20.315 7.037 22 12 22Zm7.09-13.928a9.91 9.91 0 0 1-.6.253c-.063.025-.124.05-.189.074a18.935 18.935 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.074a10.163 10.163 0 0 1-.852-.372 7.816 7.816 0 0 1-.493-.268c-.055-.03-.115-.058-.167-.09V12c0 .917 3.037 2.603 8 2.603s8-1.686 8-2.603V7.596c-.052.031-.112.059-.165.09a7.816 7.816 0 0 1-.745.386Z" />
+            </svg>
+          </div>
+        </li>
+        <li
+          className={`${getClass(6)} md:after:content-['Auto_Price_Adjustment']`}
+        >
+          <div
+            className={`flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12  shrink-0 ${stage === 6 && 'bg-blue-100'}`}
+          >
+            <svg
+              className="w-4 h-4 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 13.17a3.001 3.001 0 0 0 0 5.66V20a1 1 0 1 0 2 0v-1.17a3.001 3.001 0 0 0 0-5.66V4a1 1 0 0 0-2 0v9.17ZM11 20v-9.17a3.001 3.001 0 0 1 0-5.66V4a1 1 0 1 1 2 0v1.17a3.001 3.001 0 0 1 0 5.66V20a1 1 0 1 1-2 0Zm6-1.17V20a1 1 0 1 0 2 0v-1.17a3.001 3.001 0 0 0 0-5.66V4a1 1 0 1 0-2 0v9.17a3.001 3.001 0 0 0 0 5.66Z" />
             </svg>
           </div>
         </li>
@@ -1089,6 +1114,17 @@ const AddBespokeCloth = () => {
               />
             </div>
           )}
+          {stage === 6 && (
+            <AutoPriceAdjustment
+              productId={productId}
+              setServerError={(error: string | null) =>
+                setServerError(error || '')
+              }
+              serverError={serverError}
+              product={product}
+              nextAction={nextStep}
+            />
+          )}
         </div>
         {openSubmitModal && (
           <SubmitProductModal
@@ -1111,11 +1147,11 @@ const AddBespokeCloth = () => {
           </Button>
           <Button
             onClick={nextStep}
-            disabled={stage === 6}
+            disabled={stage === 7}
             size="sm"
             color="success"
           >
-            {stage === 5 ? 'Save and Submit' : 'Save and Continue'}
+            {stage === 6 ? 'Save and Submit' : 'Save and Continue'}
           </Button>
         </div>
       </div>
