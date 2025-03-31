@@ -118,6 +118,7 @@ const BodyMeasurementEditModal = ({
               value={fieldTitle}
               // onChange={(e) => setFieldTitle(e.target.value)}
               readOnly
+              disabled
             />
             <Label htmlFor="description">Description</Label>
             <Textarea

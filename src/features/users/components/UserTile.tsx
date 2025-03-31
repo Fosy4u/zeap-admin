@@ -52,11 +52,12 @@ const UserTile = ({ user }: { user: UserInterface }) => {
                 Vendor
               </span>
             )}
-            {user?.phoneNumber && (
-              <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2">
-                {user?.phoneNumber}
-              </span>
-            )}
+
+            <span
+              className={`inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2 ${user?.isGuest ? 'bg-warning' : 'bg-success'}`}
+            >
+              {user?.isGuest ? 'Guest' : 'Signed Up'}
+            </span>
 
             {admin && (
               <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2">
