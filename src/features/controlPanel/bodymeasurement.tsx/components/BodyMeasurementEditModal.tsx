@@ -50,7 +50,7 @@ const BodyMeasurementEditModal = ({
 }) => {
   const { gender } = useParams();
   const [error, setError] = useState<string>('');
-  const [fieldTitle, setFieldTitle] = useState<string>(field.field);
+  const [fieldTitle] = useState<string>(field.field);
   const [description, setDescription] = useState<string>(field.description);
 
   const [
@@ -116,7 +116,8 @@ const BodyMeasurementEditModal = ({
               id="fieldTitle"
               name="fieldTitle"
               value={fieldTitle}
-              onChange={(e) => setFieldTitle(e.target.value)}
+              // onChange={(e) => setFieldTitle(e.target.value)}
+              readOnly
             />
             <Label htmlFor="description">Description</Label>
             <Textarea

@@ -142,7 +142,7 @@ const Product = () => {
                         setImages(color?.images.map((image) => image.link));
                       }}
                       key={index}
-                      className="w-8 h-8 rounded-full cursor-pointer"
+                      className="w-8 h-8 rounded-full cursor-pointer border  border-slate-200"
                       style={{ background: getBg(color?.value) }}
                     ></div>
                   ),
@@ -190,6 +190,16 @@ const Product = () => {
                     <Accordion.Content>
                       <div className="flex gap-2 flex-wrap">
                         {product?.productId}
+                      </div>
+                    </Accordion.Content>
+                  </Accordion.Panel>
+                  <Accordion.Panel>
+                    <Accordion.Title className=" h-8 text-md rounded-md items-center  flex">
+                      ID
+                    </Accordion.Title>
+                    <Accordion.Content>
+                      <div className="flex gap-2 flex-wrap">
+                        {product?.productId.substring(12)}
                       </div>
                     </Accordion.Content>
                   </Accordion.Panel>

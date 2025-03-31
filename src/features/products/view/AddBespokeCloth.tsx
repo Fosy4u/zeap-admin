@@ -321,7 +321,7 @@ const AddBespokeCloth = () => {
   const handleAddBodyMeasurement = () => {
     const payload = {
       productId: product?.productId,
-      measurements: measurements,
+      measurements: measurements.filter((item) => item.fields.length > 0),
     };
     addProductBodyMeasurement({ payload })
       .unwrap()

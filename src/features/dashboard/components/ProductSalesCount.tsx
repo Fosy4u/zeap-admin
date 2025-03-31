@@ -134,7 +134,7 @@ const ProductSalesCount = ({
       </div>
       <div className="flex justify-center">
         <SalesCountChart
-          fillColors={['#D5B07B', '#133522']}
+          fillColors={['#AFE1AF', '#133522']}
           labels={['Bespoke', 'Ready Made']}
           data={[
             productGroupsCount['Bespoke'],
