@@ -67,7 +67,7 @@ const DeliveryFee = () => {
     if (newDeliveryFee === deliveryFee?.fee) {
       return;
     }
-    if (newDeliveryFee < 0) {
+    if (newDeliveryFee < 0 && newDeliveryFee !== 0) {
       setError('Delivery fee cannot be less than 0');
       setTimeout(() => {
         setError('');
