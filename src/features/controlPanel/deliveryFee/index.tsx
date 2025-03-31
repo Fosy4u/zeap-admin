@@ -74,7 +74,7 @@ const DeliveryFee = () => {
       }, 5000);
       return;
     }
-    if (!newDeliveryFee) {
+    if (!newDeliveryFee && newDeliveryFee !== 0) {
       setError('Delivery fee cannot be empty');
       setTimeout(() => {
         setError('');
