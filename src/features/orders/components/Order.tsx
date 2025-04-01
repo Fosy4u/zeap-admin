@@ -11,7 +11,7 @@ import Reciept from './Reciept';
 
 const Order = ({ order }: { order: OrderInterface }) => {
   const productOrders = order?.productOrders;
-  const deliveryAddress = order?.deliveryAddress;
+  const deliveryDetails = order?.deliveryDetails;
   const isCancelled = order?.cancel?.isCancelled;
   const payment = order?.payment;
   const calcProgress = () => {
@@ -48,27 +48,27 @@ const Order = ({ order }: { order: OrderInterface }) => {
         </span>
       </div>
       <div className="flex flex-col gap-2 shadow-md w-full p-2">
-        <span className="font-bold">Delivery Address</span>
+        <span className="font-bold">Delivery Details</span>
         <div className="flex flex-col gap-2 bg-grey8 p-2">
           <div className="flex justify-between">
             <span>Address: </span>
-            <span>{deliveryAddress?.address || 'N/P'}</span>
+            <span>{deliveryDetails?.address || 'N/P'}</span>
           </div>
           <div className="flex justify-between">
             <span>Region: </span>
-            <span>{deliveryAddress?.region || 'N/P'}</span>
+            <span>{deliveryDetails?.region || 'N/P'}</span>
           </div>
           <div className="flex justify-between">
             <span>Post Code: </span>
-            <span>{deliveryAddress?.postCode || 'N/P'}</span>
+            <span>{deliveryDetails?.postCode || 'N/P'}</span>
           </div>
           <div className="flex justify-between">
             <span>Country: </span>
-            <span>{deliveryAddress?.country || 'N/P'}</span>
+            <span>{deliveryDetails?.country || 'N/P'}</span>
           </div>
           <div className="flex justify-between">
             <span>Contact No: </span>
-            <span>{deliveryAddress?.phoneNumber || 'N/P'}</span>
+            <span>{deliveryDetails?.phoneNumber || 'N/P'}</span>
           </div>
         </div>
       </div>

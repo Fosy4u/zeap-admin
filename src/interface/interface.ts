@@ -299,6 +299,16 @@ interface PaymentInterface {
   gatewayResponse: string;
   log: any;
 }
+interface deliveryDetailsInterface {
+  firstName: string;
+  lastName: string;
+  address: string;
+  region: string;
+  country: string;
+  postCode: string;
+  phoneNumber: string;
+}
+
 interface ProductOrdersInterface {
   _id: string;
   order: OrderInterface;
@@ -312,6 +322,7 @@ interface ProductOrdersInterface {
   sku: string;
   color?: string;
   size?: string;
+  deliveryDetails: deliveryDetailsInterface;
   deliveryAddress: deliveryAddressInterface;
   bespokeColor?: string;
   images: [
@@ -391,7 +402,7 @@ interface OrderInterface {
   user: UserInterface;
   disabled: boolean;
   orderId: string;
-
+  deliveryDetails: deliveryDetailsInterface;
   deliveryAddress: deliveryAddressInterface;
   payment: PaymentInterface;
   productOrders: ProductOrdersInterface[];
@@ -559,4 +570,5 @@ export {
   BodyMeasurementGuideInterface,
   ProductAnaliticsInterface,
   CountAnalyticsInterface,
+  deliveryDetailsInterface,
 };

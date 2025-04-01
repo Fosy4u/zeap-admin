@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from '../../../images/logo/app_logo.png';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import { mediumScreen } from '../../../utils/screenSizes';
+import { mediumScreen, smallScreen } from '../../../utils/screenSizes';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -116,6 +116,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     (pathname === '/' || pathname.includes('dashboard')) &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="fill-current"
@@ -157,6 +158,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('users') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="fill-current"
@@ -187,6 +189,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('shops') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -217,6 +220,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('products') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -247,6 +251,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('baskets') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -275,6 +280,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('orders') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -335,6 +341,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('promos') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -363,6 +370,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('payment') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
@@ -452,6 +460,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
                                 (isActive && '!text-white')
                               }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
+                              }
                             >
                               Body Measurement
                             </NavLink>
@@ -462,6 +473,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
                                 (isActive && '!text-white')
+                              }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
                               }
                             >
                               Delivery Fee
@@ -474,6 +488,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
                                 (isActive && '!text-white')
                               }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
+                              }
                             >
                               Exchange Rate
                             </NavLink>
@@ -484,6 +501,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               className={({ isActive }) =>
                                 'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
                                 (isActive && '!text-white')
+                              }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
                               }
                             >
                               Email Templates
@@ -515,6 +535,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes('reports') &&
                     'bg-graydark dark:bg-meta-4 text-white'
                   }`}
+                  onClick={() => smallScreen && setSidebarOpen(false)}
                 >
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"

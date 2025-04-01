@@ -43,7 +43,7 @@ const ProductOrder = () => {
   const user = productOrder?.user;
   const shop = productOrder?.shop;
   const status = productOrder?.status;
-  const deliveryAddress = productOrder?.deliveryAddress;
+  const deliveryDetails = productOrder?.deliveryDetails;
   const bodyMeasurements = productOrder?.bodyMeasurements || [];
   const amount = productOrder?.amount || [];
   const images = productOrder?.images.map((image: any) => image.link);
@@ -141,7 +141,9 @@ const ProductOrder = () => {
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-md ">Single Plain bespoke Colour</span>
+                <span className="text-md ">
+                  Single Plain bespoke Material Colour
+                </span>
                 <span className="text-lg font-semibold">
                   {bespokeColor || 'N/A'}
                 </span>
@@ -251,28 +253,28 @@ const ProductOrder = () => {
               </div>
 
               <div>
-                <span className="font-bold">Delivery Address</span>
+                <span className="font-bold">Delivery Details</span>
                 <div className=" bg-grey8 p-2 ">
                   <div className="flex flex-col gap-2 bg-grey8 p-2 dark:bg-boxdark">
                     <div className="flex justify-between">
                       <span>Address: </span>
-                      <span>{deliveryAddress?.address || 'N/P'}</span>
+                      <span>{deliveryDetails?.address || 'N/P'}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Region: </span>
-                      <span>{deliveryAddress?.region || 'N/P'}</span>
+                      <span>{deliveryDetails?.region || 'N/P'}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Post Code: </span>
-                      <span>{deliveryAddress?.postCode || 'N/P'}</span>
+                      <span>{deliveryDetails?.postCode || 'N/P'}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Country: </span>
-                      <span>{deliveryAddress?.country || 'N/P'}</span>
+                      <span>{deliveryDetails?.country || 'N/P'}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Contact No: </span>
-                      <span>{deliveryAddress?.phoneNumber || 'N/P'}</span>
+                      <span>{deliveryDetails?.phoneNumber || 'N/P'}</span>
                     </div>
                   </div>
                 </div>
