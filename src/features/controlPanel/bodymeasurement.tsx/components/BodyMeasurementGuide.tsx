@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Alert, Badge, Popover } from 'flowbite-react';
 import DeleteBodyMeasurementGuideModal from './DeleteBodyMeasurementGuideModal';
 import { HiArrowsExpand, HiArrowSmUp, HiDotsVertical } from 'react-icons/hi';
-//import DeleteBodyMeasurementGuideFieldModal from './DeleteBodyMeasurementGuideFieldModal';
+import DeleteBodyMeasurementGuideFieldModal from './DeleteBodyMeasurementGuideFieldModal';
 import UpdateBodyMeasurementGuideNameModal from './UpdateBodyMeasurementGuideNameModal';
 import AddBodyMeasurementGuideFieldModal from './AddBodyMeasurementGuideFieldModal';
 
@@ -150,7 +150,7 @@ const BodyMeasurementGuide = ({
                       >
                         Edit
                       </Badge>
-                      {/* <DeleteBodyMeasurementGuideFieldModal field={field} /> */}
+                      <DeleteBodyMeasurementGuideFieldModal field={field} />
                     </div>
                   </div>
                 </div>

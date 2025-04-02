@@ -16,14 +16,17 @@ const PaymentSideB = ({ payment }: { payment: PaymentInterface }) => {
         <span className="flex flex-col gap-2">
           <span className="font-bold">Card Type</span>
           <span className="text-md">
-            {capitalizeFirstLetter(payment.cardType)}
+            {payment.cardType ? capitalizeFirstLetter(payment.cardType) : 'N/A'}
           </span>
         </span>
         <span className="flex flex-col gap-2">
           <span className="font-bold">Bank and Country</span>
-          <span className="text-md">
-            {payment.bank} ({payment.countryCode})
-          </span>
+          {payment.bank && (
+            <span className="text-md">
+              {payment.bank} ({payment.countryCode})
+            </span>
+          )}
+          {!payment.bank && <span className="text-md">N/A</span>}
         </span>
       </div>
       <div className="flex gap-12 h-[18rem] justify-center items-center">

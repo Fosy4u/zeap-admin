@@ -69,8 +69,7 @@ const PaymentTable = ({ payments }: { payments: PaymentInterface[] }) => {
                 }}
                 className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 underline cursor-pointer text-darkGold"
               >
-                {capitalizeFirstLetter(payment?.user?.firstName)}{' '}
-                {capitalizeFirstLetter(payment?.user?.lastName)}
+                {capitalizeFirstLetter(payment?.user?.email)}{' '}
               </td>
               <td className=" h-10 px-4 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500">
                 {getCurrencySmallSymbol(payment.currency)}
