@@ -77,7 +77,7 @@ const ProductCard = ({
       </div>
       <div className=" hidden md:block mx-auto mt-2  transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <img
-          className="h-[484px] w-full object-cover object-center"
+          className="h-[35rem] w-full object-cover object-center"
           src={getDefaultImageLink(product)}
           alt={product?.title}
         />
