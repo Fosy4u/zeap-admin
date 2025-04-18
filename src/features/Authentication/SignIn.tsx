@@ -138,7 +138,7 @@ const SignIn: React.FC = () => {
                 />
 
                 <span
-                  className="absolute right-4 top-4"
+                  className="absolute right-4 top-4 cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   <svg

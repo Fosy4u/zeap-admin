@@ -308,6 +308,23 @@ interface deliveryDetailsInterface {
   postCode: string;
   phoneNumber: string;
 }
+interface DeliveryFeeInterface {
+  _id: string;
+  fee: number;
+  currency: string;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  country: string;
+  logs: [
+    {
+      value: number;
+      currency: string;
+      date: Date;
+      user: UserInterface;
+    },
+  ];
+}
 
 interface ProductOrdersInterface {
   _id: string;
@@ -571,4 +588,5 @@ export {
   ProductAnaliticsInterface,
   CountAnalyticsInterface,
   deliveryDetailsInterface,
+  DeliveryFeeInterface,
 };

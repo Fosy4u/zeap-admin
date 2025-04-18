@@ -89,6 +89,7 @@ export default createApi({
         );
       },
     }),
+
     updateUser: builder.mutation({
       query: (arg) => {
         const { payload } = arg;
@@ -1910,10 +1911,10 @@ export default createApi({
         );
       },
     }),
-    getDeliveryFee: builder.query({
+    getDeliveryFees: builder.query({
       query: (arg) => {
         return {
-          url: `/deliveryFee`,
+          url: `/deliveryFees`,
           params: { ...arg },
         };
       },

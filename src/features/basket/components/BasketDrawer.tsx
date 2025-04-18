@@ -79,16 +79,13 @@ export function BasketDrawer({
           </div>
           <div className="flex text-sm justify-between p-4 text-black font-semibold">
             <span>Delivery</span>
-            <span>
-              {currency?.symbol}
-              {numberWithCommas(Number(basket?.deliveryFee))}
-            </span>
+            <span>Calculated at checkout</span>
           </div>
           <div className="flex justify-between p-4 text-black font-bold">
             <span>Total</span>
             <span>
               {currency?.symbol}
-              {numberWithCommas(Number(basket?.total))}
+              {numberWithCommas(Number(basket?.total))} + Delivery fee
             </span>
           </div>
         </div>
