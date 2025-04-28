@@ -424,6 +424,11 @@ interface OrderInterface {
   payment: PaymentInterface;
   productOrders: ProductOrdersInterface[];
   voucher: VoucherInterface;
+  progress: {
+    value: number;
+    max: number;
+    min: number;
+  };
   cancel: {
     isCancelled: boolean;
     reason: string;

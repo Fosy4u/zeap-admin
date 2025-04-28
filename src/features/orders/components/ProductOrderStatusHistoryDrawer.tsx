@@ -85,7 +85,6 @@ export function ProductOrderStatusHistoryDrawer({
   const isLoading =
     productOrderStatusHistoryQuery.isLoading ||
     updateProductOrderStatusStatus.isLoading;
-  console.log('history', history);
 
   const handleClose = () => setIsOpen(false);
 

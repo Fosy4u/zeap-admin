@@ -14,13 +14,7 @@ const Order = ({ order }: { order: OrderInterface }) => {
   const deliveryDetails = order?.deliveryDetails;
   const isCancelled = order?.cancel?.isCancelled;
   const payment = order?.payment;
-  const calcProgress = () => {
-    const total = productOrders?.length;
-    const completed = productOrders?.filter(
-      (productOrder) => productOrder.status.value === 'order delivered',
-    ).length;
-    return ((completed / total) * 100).toFixed(2);
-  };
+
   return (
     <div className="flex flex-col text-black gap-4">
       <div className="flex flex-col gap-2 shadow-md w-full p-2">
@@ -28,16 +22,16 @@ const Order = ({ order }: { order: OrderInterface }) => {
         <div className="flex justify-between">
           <div className="flex flex-col ">
             <span className=" text-xs">
-              Progress - <strong>{calcProgress()}%</strong>
+              Progress - <strong>{order?.progress?.value}%</strong>
             </span>
             <div className="flex items-center">
               <progress
                 id={order?.orderId}
                 max="100"
-                value={calcProgress()}
+                value={order?.progress?.value}
                 className="block w-100% overflow-hidden rounded bg-slate-100 [&::-webkit-progress-bar]:bg-white [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
               >
-                {calcProgress()}%
+                {order?.progress?.value}%
               </progress>
             </div>
           </div>

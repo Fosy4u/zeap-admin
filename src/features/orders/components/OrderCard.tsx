@@ -22,13 +22,7 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
   //   }
   //   return '#219653';
   // };
-  const calcProgress = () => {
-    const total = productOrders?.length;
-    const completed = productOrders?.filter(
-      (productOrder) => productOrder?.status?.value === 'order delivered',
-    ).length;
-    return ((completed / total) * 100).toFixed(2);
-  };
+
   return (
     <div className="overflow-scroll cursor-pointer   rounded shadow-md  light:shadow-slate-200 dark:shadow-slate-800 bg-grey8 dark:bg-grey2 dark:text-white mt-2 hover:shadow-2xl transition duration-300">
       <div className="p-2">
@@ -74,16 +68,16 @@ const OrderCard = ({ order }: { order: OrderInterface }) => {
           <div className="flex justify-between items-center mt-2">
             <div className="flex flex-col">
               <span className="dark:text-slate-300 text-slate-500 text-xs">
-                Progress - <strong>{calcProgress()}%</strong>
+                Progress - <strong>{order?.progress?.value}%</strong>
               </span>
               <div className="flex items-center">
                 <progress
                   id={order?.orderId}
                   max="100"
-                  value={calcProgress()}
+                  value={order?.progress?.value}
                   className="block w-100% overflow-hidden rounded bg-white [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-emerald-500 [&::-moz-progress-bar]:bg-emerald-500"
                 >
-                  {calcProgress()}%
+                  {order?.progress?.value}%
                 </progress>
               </div>
             </div>
