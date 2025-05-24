@@ -116,6 +116,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (userData && userUid) {
+      if (!userData?.isAdmin && !userData?.superAdmin) {
+        setLoginError('You are not authorized to access this page');
+        setLoading(false);
+        return navigate('/SignIn');
+      }
       setUser(userData as UserInterface);
       setLoading(false);
       return;

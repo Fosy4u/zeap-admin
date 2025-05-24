@@ -312,6 +312,11 @@ interface DeliveryFeeInterface {
   _id: string;
   fee: number;
   currency: string;
+  method: string;
+  freeDeliveryThreshold: {
+    enabled: boolean;
+    amount: number;
+  };
   createdAt: Date;
   updatedAt: Date;
   __v: number;
@@ -322,6 +327,11 @@ interface DeliveryFeeInterface {
       currency: string;
       date: Date;
       user: UserInterface;
+      type: string;
+      freeDeliveryThreshold?: {
+        enabled: boolean;
+        amount: number;
+      };
     },
   ];
 }

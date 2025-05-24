@@ -17,7 +17,6 @@ const LeavePromoModal = ({
   setOpenModal: (open: boolean) => void;
   productId: string;
 }) => {
-  console.log('promo', promo);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { setDimBackground } = useContext(ThemeContext);
   const [leavePromo, leavePromoStatus] = zeapApiSlice.useLeavePromoMutation();

@@ -13,6 +13,7 @@ import { formatCurrency } from '../../../utils/helpers';
 import { HiCalendar } from 'react-icons/hi';
 import ReactTimeAgo from 'react-time-ago';
 import { DeliveryFeeInterface } from '../../../interface/interface';
+import FreeThreshold from './FreeThreshold';
 
 const modalTheme = {
   root: {
@@ -83,7 +84,7 @@ const DeliveryFeeDetails = ({
     }
     const payload = {
       fee: newDeliveryFee,
-      country: deliveryFee.country,
+      id: deliveryFee._id,
     };
     updateDeliveryFee({ payload })
       .unwrap()
@@ -101,20 +102,20 @@ const DeliveryFeeDetails = ({
     <div
       id="accordion-flush"
       data-accordion="collapse"
-      data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+      data-active-classes="bg-white dark:bg-slate-900 text-gray-900 "
       data-inactive-classes="text-gray-500 dark:text-gray-400"
     >
       <h2 id="accordion-flush-heading-1">
         <button
           onClick={handleClick}
           type="button"
-          className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+          className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700  gap-3"
           data-accordion-target="#accordion-flush-body-1"
           aria-expanded="true"
           aria-controls="accordion-flush-body-1"
         >
           <span className="text-lg font-bold text-info">
-            {deliveryFee.country}
+            {deliveryFee.country} - ({deliveryFee.method})
           </span>
           <svg
             data-accordion-icon
@@ -136,7 +137,7 @@ const DeliveryFeeDetails = ({
       </h2>
       <div
         id="accordion-flush-body-1"
-        className={`py-5 border-b border-gray-200 dark:border-gray-700 text-sm flex flex-col  bg-neutral-100 p-2 ${
+        className={`py-5 border-b border-gray-200 dark:border-gray-700 text-sm flex flex-col  bg-neutral-100 dark:bg-slate-700  p-2 ${
           active ? 'block' : 'hidden'
         }`}
         aria-labelledby="accordion-flush-heading-1"
@@ -144,27 +145,48 @@ const DeliveryFeeDetails = ({
         {isLoading && <Loading />}
         {error && <Alert color="failure">Error - {error}</Alert>}
         {deliveryFee && (
-          <div className="flex flex-col gap-4 p-4 text-gray-500 dark:text-gray-400 border p-4 m-4 rounded-lg">
-            <div className="flex text-md justify-between items-center gap-2">
+          <div className="flex flex-col gap-4 p-4 text-gray-500  border p-4 m-4 rounded-lg bg-white dark:bg-slate-800 ">
+            <div className="flex flex-col md:flex-row text-md md:justify-between md:items-center gap-2">
               <Label htmlFor="fieldTitle">Current Delivery Fee</Label>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center gap-2">
                 <div className="text-lg font-semibold text-success">
                   {formatCurrency(fee, currency)}
                 </div>
+                <Button
+                  onClick={() => setOpen(!open)}
+                  className="w-full"
+                  color="primary"
+                  size="xs"
+                  disabled={isLoading}
+                >
+                  Update Delivery Fee
+                </Button>
               </div>
             </div>
           </div>
         )}
+        {deliveryFee && (
+          <div className="flex flex-col gap-4 p-4 text-gray-500  border p-4 m-4 rounded-lg bg-white dark:bg-slate-800">
+            <FreeThreshold fee={deliveryFee} />
+          </div>
+        )}
         {logs?.length > 0 && (
-          <div className="flex flex-col max-h-96 overflow-y-auto gap-4 p-4 text-gray-500 dark:text-gray-400 border p-4 m-4 rounded-lg">
-            <p className="text-sm font-semibold">Delivery Fee Update History</p>
+          <div className="flex flex-col max-h-96 overflow-y-auto gap-4 p-4 text-gray-500 dark:text-gray-400 border p-4 m-4 rounded-lg bg-white dark:bg-slate-800">
+            <p className="text-sm font-semibold dark:text-white">
+              Delivery Fee Update History
+            </p>
             <Timeline>
               {logs.map(
                 (
                   log: {
+                    type: string;
                     value: number;
                     currency: string;
                     date: Date;
+                    freeDeliveryThreshold?: {
+                      enabled: boolean;
+                      amount: number;
+                    };
                     user: {
                       firstName: string;
                       lastName: string;
@@ -184,10 +206,29 @@ const DeliveryFeeDetails = ({
                         <ReactTimeAgo date={log.date} locale="en-US" />
                       </Timeline.Time>
                       <Timeline.Title className="text-sm md:text-md font-normal">
-                        Updated Delivery Fee to{' '}
-                        <span className="font-semibold">
-                          {formatCurrency(log.value, log.currency)}
-                        </span>
+                        {log?.type === 'free_delivery_threshold_update' ? (
+                          <>
+                            {log.freeDeliveryThreshold?.enabled
+                              ? 'Enabled Free Delivery Threshold'
+                              : 'Disabled Free Delivery Threshold'}{' '}
+                            {log.freeDeliveryThreshold?.enabled && (
+                              <span className="font-semibold">
+                                Amount:{' '}
+                                {formatCurrency(
+                                  log.freeDeliveryThreshold.amount,
+                                  log.currency,
+                                )}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            Updated Delivery Fee to{' '}
+                            <span className="font-semibold">
+                              {formatCurrency(log.value, log.currency)}
+                            </span>
+                          </>
+                        )}
                       </Timeline.Title>
                       <Timeline.Body>
                         <span className="flex gap-2 items-center text-sm">
@@ -208,15 +249,7 @@ const DeliveryFeeDetails = ({
             </Timeline>
           </div>
         )}
-        <Button
-          onClick={() => setOpen(!open)}
-          className="w-full"
-          color="primary"
-          size="sm"
-          disabled={isLoading}
-        >
-          Update Delivery Fee
-        </Button>
+
         {open && (
           <Modal
             className="bg-black bg-opacity-50"

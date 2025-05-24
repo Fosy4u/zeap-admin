@@ -25,13 +25,13 @@ const UserVoucher = ({ voucher }: { voucher: VoucherInterface }) => {
         <Alert
           className="text-xs"
           color={
-            new Date(voucher.expiryDate).toDateString() >
+            new Date(voucher.expiryDate).toDateString() <
             new Date().toDateString()
               ? 'failure'
               : 'success'
           }
         >
-          {new Date(voucher.expiryDate).toDateString() >
+          {new Date(voucher.expiryDate).toDateString() <
           new Date().toDateString() ? (
             <span>
               {' '}
