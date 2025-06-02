@@ -257,6 +257,14 @@ const ProductOrder = () => {
                 <div className=" bg-grey8 p-2 ">
                   <div className="flex flex-col gap-2 bg-grey8 p-2 dark:bg-boxdark">
                     <div className="flex justify-between">
+                      <span>Method: </span>
+                      <span>
+                        {capitalizeFirstLetter(
+                          productOrder?.deliveryMethod || '',
+                        ) || 'N/P'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
                       <span>Address: </span>
                       <span>{deliveryDetails?.address || 'N/P'}</span>
                     </div>
