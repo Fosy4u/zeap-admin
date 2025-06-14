@@ -599,6 +599,7 @@ const AddReadyMadeCloth = () => {
                           categories.main.includes(item.value),
                         )}
                         placeholder="Select main categories"
+                        showCheckbox={true}
                         style={{
                           chips: {
                             background: '#219653',
