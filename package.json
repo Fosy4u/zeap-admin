@@ -1,5 +1,5 @@
 {
-  "name": "zeap-blog-admin",
+  "name": "zeap-admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
