@@ -3,6 +3,7 @@ import Logo from '../../images/logo/app_logo.png';
 import { AuthContext } from '../../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 import Banner from '../../lib/Banner';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 const SignIn: React.FC = () => {
   const {
@@ -23,6 +24,8 @@ const SignIn: React.FC = () => {
   const [errorTitle, setErrorTitle] = useState<string>('');
   const [error, setError] = useState<string>('');
 
+  const [openForgotPasswordModal, setOpenForgotPasswordModal] =
+    useState<boolean>(false);
   useEffect(() => {
     const email = localStorage.getItem('zeapEmail');
     const password = localStorage.getItem('zeapPassword');
@@ -176,7 +179,11 @@ const SignIn: React.FC = () => {
                     Remember me
                   </label>
                 </div>
-                <label className="font-medium text-danger dark:text-white">
+                <label
+                  onClick={() => setOpenForgotPasswordModal(true)}
+                  htmlFor="forgot-password-modal"
+                  className="font-medium text-danger dark:text-white cursor-pointer"
+                >
                   Forgot password?
                 </label>
               </div>
@@ -218,6 +225,12 @@ const SignIn: React.FC = () => {
                   /> */}
             </button>
           </form>
+          {openForgotPasswordModal && (
+            <ForgotPasswordModal
+              openModal={openForgotPasswordModal}
+              setOpenModal={setOpenForgotPasswordModal}
+            />
+          )}
         </div>
       </div>
     </>

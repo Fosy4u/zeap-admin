@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { createContext } from 'react';
 import { useEffect, useState } from 'react';
@@ -24,6 +25,7 @@ export const AuthContext = createContext<{
   setUser: React.Dispatch<
     React.SetStateAction<UserInterface | null | undefined>
   >;
+  resetPassword: (email: string) => void;
 }>({
   isAuthenticated: false,
   login: () => {},
@@ -33,6 +35,7 @@ export const AuthContext = createContext<{
   loading: false,
   setLoading: () => {},
   setUser: () => {},
+  resetPassword: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -201,6 +204,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch(globalActions.setAuthToken(null));
   };
 
+  const resetPassword = async (email: string) => {
+    setLoading(true);
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setLoginError('Password reset email sent successfully');
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+        if (error.code === 'auth/user-not-found') {
+          setLoginError('No user found with this email address');
+        } else if (error.code === 'auth/invalid-email') {
+          setLoginError('Invalid email address');
+        } else {
+          setLoginError('Error sending password reset email');
+        }
+        setLoading(false);
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -212,6 +235,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         loading,
         setUser,
         setLoading,
+        resetPassword,
       }}
     >
       {loading && <Loading />}
