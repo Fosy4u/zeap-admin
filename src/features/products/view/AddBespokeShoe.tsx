@@ -1,11 +1,4 @@
-import {
-  Alert,
-  Button,
-  Dropdown,
-  Label,
-  Textarea,
-  TextInput,
-} from 'flowbite-react';
+import { Alert, Button, Dropdown, Label, TextInput } from 'flowbite-react';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductHeader from '../components/ProductHeader';
@@ -25,6 +18,7 @@ import {
 } from '../../../interface/interface';
 import BespokeBodyMeasurement from '../components/BespokeBodyMeasurement';
 import AutoPriceAdjustment from '../components/AutoPriceAdjustment';
+import Editor from '../../../lib/editor/EditorWithUseQuill';
 
 // import ProductHeader from '../components/ProductHeader'
 
@@ -57,6 +51,7 @@ const AddBespokeShoe = () => {
     step: string;
     id: string;
   }>();
+  const [refresh, setRefresh] = useState(false);
   const [productId, setProductId] = useState('');
   const [product_id, setProduct_id] = useState('');
   const [openSubmitModal, setOpenSubmitModal] = useState(false);
@@ -161,6 +156,7 @@ const AddBespokeShoe = () => {
         heelType: product?.categories?.heelType,
         fastening: product?.categories.fastening,
       });
+      setRefresh(true);
     }
   }, [product]);
 
@@ -614,23 +610,17 @@ const AddBespokeShoe = () => {
                 <div className="mb-2 block">
                   <Label value="Description" />
                 </div>
-                <Textarea
-                  placeholder="Description of the product"
-                  required
-                  className="h-52"
+                <Editor
+                  placeholder={'Description of the product'}
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  color={getColor(description, error.description)}
-                  helperText={
-                    error.description && !description ? (
-                      <>
-                        <span className="text-xs">{error?.description}</span>
-                      </>
-                    ) : (
-                      ''
-                    )
-                  }
+                  onChange={(value) => setDescription(value)}
+                  refresh={refresh}
                 />
+                {error.description && !description && (
+                  <span className="text-xs text-danger">
+                    {error?.description}
+                  </span>
+                )}
               </div>
             </>
           )}
