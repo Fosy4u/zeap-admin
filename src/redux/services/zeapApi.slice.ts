@@ -1403,6 +1403,18 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getOrderForReceipt: builder.query({
+      query: (arg) => {
+        return {
+          url: `order/rec`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Basket', 'Order'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     downloadOrderReceipt: builder.mutation({
       query: (arg) => {
         const { payload } = arg;

@@ -11,7 +11,7 @@ import zeapApiSlice from '../../../redux/services/zeapApi.slice';
 
 const DownLoadReceipt = () => {
   const { order_id } = useParams();
-  const orderQuery = zeapApiSlice.useGetOrderQuery({ order_id });
+  const orderQuery = zeapApiSlice.useGetOrderForReceiptQuery({ order_id });
   const order: OrderInterface = orderQuery?.data?.data;
   const currency = order?.payment?.currency;
 
