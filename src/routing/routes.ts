@@ -37,6 +37,10 @@ import EmailTemplates from '../features/controlPanel/emailTemplate';
 import WelcomeShop from '../features/controlPanel/emailTemplate/view/WelcomeShop';
 import DownLoadReceipt from '../features/downloads/receipt/DownLoadReceipt';
 import SuccessfulOrder from '../features/controlPanel/emailTemplate/view/SuccessfulOrder';
+import HelpArtices from '../features/controlPanel/helpArticle';
+import AddHelpArticle from '../features/controlPanel/helpArticle/views/AddHelpArticle';
+import ListOfHelpArticles from '../features/controlPanel/helpArticle/views/ListOfHelpArticles';
+import HelpArticleContent from '../features/controlPanel/helpArticle/views/HelpArticleContent';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -207,6 +211,26 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/email-templates/successful-order',
     component: SuccessfulOrder,
+  },
+  {
+    path: '/control-panel/help/articles',
+    component: HelpArtices,
+  },
+  {
+    path: '/control-panel/help/article/add',
+    component: AddHelpArticle,
+  },
+  {
+    path: '/control-panel/help/article/edit',
+    component: AddHelpArticle,
+  },
+  {
+    path: '/control-panel/help/article',
+    component: ListOfHelpArticles,
+  },
+  {
+    path: '/control-panel/help/article/:articleId',
+    component: HelpArticleContent,
   },
 
   {

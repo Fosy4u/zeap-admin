@@ -29,6 +29,7 @@ export default createApi({
     'Notification',
     'PushToken',
     'EmailTemplate',
+    'Help',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -2058,6 +2059,147 @@ export default createApi({
         responseHandler(
           {
             success: 'Email Template Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getHelpArticles: builder.query({
+      query: (arg) => {
+        return {
+          url: `/help/articles`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Help'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getPopularTopicsByCategory: builder.query({
+      query: (arg) => {
+        return {
+          url: `/help/articles/popular`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Help'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    getHelpArticle: builder.query({
+      query: (arg) => {
+        return {
+          url: `/help/article`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Help'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    addHelpArticle: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/help/article/add`,
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Help'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Help Article Successfully Added',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updateHelpArticle: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/help/article/update`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Help'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Help Article Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    addToPopularTopics: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/help/article/update/popular`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Help'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Help Article Successfully Added to Popular Topics',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    removeFromPopularTopics: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/help/article/update/unpopular`,
+          method: 'PUT',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Help'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Help Article Successfully Removed from Popular Topics',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    deleteHelpArticle: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/help/article/delete`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Help'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Help Article Successfully Deleted',
             successHandler,
             errorHandler,
           },

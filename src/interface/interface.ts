@@ -569,6 +569,19 @@ interface CountAnalyticsInterface {
     },
   ];
 }
+interface HelpArticleInterface {
+  articleId: string;
+  _id: string;
+  title: string;
+  category: string;
+  subCategory: string;
+  content: string;
+  tags: string[];
+  createdBy: UserInterface;
+  isPopular: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -604,4 +617,5 @@ export {
   CountAnalyticsInterface,
   deliveryDetailsInterface,
   DeliveryFeeInterface,
+  HelpArticleInterface,
 };
