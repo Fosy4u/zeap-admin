@@ -23,7 +23,6 @@ const NotificationProvider: React.FC<{ children: ReactNode }> = ({
     dispatch(zeapApiSlice.util.invalidateTags(['Notification']));
 
     if (payload.notification || payload?.data) {
-      console.log('Notification received. ', payload);
       toast(
         <Message
           notification={{

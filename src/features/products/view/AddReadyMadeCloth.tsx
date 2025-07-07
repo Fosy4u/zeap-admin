@@ -1,4 +1,11 @@
-import { Alert, Button, Dropdown, Label, TextInput } from 'flowbite-react';
+import {
+  Alert,
+  Button,
+  Dropdown,
+  Label,
+  Radio,
+  TextInput,
+} from 'flowbite-react';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductHeader from '../components/ProductHeader';
@@ -57,6 +64,7 @@ const AddReadyMadeCloth = () => {
   const [subtitle, setSubtitle] = useState('');
   const [description, setDescription] = useState('');
   const [sizes, setSizes] = useState<string[]>([]);
+  const [sizeStandard, setSizeStandard] = useState('');
   const [categories, setCategories] = useState<CategoriesInterface>({
     main: [],
     style: [],
@@ -119,7 +127,8 @@ const AddReadyMadeCloth = () => {
   const sizeOptionEnums = options?.readyMadeClothes?.clothSizeEnums
     ?.map((str: string, index: number) => ({ value: str, id: index + 1 }))
     .sort((a: any, b: any) => a.value.localeCompare(b.value));
-
+  const sizeStandardEnums: string[] =
+    options?.readyMadeShoes?.sizeStandardEnums;
   const productQuery = zeapApiSlice.useGetProductByIdQuery(
     { _id: id || product_id },
     { skip: !token || (stage === 1 && !id) },
@@ -153,6 +162,7 @@ const AddReadyMadeCloth = () => {
         fit: product?.categories.fit,
       });
       setSizes(product.sizes);
+      setSizeStandard(product.sizeStandard);
       setRefresh(true);
     }
   }, [product]);
@@ -239,6 +249,10 @@ const AddReadyMadeCloth = () => {
       return true;
     }
     if (stage === 3) {
+      if (!sizeStandard) {
+        setError({ ...error, size: 'Size standard is required' });
+        return false;
+      }
       if (!sizes) {
         setError({ ...error, size: 'Size is required' });
         return false;
@@ -349,6 +363,7 @@ const AddReadyMadeCloth = () => {
     if (stage === 3) {
       payload = {
         sizes,
+        sizeStandard,
         productId,
       };
     }
@@ -1021,47 +1036,71 @@ const AddReadyMadeCloth = () => {
           )}
 
           {stage === 3 && (
-            <div className="border rounded p-2">
-              <div className="mb-2 block">
-                <Label value="Size" />
-              </div>
-              <div className="text-xs text-slate-500 mb-2">
-                Select the sizes available
-              </div>
-              {sizeOptionEnums?.length > 0 && (
-                <div>
-                  <Multiselect
-                    options={sortNaturally(sizeOptionEnums, 'value')}
-                    displayValue="value"
-                    onSelect={(selectedList) => {
-                      setSizes(selectedList.map((item: any) => item.value));
-                    }}
-                    onRemove={(selectedList) =>
-                      setSizes(selectedList.map((item: any) => item.value))
-                    }
-                    selectedValues={sizeOptionEnums.filter((item: any) =>
-                      sizes.includes(item.value),
-                    )}
-                    placeholder="Select sizes"
-                    style={{
-                      chips: {
-                        background: '#219653',
-                      },
-
-                      searchBox: {
-                        border: 'none',
-                        'border-bottom': '1px solid #a17f1a',
-                        'border-radius': '0px',
-                      },
-                    }}
-                  />
+            <>
+              <div>
+                <div className="text-sm text-slate-500 mb-2">
+                  Which size standard is used for this product?
                 </div>
-              )}
+                <div className="flex flex-col gap-2">
+                  {sizeStandardEnums?.map((item: string, index: number) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <Radio
+                        id={item}
+                        name="sizeStandard"
+                        value={item}
+                        onChange={(e) => {
+                          setSizeStandard(e.target.value);
+                        }}
+                        checked={sizeStandard === item}
+                        //   label={item}
+                      />
+                      <Label value={item} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="border rounded p-2">
+                <div className="mb-2 block">
+                  <Label value="Size" />
+                </div>
+                <div className="text-xs text-slate-500 mb-2">
+                  Select the sizes available
+                </div>
+                {sizeOptionEnums?.length > 0 && (
+                  <div>
+                    <Multiselect
+                      options={sortNaturally(sizeOptionEnums, 'value')}
+                      displayValue="value"
+                      onSelect={(selectedList) => {
+                        setSizes(selectedList.map((item: any) => item.value));
+                      }}
+                      onRemove={(selectedList) =>
+                        setSizes(selectedList.map((item: any) => item.value))
+                      }
+                      selectedValues={sizeOptionEnums.filter((item: any) =>
+                        sizes.includes(item.value),
+                      )}
+                      placeholder="Select sizes"
+                      style={{
+                        chips: {
+                          background: '#219653',
+                        },
 
-              {error.size && sizes.length === 0 && (
-                <span className="text-xs text-danger">{error.size}</span>
-              )}
-            </div>
+                        searchBox: {
+                          border: 'none',
+                          'border-bottom': '1px solid #a17f1a',
+                          'border-radius': '0px',
+                        },
+                      }}
+                    />
+                  </div>
+                )}
+
+                {error.size && sizes.length === 0 && (
+                  <span className="text-xs text-danger">{error.size}</span>
+                )}
+              </div>
+            </>
           )}
           {stage === 4 && (
             <ImagesAndColor colors={colorEnums} product={product} />
