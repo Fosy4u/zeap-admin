@@ -1,8 +1,8 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useQuill } from "react-quilljs";
+'use client';
+import { useEffect, useState } from 'react';
+import { useQuill } from 'react-quilljs';
 // import BlotFormatter from "quill-blot-formatter";
-import "quill/dist/quill.snow.css";
+import 'quill/dist/quill.snow.css';
 
 // import './styles.css';
 
@@ -15,8 +15,8 @@ interface EditorProps {
 
 const Editor = ({ value, placeholder, onChange, refresh }: EditorProps) => {
   const [docEnv, setDocEnv] = useState(false);
-  const { quill, quillRef,  } = useQuill({
-    modules: { 
+  const { quill, quillRef } = useQuill({
+    modules: {
       // ...(docEnv ? { blotFormatter: {} } : {}),
     },
     placeholder,
@@ -27,13 +27,13 @@ const Editor = ({ value, placeholder, onChange, refresh }: EditorProps) => {
   // }
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-        setDocEnv(true);
+    if (typeof document !== 'undefined') {
+      setDocEnv(true);
     }
-}, []);
+  }, []);
   useEffect(() => {
     if (quill && docEnv) {
-      quill.on("text-change", () => {
+      quill.on('text-change', () => {
         const html = quill.root.innerHTML;
         onChange(html);
         //maintain cursor position

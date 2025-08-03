@@ -86,7 +86,7 @@ const HelpArticleContent = () => {
               {isFulfilled && article ? (
                 <div className="p-4 bg-white dark:bg-boxdark rounded-lg shadow">
                   <h2 className="text-2xl font-bold mb-4">{article.title}</h2>
-                  <div className="text-gray-700 dark:text-gray-300">
+                  <div className="text-gray-700 dark:text-gray-300 prose">
                     <div
                       dangerouslySetInnerHTML={{ __html: article.content }}
                     />

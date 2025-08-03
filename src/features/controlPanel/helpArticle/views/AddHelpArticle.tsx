@@ -358,7 +358,7 @@ const AddHelpArticle = () => {
                     </strong>
                   </p>
                   <div
-                    className="mt-2"
+                    className="mt-2 prose"
                     dangerouslySetInnerHTML={{ __html: content }}
                   ></div>
                 </div>
