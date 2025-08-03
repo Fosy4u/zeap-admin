@@ -204,6 +204,7 @@ const ImagesAndColor = ({
         <Dropdown
           label={newColor ? newColor : 'Add Color'}
           color={newColor ? 'success' : 'primary'}
+          className="max-h-[20rem] overflow-y-auto"
         >
           {colors?.map((color) => (
             <Dropdown.Item
