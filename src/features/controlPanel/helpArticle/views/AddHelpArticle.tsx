@@ -11,6 +11,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { globalSelectors } from '../../../../redux/services/global.slice';
 import { useSelector } from 'react-redux';
 import { IoIosClose } from 'react-icons/io';
+import {
+  correctULTagFromQuill,
+
+} from '../../../../utils/helpers';
 
 const stages = [
   {
@@ -359,7 +363,9 @@ const AddHelpArticle = () => {
                   </p>
                   <div
                     className="mt-2 prose"
-                    dangerouslySetInnerHTML={{ __html: content }}
+                    dangerouslySetInnerHTML={{
+                      __html: correctULTagFromQuill(content),
+                    }}
                   ></div>
                 </div>
               )}

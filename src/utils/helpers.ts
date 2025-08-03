@@ -134,3 +134,47 @@ export const getCurrencySmallSymbol = (currency: string) => {
       return currency;
   }
 };
+
+export const correctULTagFromQuill = (str: string) => {
+  if (str) {
+    let re = /(<ol><li data-list="bullet">)(.*?)(<\/ol>)/;
+    let strArr = str.split(re);
+
+    while (
+      strArr.findIndex((ele) => ele === '<ol><li data-list="bullet">') !== -1
+    ) {
+      let indx = strArr.findIndex(
+        (ele) => ele === '<ol><li data-list="bullet">',
+      );
+      if (indx) {
+        strArr[indx] = '<ul><li data-list="bullet">';
+        let endTagIndex = strArr.findIndex((ele) => ele === '</ol>');
+        strArr[endTagIndex] = '</ul>';
+      }
+    }
+    return strArr.join('');
+  }
+  return str;
+};
+
+export const revertCorrectULTagFromQuill = (str: string) => {
+  if (str) {
+    let re = /(<ul><li data-list="bullet">)(.*?)(<\/ul>)/;
+    let strArr = str.split(re);
+
+    while (
+      strArr.findIndex((ele) => ele === '<ul><li data-list="bullet">') !== -1
+    ) {
+      let indx = strArr.findIndex(
+        (ele) => ele === '<ul><li data-list="bullet">',
+      );
+      if (indx) {
+        strArr[indx] = '<ol><li data-list="bullet">';
+        let endTagIndex = strArr.findIndex((ele) => ele === '</ul>');
+        strArr[endTagIndex] = '</ol>';
+      }
+    }
+    return strArr.join('');
+  }
+  return str;
+};

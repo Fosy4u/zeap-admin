@@ -4,7 +4,10 @@ import { globalSelectors } from '../../../../redux/services/global.slice';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import Loading from '../../../../lib/Loading';
 import { HelpArticleInterface } from '../../../../interface/interface';
-import { capitalizeFirstLetter } from '../../../../utils/helpers';
+import {
+  capitalizeFirstLetter,
+  correctULTagFromQuill,
+} from '../../../../utils/helpers';
 import {
   helpCenterCategoryOptions,
   helpCenterSubCategoryOptions,
@@ -88,7 +91,9 @@ const HelpArticleContent = () => {
                   <h2 className="text-2xl font-bold mb-4">{article.title}</h2>
                   <div className="text-gray-700 dark:text-gray-300 prose">
                     <div
-                      dangerouslySetInnerHTML={{ __html: article.content }}
+                      dangerouslySetInnerHTML={{
+                        __html: correctULTagFromQuill(article.content),
+                      }}
                     />
                   </div>
                   <div className="mt-4 text-sm text-gray-500">
