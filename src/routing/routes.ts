@@ -41,6 +41,7 @@ import HelpArtices from '../features/controlPanel/helpArticle';
 import AddHelpArticle from '../features/controlPanel/helpArticle/views/AddHelpArticle';
 import ListOfHelpArticles from '../features/controlPanel/helpArticle/views/ListOfHelpArticles';
 import HelpArticleContent from '../features/controlPanel/helpArticle/views/HelpArticleContent';
+import DisabledShops from '../features/controlPanel/disabledShops/DisabledShops';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -231,6 +232,10 @@ const routes: RouteInterface[] = [
   {
     path: '/control-panel/help/article/:articleId',
     component: HelpArticleContent,
+  },
+  {
+    path: '/control-panel/disabled-shops',
+    component: DisabledShops,
   },
 
   {
