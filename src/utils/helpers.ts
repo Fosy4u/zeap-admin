@@ -134,6 +134,10 @@ export const getCurrencySmallSymbol = (currency: string) => {
       return currency;
   }
 };
+export const checkIfHtml = (text: string) => {
+  const htmlRegex = /<[^>]+>/;
+  return htmlRegex.test(text);
+};
 
 export const correctULTagFromQuill = (str: string) => {
   if (str) {

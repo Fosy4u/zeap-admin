@@ -10,7 +10,11 @@ import {
 } from '../../../interface/interface';
 import { Accordion, Alert, Badge, Button, Table } from 'flowbite-react';
 import ProductImage from './ProductImage';
-import { getStatusColor, numberWithCommas } from '../../../utils/helpers';
+import {
+  checkIfHtml,
+  getStatusColor,
+  numberWithCommas,
+} from '../../../utils/helpers';
 import ShopBar from '../../shops/components/ShopBar';
 import UserTile from '../../users/components/UserTile';
 import ProductActions from './ProductActions';
@@ -118,7 +122,20 @@ const Product = () => {
             <div>
               <p className="text-2xl font-bold">{product?.title}</p>
               <p className="text-md text-slate-500">{product?.subTitle}</p>
-              <p className="text-sm text-gray-500">{product?.description}</p>
+              {checkIfHtml(product?.description) ? (
+                <div
+                  className="prose prose-sm max-w-none px-5 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: product?.description || '',
+                  }}
+                ></div>
+              ) : (
+                <div className="px-5 py-2">
+                  <p className="mb-2 text-gray-500 dark:text-gray-400">
+                    {product?.description}
+                  </p>
+                </div>
+              )}
             </div>
             <div>
               <div className="text-darkGold text-lg mt-4">Status</div>

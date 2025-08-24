@@ -63,13 +63,13 @@ const ProductOrderUpdateStatus = ({
     const value = status?.value;
 
     if (value === 'order confirmed') {
-      return `Are you sure you want to update status to ${status?.name}? This supposed to be actioned by the vendor`;
+      return `Are you sure you want to update status to ${status?.name}? This action is typically performed by the vendor`;
     }
     if (value === 'order processing') {
-      return `Are you sure you want to update status to ${status?.name}? This supposed to be actioned by the vendor`;
+      return `Are you sure you want to update status to ${status?.name}? This action is typically performed by the vendor`;
     }
     if (value === 'order ready for delivery') {
-      return `Are you sure you want to update status to ${status?.name}? This supposed to be actioned by the vendor`;
+      return `Are you sure you want to update status to ${status?.name}? This action is typically performed by the vendor`;
     }
     return `Are you sure you want to update status to ${status?.name}`;
   };
