@@ -30,6 +30,7 @@ export default createApi({
     'PushToken',
     'EmailTemplate',
     'Help',
+    'EmailList',
   ],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -341,6 +342,18 @@ export default createApi({
         responseHandler({}, queryArgs);
       },
     }),
+    getNewShops: builder.query({
+      query: (arg) => {
+        return {
+          url: `shops/new`,
+          params: { ...arg },
+        };
+      },
+      providesTags: ['Shops'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
     getShop: builder.query({
       query: (arg) => {
         return {
@@ -380,6 +393,28 @@ export default createApi({
         responseHandler(
           {
             success: 'Shop Successfully Updated',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    updateShopStatus: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `shop/update/status`,
+          method: 'PUT',
+          body: payload,
+          params: { _id: payload._id },
+        };
+      },
+      invalidatesTags: ['Shops', 'Shop'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Shop Status Successfully Updated',
             successHandler,
             errorHandler,
           },
@@ -2212,6 +2247,36 @@ export default createApi({
         responseHandler(
           {
             success: 'Help Article Successfully Deleted',
+            successHandler,
+            errorHandler,
+          },
+          queryArgs,
+        );
+      },
+    }),
+    getEmailList: builder.query({
+      query: () => ({
+        url: `/email/list`,
+      }),
+      providesTags: ['EmailList'],
+      onQueryStarted: async (_, queryArgs) => {
+        responseHandler({}, queryArgs);
+      },
+    }),
+    removeEmailFromList: builder.mutation({
+      query: (arg) => {
+        const { payload } = arg;
+        return {
+          url: `/email/remove`,
+          method: 'DELETE',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['EmailList'],
+      onQueryStarted: async ({ successHandler, errorHandler }, queryArgs) => {
+        responseHandler(
+          {
+            success: 'Email Successfully Removed from List',
             successHandler,
             errorHandler,
           },

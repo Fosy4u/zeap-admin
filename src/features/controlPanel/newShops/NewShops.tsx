@@ -7,18 +7,13 @@ import { useEffect, useState } from 'react';
 import { ShopInterface } from '../../../interface/interface';
 import ShopHeader from '../../shops/components/ShopHeader';
 import { Alert } from 'flowbite-react';
-import DisabledShopTable from './DisabledShopTable';
+import NewShopTable from './NewShopTable';
 
-const DisabledShops = () => {
+const NewShops = () => {
   const token = useSelector(globalSelectors.selectAuthToken);
   const [filteredShops, setFilteredShops] = useState([]);
   const [input, setInput] = useState('');
-  const shopsQuery = zeapApiSlice.useGetShopsQuery(
-    {
-      disabled: true,
-    },
-    { skip: !token },
-  );
+  const shopsQuery = zeapApiSlice.useGetNewShopsQuery({}, { skip: !token });
   const shops = shopsQuery?.data?.data;
 
   const escapeRegExp = (value: string) => {
@@ -66,31 +61,27 @@ const DisabledShops = () => {
 
   return (
     <div>
-      <ShopHeader setInput={setInput} title={'Disabled Shops'} />
+      <ShopHeader setInput={setInput} title={'New Shops'} />
 
       {shops?.length === 0 && !shopsQuery.isLoading && (
         <Alert color="info">No disabled shops found.</Alert>
       )}
       {shopsQuery.isLoading && <Loading />}
       {shops?.length > 0 && !shopsQuery.isLoading && (
-        <Alert color="failure">
+        <Alert color="info" className="mb-5">
           <div className="flex flex-col gap-2">
-            <span className="font-semibold">Disabled Shops</span>
-            <span className="text-sm">These shops are currently disabled.</span>
+            <span className="font-semibold">New Shops</span>
+            <span className="text-sm">These shops are newly registered.</span>
             <span className="text-sm">
-              To enable a disabled shop, go to the shop's detail page and click
-              on the enable badge under the shop actions floating button.
-            </span>
-            <span className="text-sm">
-              Note that some shops may be disabled due to new sign up, policy
-              violations or other issues.
+              To change a shop's status, go to the shop's detail page and click
+              on the status badge under the shop actions floating button.
             </span>
           </div>
         </Alert>
       )}
-      {filteredShops?.length > 0 && <DisabledShopTable shops={filteredShops} />}
+      {filteredShops?.length > 0 && <NewShopTable shops={filteredShops} />}
     </div>
   );
 };
 
-export default DisabledShops;
+export default NewShops;

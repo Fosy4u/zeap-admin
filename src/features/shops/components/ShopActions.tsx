@@ -4,6 +4,7 @@ import SimpleModal from '../../../lib/SimpleModal';
 import { AddShop } from './AddShop';
 import ShopDeleteRestore from './ShopDeleteRestore';
 import ShopComment from './ShopComment';
+import ShopStatus from './ShopStatus';
 
 const buttonClass =
   'w-[56px] h-[56px] text-gray-500 rounded-full border border-gray-200 dark:border-gray-600 hover:text-white shadow-sm dark:hover:text-white bg-emerald-100 dark:text-gray-400 hover:bg-emerald-500  dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400';
@@ -14,6 +15,7 @@ const ShopActions = ({ shop }: { shop: ShopInterface }) => {
   const [openDisable, setOpenDisable] = useState(false);
   const [openEnable, setOpenEnable] = useState(false);
   const [openComment, setOpenComment] = useState(false);
+  const [openStatus, setOpenStatus] = useState(false);
   return (
     <>
       <div
@@ -75,6 +77,31 @@ const ShopActions = ({ shop }: { shop: ShopInterface }) => {
             </svg>
 
             <span className="block mb-px text-xs font-medium ">Comment</span>
+          </button>
+          <button
+            onClick={() => setOpenStatus(true)}
+            type="button"
+            className={buttonClass}
+          >
+            <svg
+              className="w-4 h-4 mx-auto mb-1 text-darkGold"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.9"
+                d="M12 3v1m0 16v1m8.66-10.66l-.7.7M4.34 12.34l-.7.7m16.97 4.95l-.7-.7M4.34 7.66l-.7-.7M21 12h-1M4 12H3m15.66-6.66l-.7.7M6.34 17.66l-.7-.7"
+              />
+            </svg>
+
+            <span className="block mb-px text-xs font-medium ">Status</span>
           </button>
 
           {shop?.disabled && (
@@ -200,6 +227,14 @@ const ShopActions = ({ shop }: { shop: ShopInterface }) => {
           shopId={shop?.shopId}
           open={openComment}
           close={() => setOpenComment(false)}
+        />
+      )}
+      {openStatus && (
+        <ShopStatus
+          shopId={shop?.shopId}
+          status={shop.status as 'new' | 'reviewed'}
+          open={openStatus}
+          close={() => setOpenStatus(false)}
         />
       )}
     </>

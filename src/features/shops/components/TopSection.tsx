@@ -47,6 +47,11 @@ const TopSection = ({
               Active
             </span>
           )}
+          <span
+            className={`inline-flex items-center justify-center gap-1 rounded-full  px-1.5 text-xs text-white mr-2 ${shop?.status === 'new' ? 'bg-info' : 'bg-success'}`}
+          >
+            {capitalizeFirstLetter(shop.status || 'new')}
+          </span>
           {shop?.isTailor && (
             <span className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-600 px-1.5 text-xs text-white mr-2">
               Tailor

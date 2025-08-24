@@ -537,6 +537,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Disabled Shops
                             </NavLink>
                           </li>
+                          <li>
+                            <NavLink
+                              to="/control-panel/new-shops"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
+                                (isActive && '!text-white')
+                              }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
+                              }
+                            >
+                              New Shops
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              to="/control-panel/email-list"
+                              className={({ isActive }) =>
+                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-600 dark:text-slate-400 duration-300 ease-in-out hover:bg-graydark hover:text-white dark:hover:bg-meta-4' +
+                                (isActive && '!text-white')
+                              }
+                              onClick={() =>
+                                smallScreen && setSidebarOpen(false)
+                              }
+                            >
+                              Email List
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}

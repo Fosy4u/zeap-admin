@@ -95,6 +95,7 @@ interface ShopInterface {
   region: string;
   country: string;
   disabled: boolean;
+  status: string;
   createdAt: Date;
   updatedAt: Date;
   __v: number;
@@ -582,6 +583,14 @@ interface HelpArticleInterface {
   createdAt: Date;
   updatedAt: Date;
 }
+
+interface EmailListInterface {
+  _id: string;
+  email: string;
+  createdAt: Date;
+  subscribedTo: string;
+  source: string;
+}
 export {
   RouteInterface,
   DocumentWithFullscreen,
@@ -618,4 +627,5 @@ export {
   deliveryDetailsInterface,
   DeliveryFeeInterface,
   HelpArticleInterface,
+  EmailListInterface,
 };
