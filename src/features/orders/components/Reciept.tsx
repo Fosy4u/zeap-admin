@@ -7,7 +7,7 @@ import {
   getCurrencySmallSymbol,
   numberWithCommas,
 } from '../../../utils/helpers';
-import LogoIcon from '../../../images/logo/app_logo.png';
+import LogoIcon from '../../../images/logo/Zeaper_Green.png';
 import { useReactToPrint } from 'react-to-print';
 import { HiDownload, HiPrinter } from 'react-icons/hi';
 import zeapApiSlice from '../../../redux/services/zeapApi.slice';
@@ -154,7 +154,7 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
                 </div>
 
                 <div className="text-right">
-                  <p>Zona Empires & Partners LTD .</p>
+                  <p>Zeaper</p>
                   <p className="text-gray-500 text-sm">admin@zeaper.com</p>
                   <p className="text-gray-500 text-sm mt-1">+44-442341232</p>
                 </div>
