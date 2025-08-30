@@ -21,9 +21,18 @@ const PaymentSideA = ({ payment }: { payment: PaymentInterface }) => {
           {payment.status}
         </Badge>
       </div>
+
+      <div className="flex justify-between items-center">
+        <span className="text-md ">Gateway</span>
+        <span className="text-lg font-semibold">
+          {payment.gateway || 'N/A'}
+        </span>
+      </div>
       <div className="flex justify-between items-center">
         <span className="text-md ">Reference</span>
-        <span className="text-lg font-semibold">{payment.reference}</span>
+        <span className="text-lg font-semibold">
+          {payment.reference || 'N/A'}
+        </span>
       </div>
       <div className="flex justify-between items-center">
         <span className="text-md ">Channel</span>

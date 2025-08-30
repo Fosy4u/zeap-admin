@@ -2,7 +2,8 @@ import { HiAdjustmentsHorizontal, HiComputerDesktop } from 'react-icons/hi2';
 import { PaymentInterface } from '../../../interface/interface';
 import { capitalizeFirstLetter } from '../../../utils/helpers';
 import { HiInformationCircle } from 'react-icons/hi';
-import PaymentTimeline from './PaymentTimeline';
+import PaystackPaymentTimeline from './PaystackPaymentTimeline';
+import StripePaymentTimeline from './StripePaymentTimeline';
 
 const PaymentSideB = ({ payment }: { payment: PaymentInterface }) => {
   const timeInSeconds = payment.log?.time_spent;
@@ -20,7 +21,7 @@ const PaymentSideB = ({ payment }: { payment: PaymentInterface }) => {
           </span>
         </span>
         <span className="flex flex-col gap-2">
-          <span className="font-bold">Bank and Country</span>
+          <span className="font-bold">Bank / Funding and Country</span>
           {payment.bank && (
             <span className="text-md">
               {payment.bank} ({payment.countryCode})
@@ -48,36 +49,42 @@ const PaymentSideB = ({ payment }: { payment: PaymentInterface }) => {
             <span className="flex  flex-col">
               <span className="font-bold">Device Type</span>
               {payment.log ? (
-                <span className="text-md">
-                  {payment.log?.mobile ? 'Mobile' : 'Desktop'}
-                </span>
+                <span className="text-md">{payment.deviceType}</span>
               ) : (
                 <span className="text-md">N/A</span>
               )}
             </span>
           </span>
-          <span className="flex gap-2 items-center text-warning">
-            <span>
-              <HiAdjustmentsHorizontal className="text-2xl " />
-            </span>
-            <span className="flex  flex-col">
-              <span className="font-bold">Attempts</span>
+          {payment?.gateway !== 'stripe' && (
+            <>
+              <span className="flex gap-2 items-center text-warning">
+                <span>
+                  <HiAdjustmentsHorizontal className="text-2xl " />
+                </span>
+                <span className="flex  flex-col">
+                  <span className="font-bold">Attempts</span>
 
-              <span className="text-md">{payment.log?.attempts || 0}</span>
-            </span>
-          </span>
-          <span className="flex gap-2 items-center text-danger">
-            <span>
-              <HiInformationCircle className="text-2xl " />
-            </span>
-            <span className="flex  flex-col">
-              <span className="font-bold text-danger">Errors</span>
-              <span className="text-md">{payment.log?.errors || 0}</span>
-            </span>
-          </span>
+                  <span className="text-md">{payment.log?.attempts || 0}</span>
+                </span>
+              </span>
+              <span className="flex gap-2 items-center text-danger">
+                <span>
+                  <HiInformationCircle className="text-2xl " />
+                </span>
+                <span className="flex  flex-col">
+                  <span className="font-bold text-danger">Errors</span>
+                  <span className="text-md">{payment.log?.errors || 0}</span>
+                </span>
+              </span>
+            </>
+          )}
         </span>
       </div>
-      <PaymentTimeline history={payment.log?.history} />
+      {payment?.gateway !== 'stripe' ? (
+        <PaystackPaymentTimeline history={payment.log?.history} />
+      ) : (
+        <StripePaymentTimeline logs={payment.log} />
+      )}
     </div>
   );
 };

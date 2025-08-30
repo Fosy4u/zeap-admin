@@ -279,10 +279,12 @@ interface deliveryAddressInterface {
 interface PaymentInterface {
   _id: string;
   user: UserInterface;
+  gateway: string;
   fullName: string;
   email: string;
   status: string;
   reference: string;
+  deviceType: string;
   amount: number;
   appliedVoucherAmount: number;
   total: number;

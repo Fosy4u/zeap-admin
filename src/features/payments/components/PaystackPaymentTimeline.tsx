@@ -25,7 +25,7 @@ const timelineTheme = {
   },
 };
 
-const PaymentTimeline = ({
+const PaystackPaymentTimeline = ({
   history,
 }: {
   history: [
@@ -71,4 +71,4 @@ const PaymentTimeline = ({
   );
 };
 
-export default PaymentTimeline;
+export default PaystackPaymentTimeline;
