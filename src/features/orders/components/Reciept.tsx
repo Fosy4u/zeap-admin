@@ -144,19 +144,14 @@ const Reciept = ({ order }: { order: OrderInterface }) => {
               id="receipt"
               ref={receiptRef}
             >
-              <div className="flex justify-between items-center w-full overflow-auto ">
-                <div>
+              <div className="flex justify-end items-center w-full overflow-auto ">
+                <div className="flex flex-col ">
                   <img
                     src={LogoIcon}
                     alt="company-logo"
                     className="object-contain rounded-lg w-24 h-24"
                   />
-                </div>
-
-                <div className="text-right">
-                  <p>Zeaper</p>
                   <p className="text-gray-500 text-sm">admin@zeaper.com</p>
-                  <p className="text-gray-500 text-sm mt-1">+44-442341232</p>
                 </div>
               </div>
 
