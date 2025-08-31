@@ -7,7 +7,7 @@ import {
   getCurrencySmallSymbol,
   numberWithCommas,
 } from '../../../utils/helpers';
-import LogoIcon from '../../../images/logo/Zeaper_Green.png';
+import LogoIcon from '../../../images/logo/Zeaper_Main_Logo.png';
 import { useReactToPrint } from 'react-to-print';
 import { HiDownload, HiPrinter } from 'react-icons/hi';
 import zeapApiSlice from '../../../redux/services/zeapApi.slice';

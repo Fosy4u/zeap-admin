@@ -5,7 +5,7 @@ import {
   getCurrencySmallSymbol,
   numberWithCommas,
 } from '../../../utils/helpers';
-import LogoIcon from '../../../images/logo/Zeaper_Green.png';
+import LogoIcon from '../../../images/logo/Zeaper_Main_Logo.png';
 import { useParams } from 'react-router-dom';
 import zeapApiSlice from '../../../redux/services/zeapApi.slice';
 
