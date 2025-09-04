@@ -1,4 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import { emailTemplatesOptions } from '../../../utils/data';
+
+type templateType = {
+  name: string;
+  title: string;
+  description: string;
+  defaultSubject: string;
+};
 
 const EmailTemplates = () => {
   return (
@@ -10,32 +18,17 @@ const EmailTemplates = () => {
         </div>
       </div>
       <div className="flex  gap-4   flex-wrap">
-        <NavLink
-          to="/control-panel/email-templates/welcome-email/user"
-          className="shadow-md hover:shadow-success p-4 items-center text-center  flex rounded-full  flex-col w-full gap-4 items-center cursor-pointer dark:bg-slate-800"
-        >
-          <div className="flex flex-col gap-2 items-center justify-center">
-            <span className="font-semibold ">Welcome User Email Template</span>
-          </div>
-        </NavLink>
-        <NavLink
-          to="/control-panel/email-templates/welcome-email/shop"
-          className="shadow-md hover:shadow-success p-4 items-center text-center  flex rounded-full  flex-col w-full gap-4 items-center cursor-pointer dark:bg-slate-800"
-        >
-          <div className="flex flex-col gap-2 items-center justify-center">
-            <span className="font-semibold ">Welcome Shop Email Template</span>
-          </div>
-        </NavLink>
-        <NavLink
-          to="/control-panel/email-templates/successful-order"
-          className="shadow-md hover:shadow-success p-4 items-center text-center  flex rounded-full  flex-col w-full gap-4 items-center cursor-pointer dark:bg-slate-800"
-        >
-          <div className="flex flex-col gap-2 items-center justify-center">
-            <span className="font-semibold ">
-              Successful Order Email Template
-            </span>
-          </div>
-        </NavLink>
+        {emailTemplatesOptions.map((template: templateType) => (
+          <NavLink
+            key={template.name}
+            to={`/control-panel/email-template/${template.name}`}
+            className="shadow-md hover:shadow-success p-4 items-center text-center  flex rounded-full  flex-col w-full gap-4 items-center cursor-pointer dark:bg-slate-800"
+          >
+            <div className="flex flex-col gap-2 items-center justify-center">
+              <span className="font-semibold ">{template.title}</span>
+            </div>
+          </NavLink>
+        ))}
       </div>
     </div>
   );

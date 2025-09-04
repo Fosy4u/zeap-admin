@@ -6,12 +6,17 @@ import { globalSelectors } from '../../../../redux/services/global.slice';
 import Loading from '../../../../lib/Loading';
 import zeapApiSlice from '../../../../redux/services/zeapApi.slice';
 import EmailTemplateVariables from '../components/EmailTemplateVariables';
+import { useParams } from 'react-router-dom';
+import { emailTemplatesOptions } from '../../../../utils/data';
 
-const WelcomeShop = () => {
-  const name = 'welcome-shop';
+const EmailTemplate = () => {
+  const { name } = useParams<{ name: string }>();
+  const selectedTemplate = emailTemplatesOptions.find(
+    (template) => template.name === name,
+  );
   const token = useSelector(globalSelectors.selectAuthToken);
   const [error, setError] = useState<string>('');
-  const [subject, setSubject] = useState('Welcome to Zeap');
+  const [subject, setSubject] = useState(selectedTemplate?.defaultSubject);
   const [refresh, setRefresh] = useState(false);
 
   const [body, setBody] = useState('');
@@ -67,7 +72,7 @@ const WelcomeShop = () => {
         <div>
           {' '}
           <h1 className="text-xl md:text-2xltext-dark">
-            Welcome Shop Email Template
+            {selectedTemplate?.title}
           </h1>
         </div>
         <EmailTemplateVariables />
@@ -75,10 +80,7 @@ const WelcomeShop = () => {
 
       <Alert color="info">
         <div className="flex flex-col gap-2">
-          <span>
-            This is the email template that will be sent to the shop when they
-            sign up
-          </span>
+          <span>{selectedTemplate?.description}</span>
         </div>
       </Alert>
       {isLoading && <Loading />}
@@ -112,4 +114,4 @@ const WelcomeShop = () => {
   );
 };
 
-export default WelcomeShop;
+export default EmailTemplate;

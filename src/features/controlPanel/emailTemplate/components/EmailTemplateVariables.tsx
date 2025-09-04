@@ -44,6 +44,26 @@ const emailVariables = [
     name: 'orderPoints',
     description: 'Points awarded for the Order',
   },
+  {
+    name: 'itemNo',
+    description: 'Item Number of the Product in the Order',
+  },
+  {
+    name: 'expectedVendorCompletionDate',
+    description: 'Maximum Expected Completion Date for the Vendor',
+  },
+  {
+    name: 'productTitle',
+    description: 'Title of the Product in the Order',
+  },
+  {
+    name: 'productQuantity',
+    description: 'Quantity of the Product in the Order',
+  },
+  {
+    name: 'sku',
+    description: 'Stock Keeping Unit (sku) of the Product in the Order',
+  },
 ];
 
 const EmailTemplateVariables = () => {

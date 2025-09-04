@@ -32,11 +32,8 @@ import BodyMeasurement from '../features/controlPanel/bodymeasurement.tsx';
 import DeliveryFee from '../features/controlPanel/deliveryFee';
 import ExchangeRate from '../features/controlPanel/exchangeRate';
 import BodyMeasurementGuideLayout from '../features/controlPanel/bodymeasurement.tsx/components/BodyMeasurementGuideLayout';
-import WelcomeUser from '../features/controlPanel/emailTemplate/view/WelcomeUser';
 import EmailTemplates from '../features/controlPanel/emailTemplate';
-import WelcomeShop from '../features/controlPanel/emailTemplate/view/WelcomeShop';
 import DownLoadReceipt from '../features/downloads/receipt/DownLoadReceipt';
-import SuccessfulOrder from '../features/controlPanel/emailTemplate/view/SuccessfulOrder';
 import HelpArtices from '../features/controlPanel/helpArticle';
 import AddHelpArticle from '../features/controlPanel/helpArticle/views/AddHelpArticle';
 import ListOfHelpArticles from '../features/controlPanel/helpArticle/views/ListOfHelpArticles';
@@ -44,6 +41,7 @@ import HelpArticleContent from '../features/controlPanel/helpArticle/views/HelpA
 import DisabledShops from '../features/controlPanel/disabledShops/DisabledShops';
 import NewShops from '../features/controlPanel/newShops/NewShops';
 import EmailList from '../features/controlPanel/emailList/EmailList';
+import EmailTemplate from '../features/controlPanel/emailTemplate/view/EmailTemplate';
 
 // Define all routes for the app here.
 const routes: RouteInterface[] = [
@@ -204,17 +202,10 @@ const routes: RouteInterface[] = [
     component: EmailTemplates,
   },
   {
-    path: '/control-panel/email-templates/welcome-email/user',
-    component: WelcomeUser,
+    path: '/control-panel/email-template/:name',
+    component: EmailTemplate,
   },
-  {
-    path: '/control-panel/email-templates/welcome-email/shop',
-    component: WelcomeShop,
-  },
-  {
-    path: '/control-panel/email-templates/successful-order',
-    component: SuccessfulOrder,
-  },
+
   {
     path: '/control-panel/help/articles',
     component: HelpArtices,
